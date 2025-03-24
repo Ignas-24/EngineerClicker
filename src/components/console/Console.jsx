@@ -2,7 +2,7 @@ import "./console.css";
 import { useEffect, useRef } from "react";
 import * as PIXI from "pixi.js";
 import { PixelateFilter } from "pixi-filters";
-
+import React from 'react';
 
 export default function Console( {textState} ) {
   const consoleContent = useRef(null);
@@ -135,4 +135,3 @@ export default function Console( {textState} ) {
 
   );
 }
-

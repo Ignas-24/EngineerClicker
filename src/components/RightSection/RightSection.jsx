@@ -2,7 +2,7 @@ import React, { useSyncExternalStore } from "react";
 import styles from "./RightSection.module.css";
 import ButtonCanvas from "../ButtonCanvas";
 import game from "../../game/Game";
-import Console from "../console/Console"
+import Console from "../console/Console.jsx"
 import { useState } from "react";
 
 const RightSection = () => {
