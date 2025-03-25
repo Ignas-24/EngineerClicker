@@ -28,9 +28,6 @@ vi.mock('pixi-filters', () => ({
   PixelateFilter: vi.fn(),
 }));
 
-vi.mock('pixi-filters', () => ({
-  PixelateFilter: vi.fn(),
-}));
 
 
 

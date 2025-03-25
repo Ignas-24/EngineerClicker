@@ -128,7 +128,7 @@ export default function Console( {textState} ) {
       </div>
       <div className="console_contents" ref = {consoleContent}>
       {textState.map((msg, index) => (
-        <p key={index}>{msg}</p>
+        <p data-testid="console_text" key={index}>{msg}</p>
       ))}
       </div>
     </div>
