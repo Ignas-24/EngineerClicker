@@ -17,11 +17,11 @@ export class ResourceManager {
     const data = {
       euro: this.euro,
     };
-    localStorage.setItem('ResourceMangerData', JSON.stringify(data));
+    localStorage.setItem('ResourceManagerData', JSON.stringify(data));
   }
 
   loadData() {
-    const savedData = localStorage.getItem('ResourceMangerData');
+    const savedData = localStorage.getItem('ResourceManagerData');
     if (savedData) {
       const data = JSON.parse(savedData);
       this.euro = data.euro || 0;
