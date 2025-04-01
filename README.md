@@ -16,3 +16,8 @@ Naming conventions for syncing with Jira:
 * **Pull request titles** Include the Jira issue key at the start of the title.
     * Example: `SCRUM-40: Create syncing for jira`
 
+Deployment
+* `npm ci` (`npm install` if packages are being modified)
+* If `<subdomain>.<domain>/<path>/` host url changes (e.g. repository name was modified), ensure `base:` value in `vite.config.js` is equal to `/<path>/`
+* `npm run deploy`
+* The site should be available on https://Ignas-24.github.io/EngineerClicker/ after some time.
