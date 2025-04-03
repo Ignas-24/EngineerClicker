@@ -13,9 +13,19 @@ const RightSection = () => {
     game.subscribe.bind(game),
     () => game.resourceManager.euro
   );
+  
+  const projectProgress = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => game.project.projectProgress
+  );
 
   const handleClick = () => {
-    game.resourceManager.addEuros(1);
+    if(game.project.isActive()) {
+      game.project.addProgress();
+    }
+    else if(!game.project.isActive()) {
+      game.resourceManager.addEuros();
+    }
 
     addText( (prev) => [...prev, "test"]);
   };

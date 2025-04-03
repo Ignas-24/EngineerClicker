@@ -8,10 +8,26 @@ const TopLeft = () => {
     () => game.resourceManager.euro
   );
 
+  const prestige = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => game.resourceManager.prestige
+  );
+
+  const multiplier = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => game.resourceManager.multiplier
+  );
+
+  const clickPower = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => game.resourceManager.clickPower
+  );
+
   return (
     <div className={styles.topLeft}>
       <p>Euro: {euros}€</p>
-      <p>Prestige: 0</p>
+      <p>Prestige: {prestige}</p>
+      <p>Current typing power: {clickPower}, Multiplier: {multiplier}</p>
     </div>
   );
 };
