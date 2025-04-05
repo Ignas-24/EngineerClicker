@@ -4,14 +4,14 @@ div .console_wrap{
 
     /*change later with dynamic values*/
     /*If height and width is not set PIXI graphics fail to load properly*/
-    height: 40%;
-    width: 40%;
+    position: absolute;
     margin: auto;
     text-align: left;
 
     display: flex;
     flex-direction: column;
 
+    box-sizing: border-box;
     border: 7px;
     border-style:ridge;
     border-color: gainsboro;
@@ -22,8 +22,6 @@ div .console_wrap{
         font-weight: bold;
         font-family: 'Press Start 2P', monospace;
     }
-
-    min-width: 300px;
 }
 
 div .console_header{
