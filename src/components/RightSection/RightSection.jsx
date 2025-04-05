@@ -1,5 +1,5 @@
 import React from "react";
-import ComputerCanvas from "../ButtonCanvas";
+import ComputerCanvas from "../ComputerCanvas";
 import styles from "./RightSection.module.css";
 
 const RightSection = () => {

@@ -4,7 +4,7 @@ import click1 from "../assets/click1.mp3";
 import click2 from "../assets/click2.mp3";
 import click3 from "../assets/click3.mp3";
 import click4 from "../assets/click4.mp3";
-import Console from "./console/Console";
+import Console from "./console/Console.jsx";
 import game from "../game/Game.js";
 
 const clickSounds = [click1, click2, click3, click4];
