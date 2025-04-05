@@ -1,9 +1,11 @@
-import { useEffect, useRef } from "react";
 import * as PIXI from "pixi.js";
+import { useEffect, useRef, useState } from "react";
 import click1 from "../assets/click1.mp3";
 import click2 from "../assets/click2.mp3";
 import click3 from "../assets/click3.mp3";
 import click4 from "../assets/click4.mp3";
+import Console from "./console/Console";
+import game from "../game/Game.js";
 
 const clickSounds = [click1, click2, click3, click4];
 
@@ -15,45 +17,19 @@ const playClickSound = () => {
   sound.play();
 };
 
-const ButtonCanvas = ({ onClick }) => {
+const ComputerCanvas = ({ onClick }) => {
+  const [text, addText] = useState([]);
+  const [consoleStyles, setConsoleStyles] = useState();
+
   const canvasRef = useRef(null);
   const appRef = useRef(null);
   const spriteRef = useRef(null);
 
-  // TODO: for demo, delete later
-  function createBurst(x, y) {
-    const particles = [];
-    for (let i = 0; i < 20; i++) {
-      let circle = new PIXI.Graphics();
-      circle.circle(0, 0, 5 + Math.random() * 5).fill(0xaaaaee);
-      circle.x = x;
-      circle.y = y;
-      circle.zIndex = -1;
-      appRef.current.stage.addChild(circle);
-      let deg = Math.random() * Math.PI * 2;
-      let mag = 3 + Math.random() * 1;
-      let vx = Math.sin(deg) * mag;
-      let vy = Math.cos(deg) * mag;
-      particles.push({ sprite: circle, vx, vy });
-    }
-
-    appRef.current.ticker.add(() => {
-      particles.forEach((p) => {
-        p.sprite.x += p.vx;
-        p.sprite.y += p.vy;
-        p.sprite.alpha -= 0.02;
-        if (p.sprite.alpha <= 0) appRef.current.stage.removeChild(p.sprite);
-      });
-    });
-  }
-
   function handleClick(sprite) {
+    game.resourceManager.addEuros(1);
     playClickSound();
-    const clickedScale = 1.1;
-    sprite.scale._x = clickedScale;
-    sprite.scale._y = clickedScale;
-    createBurst(sprite.position._x, sprite.position._y);
-    onClick();
+    addText((prev) => [...prev, "test"]);
+    if (onClick) onClick();
   }
 
   function handleResize() {
@@ -61,11 +37,11 @@ const ButtonCanvas = ({ onClick }) => {
     if (!spriteRef.current) return;
     const app = appRef.current;
     const sprite = spriteRef.current;
+    sprite.setSize(app.screen.height / 2);
     sprite.position.set(app.screen.width / 2, app.screen.height / 2);
   }
 
   useEffect(() => {
-    // TODO: lots of code for demo, delete later
     if (!canvasRef.current) return;
     let load = async () => {
       const app = new PIXI.Application();
@@ -75,12 +51,11 @@ const ButtonCanvas = ({ onClick }) => {
       await app.init({ resizeTo: canvasRef.current, backgroundAlpha: 0 });
       canvasRef.current.appendChild(app.canvas);
 
-      const texture = await PIXI.Assets.load(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Crystal_Project_computer.png/200px-Crystal_Project_computer.png"
-      );
+      const texture = await PIXI.Assets.load("src/assets/pc1.png");
 
       const sprite = new PIXI.Sprite(texture);
       spriteRef.current = sprite;
+      sprite.setSize(app.screen.height / 2);
       sprite.anchor.set(0.5);
       sprite.position.set(app.screen.width / 2, app.screen.height / 2);
       sprite.eventMode = "static";
@@ -92,19 +67,34 @@ const ButtonCanvas = ({ onClick }) => {
 
       app.stage.addChild(sprite);
       app.ticker.add((time) => {
-        const sprite = spriteRef.current;
-        const eps = 1e-2;
-        const targetScale = 1;
-        if (Math.abs(sprite.scale._x - targetScale) < eps) {
-          sprite.scale.set(targetScale, targetScale);
-        } else {
-          let scaleSpeed = 0.2;
-          let newScale =
-            sprite.scale._x *
-            ((targetScale / sprite.scale._x - 1) * scaleSpeed * time.deltaTime +
-              1);
-          sprite.scale.set(newScale);
-        }
+        const spriteBounds = sprite.getBounds(false, new PIXI.Bounds());
+        const spriteWidth = spriteBounds.maxX - spriteBounds.minX;
+        const spriteHeight = spriteBounds.maxY - spriteBounds.minY;
+        const originalSpriteWidth = 1024;
+        const originalSpriteHeight = 1024;
+        const targetTopLeft = { x: 208, y: 164 };
+        const targetBottomRight = { x: 815, y: 563 };
+
+        if (spriteBounds)
+          setConsoleStyles({
+            left: Math.floor(
+              spriteBounds.minX +
+                targetTopLeft.x * (spriteWidth / originalSpriteWidth)
+            ),
+            top: Math.floor(
+              spriteBounds.minY +
+                targetTopLeft.y * (spriteHeight / originalSpriteHeight)
+            ),
+            width: Math.ceil(
+              (targetBottomRight.x - targetTopLeft.x + 1) *
+                (spriteWidth / originalSpriteWidth)
+            ),
+            height:
+              Math.ceil(
+                (targetBottomRight.y - targetTopLeft.y + 1) *
+                  (spriteHeight / originalSpriteHeight)
+              ) + 1,
+          });
       });
     };
 
@@ -119,8 +109,11 @@ const ButtonCanvas = ({ onClick }) => {
     <div
       onResize={handleResize}
       ref={canvasRef}
-    ></div>
+      style={{ position: "relative", width: "100%", height: "100%" }}
+    >
+      <Console textState={text} styles={consoleStyles} />
+    </div>
   );
 };
 
-export default ButtonCanvas;
+export default ComputerCanvas;
