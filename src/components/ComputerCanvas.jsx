@@ -30,7 +30,7 @@ const ComputerCanvas = ({ onClick }) => {
       game.project.addProgress();
     }
     else if(!game.project.isActive()) {
-      game.resourceManager.addEuros();
+      game.resourceManager.addEurosClicked();
     }
     playClickSound();
     addText((prev) => [...prev, "test"]);

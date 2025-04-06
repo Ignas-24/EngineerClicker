@@ -28,7 +28,7 @@ export class LoanManager {
     if (this.paymentClock <= 0) {
       const paymentAmount = this.totalLoanToRepay * this.paymentPercentage;
       if (this.game.resourceManager.euro >= paymentAmount) {
-        this.game.resourceManager.reduceEuros(paymentAmount);
+        this.game.resourceManager.changeEuros(-paymentAmount);
         this.remainingLoanAmount -= paymentAmount;
         if (this.remainingLoanAmount <= 0) {
           this.hasLoan = false;
@@ -84,7 +84,7 @@ export class LoanManager {
     if (!this.hasLoan) return false;
 
     if (this.game.resourceManager.euro >= this.remainingLoanAmount) {
-      this.game.resourceManager.reduceEuros(this.remainingLoanAmount);
+      this.game.resourceManager.changeEuros(this.remainingLoanAmount);
       this.hasLoan = false;
       this.loanAmount = 0;
       this.totalLoanToRepay = 0;
@@ -106,8 +106,7 @@ export class LoanManager {
     this.totalLoanToRepay = 0;
     this.remainingLoanAmount = 0;
 
-    this.game.resourceManager.resetForBankruptcy();
-    this.game.project.resetForBankruptcy();
+    this.game.resetForBankruptcy();
 
     this.saveData();
     this.game.notifyUpdate();

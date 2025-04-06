@@ -12,15 +12,15 @@ export class ResourceManager {
     this.loadData();
   }
 
-  addEuros() {
+  addEurosClicked() {
     const delta = this.clickPower * this.multiplier;
     this.euro = this.euro + delta;
     this.saveData();
     this.game.notifyUpdate();
   }
-
-  reduceEuros(delta) {
-    this.euro = this.euro - delta;
+  
+  changeEuros(delta) {
+    this.euro = this.euro + delta;
     this.saveData();
     this.game.notifyUpdate();
 
