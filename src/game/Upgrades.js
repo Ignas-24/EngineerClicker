@@ -63,6 +63,7 @@ export class Upgrades {
                 break;
             case 2:
                 if(this.multUpgrades[1] === true) break;
+                if(this.multUpgrades[0] === false) break;
                 if(this.game.resourceManager.prestige < 1) break;
                 this.game.resourceManager.setMultiplier(3);
                 this.game.resourceManager.changePrestige(-1);
@@ -71,6 +72,7 @@ export class Upgrades {
                 break;
             case 3:
                 if(this.multUpgrades[2] === true) break;
+                if(this.multUpgrades[1] === false) break;
                 if(this.game.resourceManager.prestige < 1) break;
                 this.game.resourceManager.setMultiplier(4);
                 this.game.resourceManager.changePrestige(-1);
