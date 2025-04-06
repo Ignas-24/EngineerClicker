@@ -69,7 +69,7 @@ export class Project {
       this.game.projectManager.completedProjectTotal++;
       this.stopTimer();
       this.game.resourceManager.changeEuros(this.projectReward);
-      this.game.projectManager.replaceInactiveProject(this);
+      this.game.projectManager.removeProject(this);
       this.saveData();
       this.game.notifyUpdate();
     }
@@ -104,7 +104,7 @@ export class Project {
       this.active = false;
       this.stopTimer();
       alert(`Project ${this.projectName} failed`);
-      this.game.projectManager.replaceInactiveProject(this);
+      this.game.projectManager.removeProject(this);
       this.saveData();
       this.game.notifyUpdate();
     }

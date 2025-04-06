@@ -3,6 +3,11 @@ import styles from "./TopLeft.module.css";
 import game from "../../game/Game";
 
 const TopLeft = () => {
+  const activeProject = game.projectManager.selectedProjects.find(p => p.active);
+  if (activeProject) {
+    game.project = activeProject;
+  }
+  
   const euros = useSyncExternalStore(
     game.subscribe.bind(game),
     () => game.resourceManager.euro
