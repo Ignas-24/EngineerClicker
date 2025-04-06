@@ -6,8 +6,7 @@ export class LoanManager {
   totalLoanToRepay = 0;
   remainingLoanAmount = 0;
   paymentClock = 0;
-  // paymentInterval = 5 * 60 * 1000;
-  paymentInterval = 1 * 1000;
+  paymentInterval = 5 * 60 * 1000;
   paymentPercentage = 0.05;
   timerInterval = 100;
 
