@@ -17,7 +17,39 @@ const playClickSound = () => {
 	sound.play();
 };
 
+const ComputerCanvas = ({ onClick }) => {
+    const [text, addText] = useState([]);
+    const [consoleStyles, setConsoleStyles] = useState();
 
+    const canvasRef = useRef(null);
+    const appRef = useRef(null);
+    const spriteRef = useRef(null);
+    const backgroundRef = useRef(null);
+
+    function handleClick(sprite) {
+        if (game.project.isActive()) {
+            game.project.addProgress();
+        }
+        else if (!game.project.isActive()) {
+            game.resourceManager.addEurosClicked();
+        }
+        playClickSound();
+        addText((prev) => [...prev, "test"]);
+        if (onClick) onClick();
+    }
+
+    function handleResize() {
+        if (!appRef.current) return;
+        if (!spriteRef.current) return;
+        const app = appRef.current;
+        const sprite = spriteRef.current;
+        const background = backgroundRef.current;
+        sprite.setSize(app.screen.height / 2);
+        sprite.position.set(app.screen.width / 2, app.screen.height / 2);
+
+        background.width = app.screen.width;
+        background.height = app.screen.height;
+        background.position.set(
             app.screen.width / 2,
             app.screen.height / 2
         );
