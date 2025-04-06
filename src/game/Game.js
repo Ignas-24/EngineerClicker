@@ -1,4 +1,6 @@
 import { ResourceManager } from "./ResourceManager";
+import { Upgrades } from "./Upgrades";
+import { Project } from "./Project";
 
 class Game {
   // Managers
@@ -8,6 +10,8 @@ class Game {
 
   constructor() {
     this.resourceManager = new ResourceManager(this);
+    this.upgrades = new Upgrades(this);
+    this.project = new Project(this);
   }
 
   // Subcribe and notify React components
