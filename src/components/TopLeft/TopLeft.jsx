@@ -23,11 +23,45 @@ const TopLeft = () => {
     () => game.resourceManager.clickPower
   );
 
+  const projectName = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => {
+      const project = game.project;
+      return project && !project.completed && !project.failed ? project.projectName : "None selected"
+    }
+  );
+
+  const projectProgress = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => {
+      const project = game.project;
+      return project && !project.completed && !project.failed ? project.projectProgress : 0;
+    }
+  );
+
+  const projectSize = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => {
+      const project = game.project 
+      return project && !project.completed && !project.failed ? game.project.projectSize : 0
+    }
+  );
+
+  const projectRemainingTime = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => {
+      const project = game.project;
+      return project && !project.completed && !project.failed ? project.remainingTime : 0;
+    }
+  );
+
   return (
     <div className={styles.topLeft}>
       <p>Euro: {parseFloat(euros).toFixed(2)}€</p>
       <p>Prestige: {prestige}</p>
       <p>Current typing power: {parseFloat(clickPower).toFixed(2)}, Multiplier: {multiplier}</p>
+      <p>Active project: {projectName || "None selected"}</p>
+      <p>Progress: {parseFloat(projectProgress || 0).toFixed(2)}, Size: {projectSize || 0}, Time left: {projectRemainingTime || 0}</p>
     </div>
   );
 };

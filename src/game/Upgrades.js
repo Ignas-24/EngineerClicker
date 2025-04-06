@@ -15,7 +15,7 @@ export class Upgrades {
                 if(this.powerUpgrades[0] === true) break
                 if(this.game.resourceManager.euro < 0.5) break
                 this.game.resourceManager.addClickPower(0.01);
-                this.game.resourceManager.reduceEuros(0.5);
+                this.game.resourceManager.changeEuros(-0.5);
                 this.powerUpgrades[0] = true;
                 success = true;
                 break;
@@ -23,7 +23,7 @@ export class Upgrades {
                 if(this.powerUpgrades[1] === true) break;
                 if(this.game.resourceManager.euro < 1) break;
                 this.game.resourceManager.addClickPower(0.01);
-                this.game.resourceManager.reduceEuros(1);
+                this.game.resourceManager.changeEuros(-1);
                 this.powerUpgrades[1] = true;
                 success = true;
                 break;
@@ -31,7 +31,7 @@ export class Upgrades {
                 if(this.powerUpgrades[2] === true) break;
                 if(this.game.resourceManager.euro < 5) break;
                 this.game.resourceManager.addClickPower(0.02);
-                this.game.resourceManager.reduceEuros(5);
+                this.game.resourceManager.changeEuros(-5);
                 this.powerUpgrades[2] = true;
                 success = true;
                 break;
@@ -39,7 +39,7 @@ export class Upgrades {
                 if(this.powerUpgrades[3] === true) break;
                 if(this.game.resourceManager.euro < 20) break;
                 this.game.resourceManager.addClickPower(0.05);
-                this.game.resourceManager.reduceEuros(20);
+                this.game.resourceManager.changeEuros(-20);
                 this.powerUpgrades[3] = true;
                 success = true;
                 break;

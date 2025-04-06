@@ -36,8 +36,6 @@ const MultUpgradePopUp = ({ onClose }) => {
           >
           </Button>
         ))}
-        <br />
-        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );
