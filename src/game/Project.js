@@ -2,12 +2,12 @@ export class Project {
     game;
     projectProgress = 0;
     active = false;
-  
+
     constructor(game) {
       this.game = game;
       this.loadData();
     }
-  
+
     isActive() {
       return this.active;
     }
@@ -15,7 +15,7 @@ export class Project {
     changeActiveState() {
       this.active = !this.active;
       this.saveData();
-    } 
+    }
 
     addProgress() {
         const delta = parseFloat((this.game.resourceManager.clickPower * this.game.resourceManager.multiplier).toFixed(2));
@@ -31,7 +31,7 @@ export class Project {
       };
       localStorage.setItem('ProjectData', JSON.stringify(data));
     }
-  
+
     loadData() {
       const savedData = localStorage.getItem('ProjectData');
       if (savedData) {
@@ -40,5 +40,10 @@ export class Project {
         this.active = data.isActive || false;
       }
     }
+
+    resetForBankruptcy() {
+      this.projectProgress = 0;
+      this.active = false;
+      this.saveData();
+    }
   }
-  
