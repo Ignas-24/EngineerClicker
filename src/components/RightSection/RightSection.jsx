@@ -1,9 +1,6 @@
-import React, { useSyncExternalStore } from "react";
+import React from "react";
+import ComputerCanvas from "../ComputerCanvas";
 import styles from "./RightSection.module.css";
-import ButtonCanvas from "../ButtonCanvas";
-import game from "../../game/Game";
-import Console from "../console/Console"
-import { useState } from "react";
 
 const RightSection = () => {
 
@@ -31,12 +28,8 @@ const RightSection = () => {
   };
 
   return (
-    <div className={styles.rightSection} style={{ padding: "8px"}}>
-
-      <Console textState={text} />
-      <ButtonCanvas onClick={handleClick} />
-
-      
+    <div className={styles.rightSection} style={{ padding: "8px" }}>
+      <ComputerCanvas onClick={handleClick}/>
     </div>
   );
 };

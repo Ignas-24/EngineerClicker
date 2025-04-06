@@ -4,7 +4,7 @@ import * as PIXI from "pixi.js";
 import { PixelateFilter } from "pixi-filters";
 
 
-export default function Console( {textState} ) {
+export default function Console( { textState, styles } ) {
   const consoleContent = useRef(null);
   const header = useRef(null);
 
@@ -114,7 +114,7 @@ export default function Console( {textState} ) {
 
 
   return (
-    <div className="console_wrap">
+    <div className="console_wrap" style={styles}>
 
       <div className="console_header" ref = {header}>
         <p>MS-DOS</p>
