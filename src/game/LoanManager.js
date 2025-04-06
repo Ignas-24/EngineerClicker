@@ -1,5 +1,6 @@
 export class LoanManager {
   game;
+  inDebt = false;
   hasLoan = false;
   loanAmount = 0;
   loanInterestRate = 0;
@@ -64,7 +65,9 @@ export class LoanManager {
 
     const maxAmount = this.getMaxLoanAmount();
     if (amount > maxAmount) return false;
+    if (this.game.resourceManager.euro + amount < 0) return false;
 
+    this.inDebt = false;
     this.hasLoan = true;
     this.loanAmount = amount;
     this.loanInterestRate = this.getInterestRate();
@@ -83,7 +86,7 @@ export class LoanManager {
     if (!this.hasLoan) return false;
 
     if (this.game.resourceManager.euro >= this.remainingLoanAmount) {
-      this.game.resourceManager.changeEuros(this.remainingLoanAmount);
+      this.game.resourceManager.changeEuros(-this.remainingLoanAmount);
       this.hasLoan = false;
       this.loanAmount = 0;
       this.totalLoanToRepay = 0;
@@ -100,6 +103,7 @@ export class LoanManager {
   declareBankruptcy() {
     alert("You went bankrupt :)");
 
+    this.inDebt = false;
     this.hasLoan = false;
     this.loanAmount = 0;
     this.totalLoanToRepay = 0;
@@ -115,12 +119,11 @@ export class LoanManager {
     if (this.game.resourceManager.euro < 0) {
       if (this.hasLoan) {
         this.declareBankruptcy();
-        return "bankruptcy";
       } else {
-        return "offer_loan";
+        this.inDebt = true;
+        this.saveData();
       }
     }
-    return "ok";
   }
 
   saveData() {
@@ -131,6 +134,7 @@ export class LoanManager {
       totalLoanToRepay: this.totalLoanToRepay,
       remainingLoanAmount: this.remainingLoanAmount,
       paymentClock: this.paymentClock,
+      inDebt: this.inDebt
     };
     localStorage.setItem("LoanManagerData", JSON.stringify(data));
   }
@@ -145,6 +149,7 @@ export class LoanManager {
       this.totalLoanToRepay = data.totalLoanToRepay || 0;
       this.remainingLoanAmount = data.remainingLoanAmount || 0;
       this.paymentClock = data.paymentClock || 0;
+      this.inDebt = data.inDebt || false;
     }
   }
 }

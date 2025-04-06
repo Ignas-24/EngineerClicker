@@ -22,8 +22,9 @@ const LoanPopUp = ({ onClose }) => {
   const handleTakeLoan = () => {
     const amount = parseFloat(loanAmount);
     if (amount > 0 && amount <= maxLoanAmount) {
-      game.loanManager.takeLoan(amount);
-      onClose();
+      if (game.loanManager.takeLoan(amount)) {
+        onClose();
+      }
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useState, useSyncExternalStore, useEffect } from "react";
 import Button from "./Button/Button";
 import styles from "./BottomLeft.module.css";
-import game from "../../game/Game";
+import game from "../../game/Game.js";
 import PowerUpgradePopUp from "./PopUp/PowerUpgradePopUp";
 import MultUpgradePopUp from "./PopUp/MultUpgradePopUp";
 import ProjectSelectPopUp from "./PopUp/ProjectSelectPopUp";
@@ -13,7 +13,8 @@ const BottomLeft = () => {
   const [isMultOpen, setMultOpen] = useState(false);
   const [isProjectOpen, setProjectOpen] = useState(false);
   const [isLoanOpen, setLoanOpen] = useState(false);
-  const [isBankruptcyOpen, setBankruptcyOpen] = useState(false);
+
+  const inDebt = useSyncExternalStore(game.subscribe.bind(game), () => game.loanManager.inDebt);
 
   return (
     <div className={styles.bottomLeft}>
@@ -26,11 +27,9 @@ const BottomLeft = () => {
       {isProjectOpen && <ProjectSelectPopUp onClose={() => setProjectOpen(false)} />}
 
       {isLoanOpen && <LoanPopUp onClose={() => setLoanOpen(false)} />}
-      {isBankruptcyOpen && (
+      {(!isLoanOpen && inDebt) && (
         <BankruptcyPopUp
-          onClose={() => setBankruptcyOpen(false)}
           onTakeLoan={() => {
-            setBankruptcyOpen(false);
             setLoanOpen(true);
           }}
         />

@@ -25,10 +25,8 @@ export class ResourceManager {
     this.game.notifyUpdate();
 
     if (this.euro < 0 && this.game.loanManager) {
-      const status = this.game.loanManager.checkNegativeBalance();
-      return status;
+      this.game.loanManager.checkNegativeBalance();
     }
-    return "ok";
   }
 
   changePrestige(delta) {
