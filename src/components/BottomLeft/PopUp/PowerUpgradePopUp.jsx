@@ -16,7 +16,7 @@ const PowerUpgradePopUp = ({ onClose }) => {
   const handleAction = (id) => {
     const success = game.upgrades.powerUpgrade(id);
     if (success) {
-      setUpgrades((prevUpgrades) => 
+      setUpgrades((prevUpgrades) =>
         prevUpgrades.map((upgrade) =>
           upgrade.id === id ? { ...upgrade, bought: true } : upgrade
         )
@@ -28,20 +28,18 @@ const PowerUpgradePopUp = ({ onClose }) => {
     <div className={styles.Overlay}>
       <div className={styles.Modal}>
         {upgrades.map((upgrade) => (
-          <Button 
-            key={upgrade.id} 
-            label={upgrade.bought 
-              ? `${upgrade.label}, Bought` 
-              : `${upgrade.label}, Price: ${upgrade.price}€`} 
+          <Button
+            key={upgrade.id}
+            label={upgrade.bought
+              ? `${upgrade.label}, Bought`
+              : `${upgrade.label}, Price: ${upgrade.price}€`}
             onClick={() => handleAction(upgrade.id)}
           >
           </Button>
         ))}
-        <br />
-        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );
-  }
+}
 
 export default PowerUpgradePopUp;
