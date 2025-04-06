@@ -21,6 +21,7 @@ const ProjectSelectPopUp = ({ onClose }) => {
             game.project = null;
           }
           game.projectManager.selectedProjects = [...game.projectManager.selectedProjects];
+
           game.notifyUpdate();
           return;
         }
@@ -32,6 +33,7 @@ const ProjectSelectPopUp = ({ onClose }) => {
         project.toggleActive();
         game.project = project;
         game.projectManager.selectedProjects = [...game.projectManager.selectedProjects];
+
         game.notifyUpdate();
       };
 
@@ -45,16 +47,18 @@ const ProjectSelectPopUp = ({ onClose }) => {
     return (
         <div className={styles.Overlay}>
             <div className={styles.Modal}>
-                {projects.map((project) => (
-                    <Button
-                        key={project.dataName}
-                        label={project.active
-                            ? "Cancel Project"
-                            : `${project.projectName} - Size: ${project.projectSize}, Deadline: ${project.projectDeadline}, Reward: ${project.projectReward}€`}
-                        onClick={() => handleAction(project)}
-                    >
-                    </Button>
-                ))}
+                {projects
+                    .filter(project => !projects.some(p => p.active) || project.active)
+                    .map((project) => (
+                        <Button
+                            key={project.dataName}
+                            label={project.active
+                                ? "Cancel Project"
+                                : `${project.projectName} - Size: ${project.projectSize}, Deadline: ${project.projectDeadline}, Reward: ${project.projectReward}€`}
+                            onClick={() => handleAction(project)}
+                        >
+                        </Button>
+                    ))}
                 <br />
                 <button onClick={handleRefresh}>
                     {cooldown > 0 ? `Cooldown: ${cooldown}s` : "Refresh"}

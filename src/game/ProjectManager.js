@@ -69,7 +69,7 @@ export class ProjectManager {
     if (expectedProgress <= 0 || projectSize <= 0) {
       throw new Error("expectedProgress and projectSize must be positive values");
     }
-    return 1.0 / (1.0 + Math.abs(Math.log(expectedProgress / projectSize) / Math.log(1.2)))
+    return 1.0 / (1.0 + Math.abs(Math.log(expectedProgress / projectSize) / Math.log(1.2)));
   }
 
   selectProjects() {
@@ -83,8 +83,8 @@ export class ProjectManager {
       const allProjects = Object.values(projectPool).flat();
 
       const weightedProjects = allProjects.map(project => {
-        const expectedProgress = this.calculateEstimatedProgress(project.deadline);
-        const weight = this.calculateProjectWeight(expectedProgress, project.size);
+        const expectedProgress = this.calculateEstimatedProgress(project.projectDeadline);
+        const weight = this.calculateProjectWeight(expectedProgress, project.projectSize);
         return { project, key: -Math.log(Math.random()) / weight };
       });
 
@@ -100,8 +100,8 @@ export class ProjectManager {
       const allProjects = Object.values(projectPool).flat();
 
       const weightedProjects = allProjects.map(project => {
-        const expectedProgress = this.calculateEstimatedProgress(project.deadline);
-        const weight = this.calculateProjectWeight(expectedProgress, project.size);
+        const expectedProgress = this.calculateEstimatedProgress(project.projectDeadline);
+        const weight = this.calculateProjectWeight(expectedProgress, project.projectSize);
         return { project, key: -Math.log(Math.random()) / weight };
       });
 
@@ -111,27 +111,10 @@ export class ProjectManager {
     this.saveData();
   }
 
-  replaceInactiveProject(inactiveProject) {
-    this.selectedProjects = this.selectedProjects.filter(p => p !== inactiveProject);
-  
-    const projectPool = this.generateProjectPool();
-    const allProjects = Object.values(projectPool).flat();
-  
-    const weightedProjects = allProjects.map(project => {
-      const expectedProgress = this.calculateEstimatedProgress(project.deadline);
-      const weight = this.calculateProjectWeight(expectedProgress, project.projectSize);
-      return { project, key: -Math.log(Math.random()) / weight };
-    });
-  
-    weightedProjects.sort((a, b) => a.key - b.key);
-  
-    for (let { project } of weightedProjects) {
-      if (!this.selectedProjects.some(p => p.dataName === project.dataName)) {
-        this.selectedProjects.push(project);
-        break;
-      }
-    }
-    
+  removeProject(inactiveProject) {
+    this.selectedProjects = this.selectedProjects.filter(
+      (project) => project.dataName !== inactiveProject.dataName
+    );
     this.saveData();
     this.game.notifyUpdate();
   }
