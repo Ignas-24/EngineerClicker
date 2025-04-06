@@ -1,76 +1,93 @@
 export class Upgrades {
     game;
-    maxPowerUgrades = 4;
-    currentPowerUpgrade = 1;
-    maxMultUgrades = 3;
-    currentMultUpgrade = 1;
-  
+    powerUpgrades = [ false, false, false, false ];
+    multUpgrades = [ false, false, false ];
+    
     constructor(game) {
       this.game = game;
       this.loadData();
     }
 
-    powerUpgrade(){
-        if(this.currentPowerUpgrade == this.maxPowerUgrades) { return; }
-        switch(this.currentPowerUpgrade){
+    powerUpgrade(upgradeIndex){
+        let success = false;
+        switch(upgradeIndex){
             case 1:
-                this.game.resourceManager.changeClickPower(0.01);
+                if(this.powerUpgrades[0] === true) break
+                if(this.game.resourceManager.euro < 0.5) break
+                this.game.resourceManager.addClickPower(0.01);
                 this.game.resourceManager.reduceEuros(0.5);
+                this.powerUpgrades[0] = true;
+                success = true;
                 break;
             case 2:
-                this.game.resourceManager.changeClickPower(0.01);
+                if(this.powerUpgrades[1] === true) break;
+                if(this.game.resourceManager.euro < 1) break;
+                this.game.resourceManager.addClickPower(0.01);
                 this.game.resourceManager.reduceEuros(1);
+                this.powerUpgrades[1] = true;
+                success = true;
                 break;
             case 3:
-                this.game.resourceManager.changeClickPower(0.02);
+                if(this.powerUpgrades[2] === true) break;
+                if(this.game.resourceManager.euro < 5) break;
+                this.game.resourceManager.addClickPower(0.02);
                 this.game.resourceManager.reduceEuros(5);
+                this.powerUpgrades[2] = true;
+                success = true;
                 break;
             case 4:
-                this.game.resourceManager.changeClickPower(0.05);
+                if(this.powerUpgrades[3] === true) break;
+                if(this.game.resourceManager.euro < 20) break;
+                this.game.resourceManager.addClickPower(0.05);
                 this.game.resourceManager.reduceEuros(20);
+                this.powerUpgrades[3] = true;
+                success = true;
                 break;
             default:
                 break;
         }
-        if(this.currentPowerUpgrade < this.maxPowerUgrades) { this.currentPowerUpgrade++; }
         this.saveData();
-    }
-    
-    getCurrentPowerUpgrade(){
-        return this.currentPowerUpgrade;
+        return success;
     }
 
-    multUpgrade(){
-        if(this.currentMultUpgrade == this.maxMultUgrades) { return; }
-        if(this.game.resourceManager.prestige < 1) { return; }
-        switch(this.currentMultUpgrade){
+    multUpgrade(upgradeIndex){
+        let success = false;
+        switch(upgradeIndex){
             case 1:
-                this.game.resourceManager.changeMultiplier(2);
+                if(this.multUpgrades[0] === true) break;
+                if(this.game.resourceManager.prestige < 1) break;
+                this.game.resourceManager.setMultiplier(2);
                 this.game.resourceManager.changePrestige(-1);
+                this.multUpgrades[0] = true;
+                success = true;
                 break;
             case 2:
-                this.game.resourceManager.changeMultiplier(3);
+                if(this.multUpgrades[1] === true) break;
+                if(this.game.resourceManager.prestige < 1) break;
+                this.game.resourceManager.setMultiplier(3);
                 this.game.resourceManager.changePrestige(-1);
+                this.multUpgrades[1] = 1;
+                success = true;
                 break;
             case 3:
-                this.game.resourceManager.changeMultiplier(4);
+                if(this.multUpgrades[2] === true) break;
+                if(this.game.resourceManager.prestige < 1) break;
+                this.game.resourceManager.setMultiplier(4);
                 this.game.resourceManager.changePrestige(-1);
+                this.multUpgrades[2] = true;
+                success = true;
                 break;
             default:
                 break;
         }
-        if(this.currentMultUpgrade < this.maxMultUgrades) { this.currentMultUpgrade++; }
         this.saveData();
-    }
-
-    getCurrentMultUpgrade(){
-        return this.currentMultUpgrade;
+        return success;
     }
   
     saveData() {
       const data = {
-        currentPowerUpgrade: this.currentPowerUpgrade,
-        currentMultUpgrade: this.currentMultUpgrade,
+        powerUpgrades: this.powerUpgrades,
+        multUpgrades: this.multUpgrades,
       };
       localStorage.setItem('UpgradeData', JSON.stringify(data));
     }
@@ -79,8 +96,8 @@ export class Upgrades {
       const savedData = localStorage.getItem('UpgradeData');
       if (savedData) {
         const data = JSON.parse(savedData);
-        this.currentPowerUpgrade = data.currentPowerUpgrade || 1;
-        this.currentMultUpgrade = data.currentMultUpgrade || 1;
+        this.powerUpgrades = data.powerUpgrades || [ 0, 0, 0, 0 ];
+        this.multUpgrades = data.multUpgrades || [ 0, 0, 0 ];
       }
     }
   }

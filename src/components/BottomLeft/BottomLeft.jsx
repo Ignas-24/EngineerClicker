@@ -2,10 +2,12 @@ import React, { useState, useSyncExternalStore } from "react";
 import Button from "./Button/Button";
 import styles from "./BottomLeft.module.css";
 import game from "../../game/Game";
+import PowerUpgradePopUp from "./PopUp/PowerUpgradePopUp";
+import MultUpgradePopUp from "./PopUp/MultUpgradePopUp";
 
 const BottomLeft = () => {
-  const [currentPowerUpgrade, setCurrentPowerUpgrade] = useState(game.upgrades.getCurrentPowerUpgrade());
-  const [currentMultUpgrade, setCurrentMultUpgrade] = useState(game.upgrades.getCurrentMultUpgrade());
+  const [isPowerOpen, setPowerOpen] = useState(false);
+  const [isMultOpen, setMultOpen] = useState(false);
 
   const projectProgress = useSyncExternalStore(
     game.subscribe.bind(game),
@@ -20,16 +22,6 @@ const BottomLeft = () => {
     );  
   }, [projectProgress, game.project.isActive()]);
 
-  const handlePUpgradeClick = () => {
-    game.upgrades.powerUpgrade();
-    setCurrentPowerUpgrade(game.upgrades.getCurrentPowerUpgrade());
-  };
-
-  const handleMUpgradeClick = () => {
-    game.upgrades.multUpgrade();
-    setCurrentMultUpgrade(game.upgrades.getCurrentMultUpgrade());
-  };
-
   const handleProjectClick = () => {
     game.project.changeActiveState();
     setProjectState(game.project.isActive() ? `Active project progress: ${projectProgress.toFixed(2)}` : "No active project");
@@ -40,8 +32,10 @@ const BottomLeft = () => {
       <Button label="Button 1" />
       <Button label="Button 2" />
       <Button label="Button 3" />
-      <Button label={`Power Upgrade ${currentPowerUpgrade}`} onClick={handlePUpgradeClick} />
-      <Button label={`Mult Upgrade ${currentMultUpgrade}`} onClick={handleMUpgradeClick} />
+      <Button label="Open Power Upgrades" onClick={() => setPowerOpen(true)} />
+      {isPowerOpen && <PowerUpgradePopUp onClose={() => setPowerOpen(false)} />}
+      <Button label="Open Multiplier Upgrades" onClick={() => setMultOpen(true)} />
+      {isMultOpen && <MultUpgradePopUp onClose={() => setMultOpen(false)} />}
       <Button label={projectState} onClick={handleProjectClick} />
     </div>
   );

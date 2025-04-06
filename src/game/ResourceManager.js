@@ -13,14 +13,14 @@ export class ResourceManager {
   }
 
   addEuros() {
-    const delta = parseFloat((this.clickPower * this.multiplier).toFixed(2));
-    this.euro = parseFloat((this.euro + delta).toFixed(2));
+    const delta = this.clickPower * this.multiplier;
+    this.euro = this.euro + delta;
     this.saveData();
     this.game.notifyUpdate();
   }
   
   reduceEuros(delta) {
-    this.euro = parseFloat((this.euro - delta).toFixed(2));
+    this.euro = this.euro - delta;
     this.saveData();
     this.game.notifyUpdate();
   }
@@ -31,15 +31,15 @@ export class ResourceManager {
     this.game.notifyUpdate();
   }
 
-  changeMultiplier(mult) {
+  setMultiplier(mult) {
     this.multiplier = mult;
     this.saveData();
     this.game.notifyUpdate();
   }
 
-  changeClickPower(delta) {
+  addClickPower(delta) {
     this.clickPowerIncrease += delta;
-    this.clickPower = parseFloat((this.initClickPower + this.clickPowerIncrease).toFixed(2));
+    this.clickPower = this.initClickPower + this.clickPowerIncrease;
     this.saveData();
     this.game.notifyUpdate();
   }
@@ -53,11 +53,11 @@ export class ResourceManager {
       clickPowerIncrease: this.clickPowerIncrease,
       clickPower: this.clickPower,
     };
-    localStorage.setItem('ResourceMangerData', JSON.stringify(data));
+    localStorage.setItem('ResourceManagerData', JSON.stringify(data));
   }
 
   loadData() {
-    const savedData = localStorage.getItem('ResourceMangerData');
+    const savedData = localStorage.getItem('ResourceManagerData');
     if (savedData) {
       const data = JSON.parse(savedData);
       this.euro = data.euro || 0;

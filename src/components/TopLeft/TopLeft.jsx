@@ -25,9 +25,9 @@ const TopLeft = () => {
 
   return (
     <div className={styles.topLeft}>
-      <p>Euro: {euros}€</p>
+      <p>Euro: {parseFloat(euros).toFixed(2)}€</p>
       <p>Prestige: {prestige}</p>
-      <p>Current typing power: {clickPower}, Multiplier: {multiplier}</p>
+      <p>Current typing power: {parseFloat(clickPower).toFixed(2)}, Multiplier: {multiplier}</p>
     </div>
   );
 };
