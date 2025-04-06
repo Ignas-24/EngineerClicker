@@ -39,6 +39,7 @@ class Game {
     this.project.resetForBankruptcy();
     this.upgrades.resetForBankruptcy();
     this.projectManager.resetForBankruptcy();
+    this.notifyUpdate();
   }
 }
 
