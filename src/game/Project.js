@@ -52,11 +52,21 @@ export class Project {
     this.saveData();
     this.game.notifyUpdate();
   }
+  addProgressByDeveloper() {
+    if (!this.active) return;
+    const delta = this.game.companyManager.calculateTotalEfficiency();
+    this.projectProgress += delta;
+    this.checkCompletion();
+    this.saveData();
+    this.game.notifyUpdate();
+  }
 
   checkCompletion() {
     if (this.projectProgress >= this.projectSize) {
       this.completed = true;
       this.active = false;
+      this.game.projectManager.completedProjectsThisReset++;
+      this.game.projectManager.completedProjectTotal++;
       this.stopTimer();
       this.game.resourceManager.changeEuros(this.projectReward);
       this.game.projectManager.replaceInactiveProject(this);

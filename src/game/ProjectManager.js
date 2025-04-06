@@ -9,6 +9,8 @@ export class ProjectManager {
   cooldown = 0;
   timerInterval = null;
   projectRegistry = {};
+  completedProjectsThisReset = 0;
+  completedProjectTotal = 0;
 
   constructor(game) {
     this.game = game;
@@ -39,11 +41,47 @@ export class ProjectManager {
   }
 
   createProject(sizeInterval, rewardInterval, deadlineInterval) {
+    const upgrades = this.game.upgrades.companyUpgrades;
+
+    // Apply bigger projects upgrade
+    if (upgrades.biggerProjects || upgrades.biggerProjects2 || upgrades.biggerProjects3) {
+      const sizeIncreaseMultiplier = 1 *
+        (upgrades.biggerProjects ? 2 : 1) * 
+        (upgrades.biggerProjects2 ? 2 : 1) * 
+        (upgrades.biggerProjects3 ? 2 : 1);
+      sizeInterval = [
+        Math.ceil(sizeInterval[0] * sizeIncreaseMultiplier),
+        Math.ceil(sizeInterval[1] * sizeIncreaseMultiplier),
+      ];
+    }
+
     let size = this.getRandomInt(sizeInterval[0], sizeInterval[1]);
+
+    // Apply reward increase upgrades
+    if (upgrades.reward || upgrades.reward2 || upgrades.reward3) {
+      const rewardIncreaseMultiplier = 1 +
+        (upgrades.reward ? 0.1 : 0) +
+        (upgrades.reward2 ? 0.1 : 0) +
+        (upgrades.reward3 ? 0.1 : 0);
+      rewardInterval = [
+        Math.ceil(rewardInterval[0] * rewardIncreaseMultiplier),
+        Math.ceil(rewardInterval[1] * rewardIncreaseMultiplier),
+      ];
+    }
+
     let reward = this.getRandomInt(rewardInterval[0], rewardInterval[1]) * size;
+
+    // Apply size reduction upgrades
+    if (upgrades.size || upgrades.size2 || upgrades.size3) {
+      const sizeReductionMultiplier = 1 -
+        (upgrades.size ? 0.05 : 0) -
+        (upgrades.size2 ? 0.05 : 0) -
+        (upgrades.size3 ? 0.05 : 0);
+      size = Math.ceil(size * sizeReductionMultiplier); // Apply the reduction after the reward calculation
+    }
+
     let deadline = this.getRandomInt(deadlineInterval[0], deadlineInterval[1]);
     let projectName = this.getRandomProjectName();
-
     const project = new Project(this.game, size, reward, deadline, projectName);
     this.projectRegistry[project.dataName] = project;
     project.saveData();
@@ -69,7 +107,7 @@ export class ProjectManager {
     if (expectedProgress <= 0 || projectSize <= 0) {
       throw new Error("expectedProgress and projectSize must be positive values");
     }
-    return 1.0 / (1.0 + Math.abs(Math.log(expectedProgress / projectSize) / Math.log(1.2)))
+    return 1.0 / (1.0 + Math.abs(Math.log(expectedProgress / projectSize) / Math.log(1.2)));
   }
 
   selectProjects() {
@@ -113,25 +151,25 @@ export class ProjectManager {
 
   replaceInactiveProject(inactiveProject) {
     this.selectedProjects = this.selectedProjects.filter(p => p !== inactiveProject);
-  
+
     const projectPool = this.generateProjectPool();
     const allProjects = Object.values(projectPool).flat();
-  
+
     const weightedProjects = allProjects.map(project => {
       const expectedProgress = this.calculateEstimatedProgress(project.deadline);
       const weight = this.calculateProjectWeight(expectedProgress, project.projectSize);
       return { project, key: -Math.log(Math.random()) / weight };
     });
-  
+
     weightedProjects.sort((a, b) => a.key - b.key);
-  
+
     for (let { project } of weightedProjects) {
       if (!this.selectedProjects.some(p => p.dataName === project.dataName)) {
         this.selectedProjects.push(project);
         break;
       }
     }
-    
+
     this.saveData();
     this.game.notifyUpdate();
   }
@@ -158,6 +196,8 @@ export class ProjectManager {
     const data = {
       selectedProjectKeys: projectKeys,
       cooldown: this.cooldown,
+      completedProjectsThisReset: this.completedProjectsThisReset,
+      completedProjectTotal: this.completedProjectTotal,
     };
     localStorage.setItem("ProjectManagerData", JSON.stringify(data));
   }
@@ -166,6 +206,8 @@ export class ProjectManager {
     const savedData = localStorage.getItem("ProjectManagerData");
     if (savedData) {
       const data = JSON.parse(savedData);
+      this.completedProjectsThisReset = data.completedProjectsThisReset || 0;
+      this.completedProjectTotal = data.completedProjectTotal || 0;
       const projectKeys = data.selectedProjectKeys || [];
 
       this.selectedProjects = projectKeys.map(key => {
