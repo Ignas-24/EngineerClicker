@@ -26,7 +26,12 @@ const ComputerCanvas = ({ onClick }) => {
   const spriteRef = useRef(null);
 
   function handleClick(sprite) {
-    game.resourceManager.addEuros(1);
+    if(game.project.isActive()) {
+      game.project.addProgress();
+    }
+    else if(!game.project.isActive()) {
+      game.resourceManager.addEuros();
+    }
     playClickSound();
     addText((prev) => [...prev, "test"]);
     if (onClick) onClick();
