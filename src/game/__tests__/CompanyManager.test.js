@@ -158,11 +158,11 @@ describe('CompanyManager', () => {
     });
   });
 
-  describe('calculateTotalEfficiency', () => { 
+  describe('calculateTotalEfficiency', () => {
     it('should calculate total efficiency without lead developer boost and without upgrades', () => {
       companyManager.developers = { junior: 1, midlevel: 1, senior: 1, lead: 0 };
-      
-      
+
+
       const efficiency = companyManager.calculateTotalEfficiency();
       expect(efficiency).toBe(0.1 + 0.3 + 0.7);
     });
@@ -180,7 +180,7 @@ describe('CompanyManager', () => {
       companyManager.developers = { junior: 1, midlevel: 1, senior: 1, lead: 1 };
       companyManager.game.upgrades.companyUpgrades.speed = true;
       const efficiency = companyManager.calculateTotalEfficiency();
-      expect(efficiency).toBe(((0.1 + 0.3 + 0.7) * 1.1 + 1.5)*1.2);
+      expect(efficiency).toBe(((0.1 + 0.3 + 0.7) * 1.1 + 1.5) * 1.2);
     });
     it('should apply the correct multiplier when all the upgrades are active', () => {
       companyManager.developers = { junior: 1, midlevel: 1, senior: 0, lead: 0 };
@@ -188,10 +188,10 @@ describe('CompanyManager', () => {
       companyManager.game.upgrades.companyUpgrades.speed2 = true;
       companyManager.game.upgrades.companyUpgrades.speed3 = true;
       const efficiency = companyManager.calculateTotalEfficiency();
-      const expectedEfficiency = (0.1 + 0.3 ) * 1.2 *1.2 *1.2;
-      expect(efficiency).toBeCloseTo(expectedEfficiency,4); //using toBeCloseTo because of floating point precision issues
+      const expectedEfficiency = (0.1 + 0.3) * 1.2 * 1.2 * 1.2;
+      expect(efficiency).toBeCloseTo(expectedEfficiency, 4); //using toBeCloseTo because of floating point precision issues
+    });
   });
-});
   describe('stopUpkeepTimer', () => {
     it('should clear the upkeep interval when there is an active one', () => {
       companyManager.upkeepInterval = 123;
@@ -235,71 +235,90 @@ describe('CompanyManager', () => {
   });
 
   describe('buyCompany', () => {
-    it('should not buy a small company if not enough euros', () => {
-      companyManager.game.resourceManager.euro = 1000;
+    it.each([
+      {
+        description: 'should not buy a small company if not enough euros',
+        euro: 1000,
+        completedProjects: 0,
+        currentCompany: null,
+        companyType: 'small',
+        expectedResult: false,
+        expectedCurrentCompany: null,
+        shouldCallChangeEuros: false,
+      },
+      {
+        description: 'should not buy a medium company if the current one is not small',
+        euro: 1000000,
+        completedProjects: 0,
+        currentCompany: null,
+        companyType: 'medium',
+        expectedResult: false,
+        expectedCurrentCompany: null,
+        shouldCallChangeEuros: false,
+      },
+      {
+        description: 'should buy a small company if the amount of money is enough',
+        euro: 1000000,
+        completedProjects: 0,
+        currentCompany: null,
+        companyType: 'small',
+        expectedResult: true,
+        expectedCurrentCompany: { type: 'small' },
+        shouldCallChangeEuros: true,
+      },
+      {
+        description: 'should buy a medium company if there are enough projects completed',
+        euro: 1000000,
+        completedProjects: 100,
+        currentCompany: { type: 'small' },
+        companyType: 'medium',
+        expectedResult: true,
+        expectedCurrentCompany: { type: 'medium' },
+        shouldCallChangeEuros: true,
+      },
+      {
+        description: 'should not buy a medium company if there are not enough projects completed',
+        euro: 1000000,
+        completedProjects: 0,
+        currentCompany: { type: 'small' },
+        companyType: 'medium',
+        expectedResult: false,
+        expectedCurrentCompany: { type: 'small' },
+        shouldCallChangeEuros: false,
+      },
+    ])(
+      '$description',
+      ({
+        euro,
+        completedProjects,
+        currentCompany,
+        companyType,
+        expectedResult,
+        expectedCurrentCompany,
+        shouldCallChangeEuros,
+      }) => {
+        companyManager.game.resourceManager.euro = euro;
+        companyManager.game.projectManager = {
+          completedProjectsThisReset: completedProjects,
+        };
+        companyManager.currentCompany = currentCompany;
 
-      companyManager.game.projectManager = {
-        completedProjectsThisReset: 0,
-      };
+        const result = companyManager.buyCompany(companyType);
 
-      const result = companyManager.buyCompany('small');
-      expect(result).toBe(false);
-      expect(mockChangeEuros).not.toHaveBeenCalled();
-      expect(companyManager.currentCompany).toBeNull();
-    });
-
-    it('should not buy a medium company if the current one is not small', () => {
-      companyManager.game.resourceManager.euro = 1000000;
-
-      companyManager.game.projectManager = {
-        completedProjectsThisReset: 0,
-      };
-
-      const result = companyManager.buyCompany('medium');
-      expect(result).toBe(false);
-      expect(mockChangeEuros).not.toHaveBeenCalled();
-      expect(companyManager.currentCompany).toBeNull();
-    });
-    it('should buy a small company if the ammount of money is enough', () => {
-      companyManager.game.resourceManager.euro = 1000000;
-
-      companyManager.game.projectManager = {
-        completedProjectsThisReset: 0,
-      };
-
-      const result = companyManager.buyCompany('small');
-      expect(result).toBe(true);
-      expect(mockChangeEuros).toHaveBeenCalled();
-      expect(companyManager.currentCompany.type).toBe('small');
-    });
-
-    it('should buy a medium company if there are enough projects completed', () => {
-      companyManager.game.resourceManager.euro = 1000000;
-
-      companyManager.game.projectManager = {
-        completedProjectsThisReset: 100,
-      };
-
-      companyManager.currentCompany = { type: 'small' };
-      const result = companyManager.buyCompany('medium');
-      expect(result).toBe(true);
-      expect(mockChangeEuros).toHaveBeenCalled();
-      expect(companyManager.currentCompany.type).toBe('medium');
-    });
-
-    it('should not buy a medium company if there is not enough projects are completed', () => {
-      companyManager.game.resourceManager.euro = 1000000;
-
-      companyManager.game.projectManager = {
-        completedProjectsThisReset: 0,
-      };
-      companyManager.currentCompany = { type: 'small' };
-
-      const result = companyManager.buyCompany('medium');
-      expect(result).toBe(false);
-      expect(mockChangeEuros).not.toHaveBeenCalled();
-      expect(companyManager.currentCompany.type).toBe('small');
-    });
+        expect(result).toBe(expectedResult);
+        if (shouldCallChangeEuros) {
+          expect(mockChangeEuros).toHaveBeenCalled();
+        } else {
+          expect(mockChangeEuros).not.toHaveBeenCalled();
+        }
+        if (expectedCurrentCompany == null) {
+          expect(companyManager.currentCompany).toEqual(expectedCurrentCompany);
+        }
+        else {
+          expect(companyManager.currentCompany.type).toEqual(expectedCurrentCompany.type);
+        }
+      }
+    );
   });
   describe('buyUpgrade', () => {
     it('should call the buyCompanyUpgrade function with the correct upgrade key', () => {
@@ -332,7 +351,7 @@ describe('CompanyManager', () => {
         changeEuros: mockChangeEuros,
         changePrestige: mockChangePrestige = vi.fn(),
       };
-      
+
       const result = companyManager.sellCompany();
 
       expect(mockChangePrestige).toHaveBeenCalledWith(2);
