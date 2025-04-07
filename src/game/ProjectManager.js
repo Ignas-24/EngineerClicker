@@ -43,42 +43,13 @@ export class ProjectManager {
   createProject(sizeInterval, rewardInterval, deadlineInterval) {
     const upgrades = this.game.upgrades.companyUpgrades;
 
-    // Apply bigger projects upgrade
-    if (upgrades.biggerProjects || upgrades.biggerProjects2 || upgrades.biggerProjects3) {
-      const sizeIncreaseMultiplier = 1 *
-        (upgrades.biggerProjects ? 2 : 1) * 
-        (upgrades.biggerProjects2 ? 2 : 1) * 
-        (upgrades.biggerProjects3 ? 2 : 1);
-      sizeInterval = [
-        Math.ceil(sizeInterval[0] * sizeIncreaseMultiplier),
-        Math.ceil(sizeInterval[1] * sizeIncreaseMultiplier),
-      ];
-    }
+    const adjustedSizeInterval = this.applySizeUpgrades(sizeInterval, upgrades);
+    const adjustedRewardInterval = this.applyRewardUpgrades(rewardInterval, upgrades);
 
-    let size = this.getRandomInt(sizeInterval[0], sizeInterval[1]);
+    let size = this.getRandomInt(adjustedSizeInterval[0], adjustedSizeInterval[1]);
+    let reward = this.getRandomInt(adjustedRewardInterval[0], adjustedRewardInterval[1]) * size;
 
-    // Apply reward increase upgrades
-    if (upgrades.reward || upgrades.reward2 || upgrades.reward3) {
-      const rewardIncreaseMultiplier = 1 +
-        (upgrades.reward ? 0.1 : 0) +
-        (upgrades.reward2 ? 0.1 : 0) +
-        (upgrades.reward3 ? 0.1 : 0);
-      rewardInterval = [
-        Math.ceil(rewardInterval[0] * rewardIncreaseMultiplier),
-        Math.ceil(rewardInterval[1] * rewardIncreaseMultiplier),
-      ];
-    }
-
-    let reward = this.getRandomInt(rewardInterval[0], rewardInterval[1]) * size;
-
-    // Apply size reduction upgrades
-    if (upgrades.size || upgrades.size2 || upgrades.size3) {
-      const sizeReductionMultiplier = 1 -
-        (upgrades.size ? 0.05 : 0) -
-        (upgrades.size2 ? 0.05 : 0) -
-        (upgrades.size3 ? 0.05 : 0);
-      size = Math.ceil(size * sizeReductionMultiplier); // Apply the reduction after the reward calculation
-    }
+    size = this.applySizeReduction(size, upgrades);
 
     let deadline = this.getRandomInt(deadlineInterval[0], deadlineInterval[1]);
     let projectName = this.getRandomProjectName();
@@ -87,6 +58,45 @@ export class ProjectManager {
     project.saveData();
 
     return project;
+  }
+
+  applySizeUpgrades(sizeInterval, upgrades) {
+    if (upgrades.biggerProjects || upgrades.biggerProjects2 || upgrades.biggerProjects3) {
+      const sizeIncreaseMultiplier = 1 *
+        (upgrades.biggerProjects ? 2 : 1) *
+        (upgrades.biggerProjects2 ? 2 : 1) *
+        (upgrades.biggerProjects3 ? 2 : 1);
+      return [
+        Math.ceil(sizeInterval[0] * sizeIncreaseMultiplier),
+        Math.ceil(sizeInterval[1] * sizeIncreaseMultiplier),
+      ];
+    }
+    return sizeInterval;
+  }
+
+  applyRewardUpgrades(rewardInterval, upgrades) {
+    if (upgrades.reward || upgrades.reward2 || upgrades.reward3) {
+      const rewardIncreaseMultiplier = 1 +
+        (upgrades.reward ? 0.1 : 0) +
+        (upgrades.reward2 ? 0.1 : 0) +
+        (upgrades.reward3 ? 0.1 : 0);
+      return [
+        Math.ceil(rewardInterval[0] * rewardIncreaseMultiplier),
+        Math.ceil(rewardInterval[1] * rewardIncreaseMultiplier),
+      ];
+    }
+    return rewardInterval;
+  }
+
+  applySizeReduction(size, upgrades) {
+    if (upgrades.size || upgrades.size2 || upgrades.size3) {
+      const sizeReductionMultiplier = 1 -
+        (upgrades.size ? 0.05 : 0) -
+        (upgrades.size2 ? 0.05 : 0) -
+        (upgrades.size3 ? 0.05 : 0);
+      return Math.ceil(size * sizeReductionMultiplier);
+    }
+    return size;
   }
 
   generateProjectPool() {
@@ -114,39 +124,42 @@ export class ProjectManager {
     if (this.cooldown > 0) return;
 
     if (this.selectedProjects.some(project => project.active)) {
-      const activeProjects = this.selectedProjects.filter(project => project.active);
-      const inactiveCount = 4 - activeProjects.length;
-
-      const projectPool = this.generateProjectPool();
-      const allProjects = Object.values(projectPool).flat();
-
-      const weightedProjects = allProjects.map(project => {
-        const expectedProgress = this.calculateEstimatedProgress(project.projectDeadline);
-        const weight = this.calculateProjectWeight(expectedProgress, project.projectSize);
-        return { project, key: -Math.log(Math.random()) / weight };
-      });
-
-      weightedProjects.sort((a, b) => a.key - b.key);
-
-      const newProjects = weightedProjects.slice(0, inactiveCount).map(item => item.project);
-
-      this.selectedProjects = this.selectedProjects.map(project =>
-        project.active ? project : newProjects.shift()
-      );
+      this.replaceInactiveProjects();
     } else {
-      const projectPool = this.generateProjectPool();
-      const allProjects = Object.values(projectPool).flat();
-
-      const weightedProjects = allProjects.map(project => {
-        const expectedProgress = this.calculateEstimatedProgress(project.projectDeadline);
-        const weight = this.calculateProjectWeight(expectedProgress, project.projectSize);
-        return { project, key: -Math.log(Math.random()) / weight };
-      });
-
-      weightedProjects.sort((a, b) => a.key - b.key);
-      this.selectedProjects = weightedProjects.slice(0, 4).map(item => item.project);
+      this.selectAllNewProjects();
     }
     this.saveData();
+  }
+
+  replaceInactiveProjects() {
+    const activeProjects = this.selectedProjects.filter(project => project.active);
+    const inactiveCount = 4 - activeProjects.length;
+
+    const weightedProjects = this.getWeightedProjects();
+    const newProjects = weightedProjects.slice(0, inactiveCount).map(item => item.project);
+
+    this.selectedProjects = this.selectedProjects.map(project =>
+      project.active ? project : newProjects.shift()
+    );
+  }
+
+  selectAllNewProjects() {
+    const weightedProjects = this.getWeightedProjects();
+    this.selectedProjects = weightedProjects.slice(0, 4).map(item => item.project);
+  }
+
+  getWeightedProjects() {
+    const projectPool = this.generateProjectPool();
+    const allProjects = Object.values(projectPool).flat();
+
+    const weightedProjects = allProjects.map(project => {
+      const expectedProgress = this.calculateEstimatedProgress(project.projectDeadline);
+      const weight = this.calculateProjectWeight(expectedProgress, project.projectSize);
+      return { project, key: -Math.log(Math.random()) / weight };
+    });
+
+    weightedProjects.sort((a, b) => a.key - b.key);
+    return weightedProjects;
   }
 
 
@@ -192,34 +205,40 @@ export class ProjectManager {
       const data = JSON.parse(savedData);
       this.completedProjectsThisReset = data.completedProjectsThisReset || 0;
       this.completedProjectTotal = data.completedProjectTotal || 0;
-      const projectKeys = data.selectedProjectKeys || [];
-
-      this.selectedProjects = projectKeys.map(key => {
-        const projectData = localStorage.getItem(`${key}Data`);
-        if (projectData) {
-          const parsedData = JSON.parse(projectData);
-          const project = new Project(
-            this.game,
-            parsedData.projectSize,
-            parsedData.projectReward,
-            parsedData.projectDeadline,
-            parsedData.projectName,
-            key
-          );
-          project.projectProgress = parsedData.projectProgress;
-          project.remainingTime = parsedData.remainingTime;
-          project.completed = parsedData.completed;
-          project.failed = parsedData.failed;
-          project.active = parsedData.isActive;
-          this.projectRegistry[key] = project;
-          return project;
-        }
-        return undefined;
-      }).filter(project => project !== undefined);
+      
+      this.loadProjects(data.selectedProjectKeys || []);
 
       this.cooldown = data.cooldown || 0;
       this.startTimer(this.cooldown);
     }
+  }
+
+  loadProjects(projectKeys) {
+    this.selectedProjects = projectKeys.map(key => {
+      const projectData = localStorage.getItem(`${key}Data`);
+      if (projectData) {
+        return this.createProjectFromData(JSON.parse(projectData), key);
+      }
+      return undefined;
+    }).filter(project => project !== undefined);
+  }
+
+  createProjectFromData(parsedData, key) {
+    const project = new Project(
+      this.game,
+      parsedData.projectSize,
+      parsedData.projectReward,
+      parsedData.projectDeadline,
+      parsedData.projectName,
+      key
+    );
+    project.projectProgress = parsedData.projectProgress;
+    project.remainingTime = parsedData.remainingTime;
+    project.completed = parsedData.completed;
+    project.failed = parsedData.failed;
+    project.active = parsedData.isActive;
+    this.projectRegistry[key] = project;
+    return project;
   }
 
   resetForBankruptcy() {
