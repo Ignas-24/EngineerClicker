@@ -51,6 +51,7 @@ export class Upgrades {
             default:
                 break;
         }
+        this.game.notifyUpdate();
         this.saveData();
         return success;
     }
@@ -137,7 +138,7 @@ export class Upgrades {
         this.powerUpgrades = [false, false, false, false];
         this.saveData();
     }
-  
+
     saveData() {
         const data = {
             powerUpgrades: this.powerUpgrades,
@@ -146,7 +147,7 @@ export class Upgrades {
         };
         localStorage.setItem('UpgradeData', JSON.stringify(data));
     }
-  
+
     loadData() {
         const savedData = localStorage.getItem('UpgradeData');
         if (savedData) {
@@ -160,4 +161,9 @@ export class Upgrades {
             };
         }
     }
-}
+
+    resetForBankruptcy() {
+      this.powerUpgrades = [ false, false, false, false ];
+      this.saveData();
+    }
+  }

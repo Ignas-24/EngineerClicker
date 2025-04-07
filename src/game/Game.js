@@ -2,6 +2,7 @@ import { ResourceManager } from "./ResourceManager";
 import { Upgrades } from "./Upgrades";
 import { Project } from "./Project";
 import { ProjectManager } from "./ProjectManager";
+import { LoanManager } from "./LoanManager";
 import { CompanyManager } from "./CompanyManager";
 
 class Game {
@@ -10,6 +11,7 @@ class Game {
   upgrades;
   project;
   projectManager;
+  loanManager;
   companyManager;
 
   #listeners = []; // List of React components to notify
@@ -19,6 +21,7 @@ class Game {
     this.upgrades = new Upgrades(this);
     this.project = new Project(this);
     this.projectManager = new ProjectManager(this);
+    this.loanManager = new LoanManager(this);
     this.companyManager = new CompanyManager(this);
   }
 
@@ -32,6 +35,14 @@ class Game {
 
   notifyUpdate() {
     this.#listeners.forEach((listener) => listener());
+  }
+
+  resetForBankruptcy() {
+    this.resourceManager.resetForBankruptcy();
+    this.project.resetForBankruptcy();
+    this.upgrades.resetForBankruptcy();
+    this.projectManager.resetForBankruptcy();
+    this.notifyUpdate();
   }
 }
 

@@ -221,4 +221,14 @@ export class ProjectManager {
       this.startTimer(this.cooldown);
     }
   }
+
+  resetForBankruptcy() {
+    this.selectedProjects.forEach(project => {
+      if (project.active) {
+        project.resetForBankruptcy();
+      }
+    });
+    this.selectProjects();
+    this.saveData();
+  }
 }

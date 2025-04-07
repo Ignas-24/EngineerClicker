@@ -1,4 +1,3 @@
-import styles from './PopUp.module.css';
 import game from '../../../game/Game';
 import Button from '../Button/Button';
 import React, { useState, useSyncExternalStore } from "react";
@@ -25,8 +24,8 @@ const CompanyPopUp = ({ onClose }) => {
     );
 
     return (
-        <div className={styles.Overlay}>
-            <div className={styles.Modal}>
+        <div>
+            <div>
                 <h4>Completed Projects: {completedProjectsThisReset}</h4>
                 {!currentCompany && (
                     <Button

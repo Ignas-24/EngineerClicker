@@ -1,4 +1,3 @@
-import styles from './PopUp.module.css';
 import game from '../../../game/Game';
 import Button from '../Button/Button';
 import React, { useState, useEffect } from 'react';
@@ -48,8 +47,8 @@ const CompanyUpgradePopUp = ({ onClose }) => {
     const availableUpgrades = validCompanyTypes.flatMap(type => upgradeOptions[type]);
 
     return (
-        <div className={styles.Overlay}>
-            <div className={styles.Modal}>
+        <div>
+            <div>
                 <h3>Company Upgrades</h3>
                 {availableUpgrades.map((upgrade) => (
                     <React.Fragment key={upgrade.key}>

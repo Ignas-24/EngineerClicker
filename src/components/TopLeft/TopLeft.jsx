@@ -28,6 +28,16 @@ const TopLeft = () => {
     () => game.resourceManager.clickPower
   );
 
+  const hasLoan = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => game.loanManager.hasLoan
+  );
+
+  const remainingLoanAmount = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => game.loanManager.remainingLoanAmount
+  );
+
   const projectName = useSyncExternalStore(
     game.subscribe.bind(game),
     () => {
@@ -67,6 +77,7 @@ const TopLeft = () => {
       <p>Current typing power: {parseFloat(clickPower).toFixed(2)}, Multiplier: {multiplier}</p>
       <p>Active project: {projectName || "None selected"}</p>
       <p>Progress: {parseFloat(projectProgress || 0).toFixed(2)}, Size: {projectSize || 0}, Time left: {projectRemainingTime || 0}</p>
+      {hasLoan && <p>Loan: {parseFloat(remainingLoanAmount).toFixed(2)}€</p>}
     </div>
   );
 };

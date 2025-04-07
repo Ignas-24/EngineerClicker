@@ -1,4 +1,3 @@
-import styles from './PopUp.module.css';
 import game from '../../../game/Game';
 import Button from '../Button/Button';
 import React, { useState, useEffect } from 'react';
@@ -33,8 +32,8 @@ const DeveloperHiringPopUp = ({ onClose }) => {
     );
 
     return (
-        <div className={styles.Overlay}>
-            <div className={styles.Modal}>
+        <div>
+            <div>
                 <h3>Hire Developers</h3>
                 {availableDeveloperOptions.map((developer) => (
                     <React.Fragment key={developer.tier}>
