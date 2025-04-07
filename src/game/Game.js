@@ -3,6 +3,7 @@ import { Upgrades } from "./Upgrades";
 import { Project } from "./Project";
 import { ProjectManager } from "./ProjectManager";
 import { LoanManager } from "./LoanManager";
+import { CompanyManager } from "./CompanyManager";
 
 class Game {
   // Managers
@@ -11,6 +12,7 @@ class Game {
   project;
   projectManager;
   loanManager;
+  companyManager;
 
   #listeners = []; // List of React components to notify
 
@@ -20,6 +22,7 @@ class Game {
     this.project = new Project(this);
     this.projectManager = new ProjectManager(this);
     this.loanManager = new LoanManager(this);
+    this.companyManager = new CompanyManager(this);
   }
 
   // Subcribe and notify React components

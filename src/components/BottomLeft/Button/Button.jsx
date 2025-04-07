@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./Button.module.css";
 
-const Button = ({ label, onClick }) => {
+const Button = ({ label, onClick, title }) => {
   function handleClick() {
     onClick();
   }
 
   return (
-    <button className={styles.customButton} onClick={handleClick}>
+    <button className={styles.customButton} onClick={handleClick} title={title}>
       {label}
     </button>
   );
