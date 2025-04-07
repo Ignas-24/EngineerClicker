@@ -1,4 +1,3 @@
-import styles from './PopUp.module.css';
 import game from '../../../game/Game';
 import Button from '../Button/Button';
 import { useState } from 'react';
@@ -24,8 +23,8 @@ const MultUpgradePopUp = ({ onClose }) => {
   };
 
   return (
-    <div className={styles.Overlay}>
-      <div className={styles.Modal}>
+    <div>
+      <div>
         {upgrades.map((upgrade) => (
           <Button 
             key={upgrade.id} 

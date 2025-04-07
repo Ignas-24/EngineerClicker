@@ -131,4 +131,13 @@ export class Project {
       this.active = data.isActive || false;
     }
   }
+
+  resetForBankruptcy() {
+    clearInterval(this.timerInterval);
+    this.projectProgress = 0;
+    this.projectSize = 0;
+    this.remainingTime = 0;
+    this.active = false;
+    this.saveData();
+  }
 }

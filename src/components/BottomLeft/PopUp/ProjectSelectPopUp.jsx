@@ -1,4 +1,3 @@
-import styles from './PopUp.module.css';
 import game from '../../../game/Game';
 import Button from '../Button/Button';
 import { useState, useSyncExternalStore } from 'react';
@@ -45,8 +44,8 @@ const ProjectSelectPopUp = ({ onClose }) => {
     };
 
     return (
-        <div className={styles.Overlay}>
-            <div className={styles.Modal}>
+        <div>
+            <div>
                 {projects
                     .filter(project => !projects.some(p => p.active) || project.active)
                     .map((project) => (

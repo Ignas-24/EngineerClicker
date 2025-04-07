@@ -2,7 +2,7 @@ export class Upgrades {
     game;
     powerUpgrades = [ false, false, false, false ];
     multUpgrades = [ false, false, false ];
-    
+
     constructor(game) {
       this.game = game;
       this.loadData();
@@ -46,6 +46,7 @@ export class Upgrades {
             default:
                 break;
         }
+        this.game.notifyUpdate();
         this.saveData();
         return success;
     }
@@ -85,7 +86,7 @@ export class Upgrades {
         this.saveData();
         return success;
     }
-  
+
     saveData() {
       const data = {
         powerUpgrades: this.powerUpgrades,
@@ -93,7 +94,7 @@ export class Upgrades {
       };
       localStorage.setItem('UpgradeData', JSON.stringify(data));
     }
-  
+
     loadData() {
       const savedData = localStorage.getItem('UpgradeData');
       if (savedData) {
@@ -102,5 +103,9 @@ export class Upgrades {
         this.multUpgrades = data.multUpgrades || [ 0, 0, 0 ];
       }
     }
+
+    resetForBankruptcy() {
+      this.powerUpgrades = [ false, false, false, false ];
+      this.saveData();
+    }
   }
-  

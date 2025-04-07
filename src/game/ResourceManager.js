@@ -23,6 +23,10 @@ export class ResourceManager {
     this.euro = this.euro + delta;
     this.saveData();
     this.game.notifyUpdate();
+
+    if (this.euro < 0 && this.game.loanManager) {
+      this.game.loanManager.checkNegativeBalance();
+    }
   }
 
   changePrestige(delta) {
@@ -53,11 +57,11 @@ export class ResourceManager {
       clickPowerIncrease: this.clickPowerIncrease,
       clickPower: this.clickPower,
     };
-    localStorage.setItem('ResourceManagerData', JSON.stringify(data));
+    localStorage.setItem("ResourceManagerData", JSON.stringify(data));
   }
 
   loadData() {
-    const savedData = localStorage.getItem('ResourceManagerData');
+    const savedData = localStorage.getItem("ResourceManagerData");
     if (savedData) {
       const data = JSON.parse(savedData);
       this.euro = data.euro || 0;
@@ -67,5 +71,12 @@ export class ResourceManager {
       this.clickPowerIncrease = data.clickPowerIncrease || 0;
       this.clickPower = data.clickPower || this.initClickPower;
     }
+  }
+
+  resetForBankruptcy() {
+    this.euro = 0;
+    this.clickPowerIncrease = 0;
+    this.clickPower = this.initClickPower;
+    this.saveData();
   }
 }
