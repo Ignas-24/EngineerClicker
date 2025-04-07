@@ -6,6 +6,8 @@ import click3 from "../assets/click3.mp3";
 import click4 from "../assets/click4.mp3";
 import Console from "./console/Console.jsx";
 import game from "../game/Game.js";
+import pc1Image from "../assets/pc1.png"
+import backgroundImage from "../assets/background.png"
 
 const clickSounds = [click1, click2, click3, click4];
 
@@ -66,8 +68,8 @@ const ComputerCanvas = ({ onClick }) => {
             canvasRef.current.appendChild(app.canvas);
 
             const [texture, backgroundTexture] = await Promise.all([
-                PIXI.Assets.load("src/assets/pc1.png"),
-                PIXI.Assets.load("src/assets/background.png")
+                PIXI.Assets.load(pc1Image),
+                PIXI.Assets.load(backgroundImage)
             ]);
 
             const background = new PIXI.Sprite(backgroundTexture);
