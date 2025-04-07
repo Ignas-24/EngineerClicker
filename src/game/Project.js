@@ -112,7 +112,6 @@ export class Project {
 
 
   saveData() {
-    console.log("LEEEEROYYYYYY JEEEEENKINSSSSSS");
     const data = {
       projectName: this.projectName,
       projectSize: this.projectSize,
