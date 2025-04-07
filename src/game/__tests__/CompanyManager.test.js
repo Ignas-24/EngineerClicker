@@ -156,6 +156,17 @@ describe('CompanyManager', () => {
       expect(result).toBe(false);
       expect(companyManager.developers.junior).toBe(1);
     });
+    it('should not hire a developer if not enough euros', () => {
+      companyManager.currentCompany = { maxEmployees: 5 };
+      companyManager.developers = { junior: 2, midlevel: 1, senior: 0, lead: 0 };
+
+      companyManager.game.resourceManager.euro = 100;
+      const result = companyManager.hireDeveloper('junior');
+
+      expect(mockChangeEuros).not.toHaveBeenCalled();
+      expect(result).toBe(false);
+      expect(companyManager.developers.junior).toBe(2);
+    });
   });
 
   describe('calculateTotalEfficiency', () => {
