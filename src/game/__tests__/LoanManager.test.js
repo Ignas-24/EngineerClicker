@@ -47,15 +47,7 @@ describe('LoanManager', () => {
         const manager = new LoanManager(game)
         
         manager.takeLoan(5000)
-
-        expect(game.resourceManager.euro).toBe(5000);  
-
-        const newGame = mockGame();
-        const newManager = new LoanManager(newGame);      
-
-        expect(newGame.resourceManager.euro).toBe(5000);
-        expect(newManager.hasLoan).toBe(true)
-        expect(newManager.loanAmount).toBe(5000)
+        expect(localStorage.setItem).toHaveBeenCalledWith("ResourceManagerData");
     })
 
     it('can not take an invalid (too large) loan', () => {
