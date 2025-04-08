@@ -77,22 +77,28 @@ describe("ProjectManager", () => {
   });
 
   describe("getRandomInt", () => {
-    it("getRandomInt returns value within specified range", () => {
+    it("should return a value within specified range", () => {
       const result = projectManager.getRandomInt(1, 10);
       expect(result).toBeGreaterThanOrEqual(1);
       expect(result).toBeLessThanOrEqual(10);
     });
+
+    it("should throw an error when max < min", () => {
+      expect(() => {
+        projectManager.getRandomInt(10, 1);
+      }).toThrow("Invalid range: min should be less than or equal to max");
+    });
   });
 
   describe("getRandomLetter", () => {
-    it("getRandomLetter returns a single uppercase letter", () => {
+    it("should return a single uppercase letter", () => {
       const result = projectManager.getRandomLetter();
       expect(result).toMatch(/^[A-Z]$/);
     });
   });
 
   describe("getRandomProjectName", () => {
-    it("getRandomProjectName returns a formatted name", () => {
+    it("should return a formatted name", () => {
       const name = projectManager.getRandomProjectName();
       expect(name).toMatch(/^Project [A-Z]{3}\d+$/);
     });
@@ -129,7 +135,7 @@ describe("ProjectManager", () => {
   });
 
   describe("applySizeUpgrades", () => {
-    it("applySizeUpgrades doubles size with one upgrade", () => {
+    it("should double size with one upgrade", () => {
       const result = projectManager.applySizeUpgrades([10, 20], {
         biggerProjects: true,
       });
@@ -138,7 +144,7 @@ describe("ProjectManager", () => {
   });
 
   describe("applyRewardUpgrades", () => {
-    it("applyRewardUpgrades increases reward by 10%", () => {
+    it("should increase reward by 10%", () => {
       const result = projectManager.applyRewardUpgrades([10, 20], {
         reward: true,
       });
@@ -147,24 +153,27 @@ describe("ProjectManager", () => {
   });
 
   describe("applySizeReduction", () => {
-    it("applySizeReduction decreases size with upgrades", () => {
+    it("should decrease size with upgrades", () => {
       const reduced = projectManager.applySizeReduction(100, { size: true });
       expect(reduced).toBeLessThan(100);
     });
   });
 
   describe("generateProjectPool", () => {
-    it("generateProjectPool returns small, medium, large arrays", () => {
+    it("should return small, medium, large arrays", () => {
       const pool = projectManager.generateProjectPool();
       expect(Object.keys(pool)).toEqual(["small", "medium", "large"]);
       expect(pool.small).toHaveLength(4);
+      expect(pool.medium).toHaveLength(4);
+      expect(pool.large).toHaveLength(4);
     });
   });
 
   describe("calculateEstimatedProgress", () => {
-    it("calculateEstimatedProgress returns a number", () => {
+    it("should return a number", () => {
       const progress = projectManager.calculateEstimatedProgress(10);
       expect(typeof progress).toBe("number");
+      expect(progress).toBeGreaterThan(0);
     });
   });
 
@@ -214,7 +223,7 @@ describe("ProjectManager", () => {
   });
 
   describe("selectProjects", () => {
-    it("selectProjects populates selectedProjects", () => {
+    it("should populate selectedProjects", () => {
       projectManager.selectedProjects = [];
       projectManager.cooldown = 0;
       projectManager.selectProjects();
@@ -223,7 +232,7 @@ describe("ProjectManager", () => {
   });
 
   describe("replaceIncativeProjects", () => {
-    it("replaceInactiveProjects replaces non-active projects", () => {
+    it("should replace non-active projects", () => {
       projectManager.selectedProjects = [
         { active: true, dataName: "a" },
         { active: false, dataName: "b" },
@@ -242,14 +251,14 @@ describe("ProjectManager", () => {
   });
 
   describe("selectAllNewProjects", () => {
-    it("selectAllNewProjects selects 4 projects", () => {
+    it("should select 4 projects", () => {
       projectManager.selectAllNewProjects();
       expect(projectManager.selectedProjects.length).toBe(4);
     });
   });
 
   describe("getWeightedProjects", () => {
-    it("getWeightedProjects returns an array of weighted projects", () => {
+    it("should return an array of weighted projects", () => {
       const weighted = projectManager.getWeightedProjects();
       expect(weighted).toHaveLength(3 * 4);
       expect(weighted[0]).toHaveProperty("project");
@@ -259,7 +268,7 @@ describe("ProjectManager", () => {
   });
 
   describe("removeProject", () => {
-    it("removeProject removes a project from selectedProjects", () => {
+    it("should remove a project from selectedProjects", () => {
       const dummy = { dataName: "123" };
       projectManager.selectedProjects = [dummy];
       projectManager.removeProject(dummy);
@@ -268,14 +277,18 @@ describe("ProjectManager", () => {
   });
 
   describe("startTimer", () => {
-    it("startTimer initializes cooldown and interval", () => {
+    it("should initialize cooldown and interval", () => {
+      const setIntervalSpy = vi.spyOn(global, "setInterval");
+      const clearIntervalSpy = vi.spyOn(global, "clearInterval");
       projectManager.startTimer(5);
       expect(projectManager.cooldown).toBe(5);
+      expect(setIntervalSpy).toHaveBeenCalled();
+      expect(clearIntervalSpy).not.toHaveBeenCalled();
     });
   });
 
   describe("saveData", () => {
-    it("saveData stores data in localStorage", () => {
+    it("should store data in localStorage", () => {
       projectManager.saveData();
       expect(localStorage.setItem).toHaveBeenCalledWith(
         "ProjectManagerData",
@@ -285,17 +298,18 @@ describe("ProjectManager", () => {
   });
 
   describe("loadData", () => {
-    it("loadData loads data and starts timer", () => {
+    it("should load data and start timer", () => {
       localStorage.getItem.mockReturnValueOnce(
         JSON.stringify({ selectedProjectKeys: [], cooldown: 3 })
       );
       projectManager.loadData();
+      expect(projectManager.selectedProjects).toHaveLength(0);
       expect(projectManager.cooldown).toBe(3);
     });
   });
 
   describe("loadProjects", () => {
-    it("loadProjects restores valid projects", () => {
+    it("should restore valid projects", async () => {
       const mockProject = {
         projectSize: 10,
         projectReward: 10,
@@ -314,7 +328,7 @@ describe("ProjectManager", () => {
   });
 
   describe("createProjectFromData", () => {
-    it("createProjectFromData creates a project from parsed data", () => {
+    it("should create a project from parsed data", () => {
       const project = projectManager.createProjectFromData(
         {
           projectSize: 5,
@@ -330,11 +344,19 @@ describe("ProjectManager", () => {
         "abc123"
       );
       expect(project.projectName).toBe("Test");
+      expect(project.projectSize).toBe(5);
+      expect(project.projectReward).toBe(10);
+      expect(project.projectDeadline).toBe(20);
+      expect(project.projectProgress).toBe(0);
+      expect(project.remainingTime).toBe(20);
+      expect(project.completed).toBe(false);
+      expect(project.failed).toBe(false);
+      expect(project.active).toBe(false);
     });
   });
 
   describe("resetForBankruptcy", () => {
-    it("resetForBankruptcy calls reset on active projects", () => {
+    it("should call reset on active projects", () => {
       const resetFn = vi.fn();
       projectManager.selectedProjects = [
         { active: true, resetForBankruptcy: resetFn },
