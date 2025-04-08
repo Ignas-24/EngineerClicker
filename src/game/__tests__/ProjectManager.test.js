@@ -1,11 +1,11 @@
 import {
-  afterAll,
+  afterEach,
   beforeAll,
   beforeEach,
   describe,
   expect,
   it,
-  vi,
+  vi
 } from "vitest";
 import { ProjectManager } from "../ProjectManager.js";
 
@@ -72,7 +72,8 @@ describe("ProjectManager", () => {
     vi.useFakeTimers();
   });
 
-  afterAll(() => {
+  afterEach(() => {
+    vi.clearAllMocks();
     vi.useRealTimers();
   });
 
@@ -321,8 +322,13 @@ describe("ProjectManager", () => {
         failed: false,
         isActive: false,
       };
+      const createProjectSpy = vi.spyOn(
+        projectManager,
+        "createProjectFromData"
+      );
       localStorage.getItem.mockReturnValueOnce(JSON.stringify(mockProject));
       projectManager.loadProjects(["testKey"]);
+      expect(createProjectSpy).toHaveBeenCalledWith(mockProject, "testKey");
       expect(projectManager.selectedProjects.length).toBe(1);
     });
   });
