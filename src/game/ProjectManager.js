@@ -168,7 +168,8 @@ export class ProjectManager {
   removeProject(inactiveProject) {
     if(inactiveProject.completed)
     {
-      this.game.statTracker.increment("projectsFinished");
+      this.game.stats.increment("projectsFinished");
+      this.game.achievementManager.checkAchievements();
     }
     this.selectedProjects = this.selectedProjects.filter(
       (project) => project.dataName !== inactiveProject.dataName
@@ -191,7 +192,7 @@ export class ProjectManager {
         this.saveData();
         this.game.notifyUpdate();
       }
-    }, 1000);
+    }, 100);
   }
 
   saveData() {

@@ -1,52 +1,61 @@
+//logic component
 export class Achievement {
-    constructor(name, description, conditionFn, rewardFn) {
+    constructor(name, description, conditionFn, rewardFn, scalability={}) {
       this.name = name;
-      this.description = description;
+      this._description = description;
       this.conditionFn = conditionFn;
       this.rewardFn = rewardFn;
       this.unlocked = false;
+      this.claimed = false;
+
+      this.requirement = scalability.requirement || null;
+      this.multiplier = scalability.multiplier || null;
+      this.increment = scalability.increment || null;
+      this.scalable = scalability.scalable;
     }
-  
+
+    get description()
+    {
+      if(typeof this._description === "function")
+      {
+        return this._description(this.requirement);
+      }
+      else
+      {
+        return this._description;
+      }
+      
+    }
+
+
     check(game) {
-      if (!this.unlocked && this.conditionFn(game)) {
+      if (!this.unlocked && this.conditionFn(game, this.requirement)) {
         this.unlocked = true;
-        this.rewardFn(game);
         alert(`Achievement Unlocked: ${this.name}`);
       }
     }
+  
+    claim(game) {
+        if (this.unlocked && !this.claimed) {
+          this.rewardFn(game);
+          this.claimed = true;
+        }
 
-    createElement() {
-        const wrap = document.createElement("div");
-        wrap.className = "Achievement_wrap";
-    
-        const achievement = document.createElement("div");
-        achievement.className = "Achievement";
-    
-        const title = document.createElement("p");
-        title.textContent = this.name;
-    
-        const claimButton = document.createElement("button");
-        claimButton.textContent = "Claim";
-        claimButton.disabled = true; // Only enabled when unlocked
-        claimButton.addEventListener("click", () => {
-          if (this.unlocked && !this.claimed) {
-            this.rewardFn(this.game);
-            this.claimed = true;
-            claimButton.disabled = true;
-            claimButton.textContent = "Claimed!";
-            wrap.classList.add("claimed");
+        if(this.scalable)
+        {
+          if(this.multiplier)
+          {
+            this.requirement=this.requirement*this.multiplier;
           }
-        });
-    
-        achievement.appendChild(title);
-        achievement.appendChild(claimButton);
-    
-        const description = document.createElement("p");
-        description.textContent = this.description;
-    
-        wrap.appendChild(achievement);
-        wrap.appendChild(description);
-    
-        return wrap;
-      }
+          else
+          {
+            this.requirement=this.requirement+this.increment;
+          }
+          this.unlocked=false;
+          this.claimed=false;
+        }
+        console.log("Sukurtas scalable naujas");
+        game.achievementManager.saveAchievements();
+        console.log(this);
+    }
   }

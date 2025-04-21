@@ -67,9 +67,9 @@ const BottomLeft = () => {
           }}
         />
       )}
-      <Achievement_button onClick={openAchievements} />
+      <Achievement_button onClick={openAchievements}/>
       {isAchvOpen && (
-        <Achievement_window onClick={closeAchievements} />
+        <Achievement_window onClick={closeAchievements} game={game} />
       )}
     </div>
   );

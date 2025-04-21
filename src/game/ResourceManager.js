@@ -14,6 +14,9 @@ export class ResourceManager {
 
   addEurosClicked() {
     const delta = this.clickPower * this.multiplier;
+    this.game.stats.increment("Money",delta);
+    this.game.stats.increment("Clikcs");
+    this.game.achievementManager.checkAchievements();
     this.euro = this.euro + delta;
     this.saveData();
     this.game.notifyUpdate();
@@ -21,7 +24,8 @@ export class ResourceManager {
   
   changeEuros(delta) {
     this.euro = this.euro + delta;
-    this.game.statTracker.increment("Money",delta);
+    this.game.stats.increment("Money",delta);
+    this.game.achievementManager.checkAchievements();
     this.saveData();
     this.game.notifyUpdate();
 

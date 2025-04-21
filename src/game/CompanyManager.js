@@ -165,6 +165,8 @@ export class CompanyManager {
             this.currentCompany = { type, ...company };
             this.saveData();
             this.game.notifyUpdate();
+            this.game.stats.increment("Companies",1);
+            this.game.achievementManager.checkAchievements();
             return true;
         }
 
@@ -209,8 +211,12 @@ export class CompanyManager {
         this.game.resourceManager.euro = 0;
         this.game.resourceManager.saveData();
 
+        this.game.stats.increment("CompaniesSold",1);
+        this.game.achievementManager.checkAchievements();
+
         this.saveData();
         this.game.notifyUpdate();
+
 
         alert(`Company sold for ${balance.toPrecision(2)} € and gained ${prestigePoints.toPrecision(2)} prestige points!`);
         return true;

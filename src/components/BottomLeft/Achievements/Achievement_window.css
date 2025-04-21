@@ -26,6 +26,7 @@
 
     display: inline-block;
     position: relative;
+    overflow: scroll;
 
     .closeButton{
         background-color: black;
@@ -77,6 +78,19 @@
             margin: auto;
             margin-left: 5%;
             
+        }
+
+        button:disabled,
+        button[disabled]{
+            background-color: rgb(26, 26, 26);
+            color: white;
+            font-weight: bold;
+        }
+        button{
+            color: white;
+            font-weight: bold;
+            background-color: green;
+            width: 25%;
         }
 
     }
