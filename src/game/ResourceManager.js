@@ -21,6 +21,7 @@ export class ResourceManager {
   
   changeEuros(delta) {
     this.euro = this.euro + delta;
+    this.game.statTracker.increment("Money",delta);
     this.saveData();
     this.game.notifyUpdate();
 

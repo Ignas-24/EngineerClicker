@@ -12,6 +12,8 @@ export class ProjectManager {
   completedProjectsThisReset = 0;
   completedProjectTotal = 0;
 
+  finishedProjects = 0;
+
   constructor(game) {
     this.game = game;
     this.loadData();
@@ -164,6 +166,10 @@ export class ProjectManager {
 
 
   removeProject(inactiveProject) {
+    if(inactiveProject.completed)
+    {
+      this.game.statTracker.increment("projectsFinished");
+    }
     this.selectedProjects = this.selectedProjects.filter(
       (project) => project.dataName !== inactiveProject.dataName
     );

@@ -1,0 +1,83 @@
+.Backdrop{
+    position: absolute;
+    top:0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+
+    z-index: 3;
+
+    display: flex;
+
+    justify-content: center;
+    vertical-align: middle;
+}
+
+.Window_Container{
+    width: 60%;
+    height: 80%;
+    background-color: black;
+    border-style:solid;
+    border-color: black;
+    border-radius: 20px;
+    margin: auto;    
+
+    display: inline-block;
+    position: relative;
+
+    .closeButton{
+        background-color: black;
+        position: absolute;
+        top: 0;
+        right: 0;
+        aspect-ratio: 1/1;
+        margin: 5px;
+        padding: 0;
+        min-width: 25px;
+        min-height: 25px;
+        text-align: center;
+
+        border-radius: 0;
+    }
+
+    .Achievement_wrap{
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+        margin-top: 5%;
+        margin-left: 5%;
+        padding: 0;
+        text-align: right;
+        p{
+            width: 60%;
+            padding-right: 15px;
+        }
+    }
+
+    .Achievement{
+        border-style: solid;
+        border-radius: 10px;
+
+        height: 15%;
+        width: 40%;
+        max-height: 60px;
+
+
+
+        display: flex;
+        justify-content: space-between;
+
+        vertical-align: middle;
+        text-align: left;
+        p{
+            width: 60%;
+            font-weight: bold;
+            margin: auto;
+            margin-left: 5%;
+            
+        }
+
+    }
+}

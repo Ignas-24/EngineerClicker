@@ -9,6 +9,8 @@ import LoanPopUp from "./PopUp/LoanPopUp";
 import BankruptcyPopUp from "./PopUp/BankruptcyPopUp";
 import CompanyPopUp from "./PopUp/CompanyPopUp";
 
+import Achievement_window from "./Achievements/Achievement_window";
+import Achievement_button from "./Achievements/Achievements_button";
 
 const BottomLeft = () => {
   const [isPowerOpen, setPowerOpen] = useState(false);
@@ -36,6 +38,14 @@ const BottomLeft = () => {
           : "Unknown"
       }`
     : "Buy a Company";
+  const [isAchvOpen, setAchvOpen] = useState(false);
+
+  const openAchievements = () =>{
+    setAchvOpen(true);
+  }
+  const closeAchievements = () =>{
+    setAchvOpen(false); 
+  }
 
   return (
     <div className={styles.bottomLeft}>
@@ -56,6 +66,10 @@ const BottomLeft = () => {
             setLoanOpen(true);
           }}
         />
+      )}
+      <Achievement_button onClick={openAchievements} />
+      {isAchvOpen && (
+        <Achievement_window onClick={closeAchievements} />
       )}
     </div>
   );

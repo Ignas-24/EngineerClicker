@@ -5,6 +5,7 @@ import { ProjectManager } from "./ProjectManager";
 import { LoanManager } from "./LoanManager";
 import { CompanyManager } from "./CompanyManager";
 
+import { Stats } from "./Stat_tracker";
 class Game {
   // Managers
   resourceManager;
@@ -13,7 +14,8 @@ class Game {
   projectManager;
   loanManager;
   companyManager;
-
+  stats;
+  
   #listeners = []; // List of React components to notify
 
   constructor() {
@@ -23,6 +25,7 @@ class Game {
     this.projectManager = new ProjectManager(this);
     this.loanManager = new LoanManager(this);
     this.companyManager = new CompanyManager(this);
+    this.stats = new Stats(this);
   }
 
   // Subcribe and notify React components
