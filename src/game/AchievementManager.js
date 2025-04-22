@@ -81,14 +81,14 @@ export class AchievementManager {
       ),
       new Achievement(
         "Tech-business guru",
-        "Acquire a million euros",
+        (requirement) => `Acquire ${requirement} euros`,
         (game, requirement) => game.stats.get("Money") >= requirement,
         (game) => {
           game.resourceManager.changePrestige(1);
         },
         {
             scalable: true,
-            requirement: 10000,
+            requirement: 1000000,
             multiplier: 10
 
         }
