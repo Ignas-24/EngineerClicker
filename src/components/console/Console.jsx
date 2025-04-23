@@ -4,17 +4,20 @@ import * as PIXI from "pixi.js";
 import { PixelateFilter } from "pixi-filters";
 
 
-export default function Console( { textState, styles } ) {
+export default function Console( { textState, styles, onClick } ) {
   const consoleContent = useRef(null);
   const header = useRef(null);
+
+  function handleClick(){
+
+    if(onClick) onClick();
+  }
 
   useEffect(() => {
     if(consoleContent.current){
       consoleContent.current.scrollTop = consoleContent.current.scrollHeight;
     }
   }, [textState])
-
-  
 
   useEffect(() => {
     let apps = [];
@@ -38,6 +41,7 @@ export default function Console( { textState, styles } ) {
       canvas.style.top = `${topPosition}%`;
       canvas.style.height = "33%";
       canvas.style.width = "100%";
+      //canvas.style.pointerEvents = "none";
       //canvas.style.zIndex = "-1"; 
       
       header.current.appendChild(canvas);
@@ -114,7 +118,7 @@ export default function Console( { textState, styles } ) {
 
 
   return (
-    <div className="console_wrap" style={styles}>
+    <div className="console_wrap" style={styles} onClick={handleClick}>
 
       <div className="console_header" ref = {header}>
         <p>MS-DOS</p>
