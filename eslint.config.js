@@ -33,7 +33,7 @@ export default [
     },
   },
   {
-    files: ["__tests__/**"],
+    files: ["**/__tests__/**"],
     languageOptions: {
       globals: {
         ...globals.vitest,
