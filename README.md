@@ -21,3 +21,7 @@ Deployment
 * If `<subdomain>.<domain>/<path>/` host url changes (e.g. repository name was modified), ensure `base:` value in `vite.config.js` is equal to `/<path>/`
 * `npm run deploy`
 * The site should be available on https://Ignas-24.github.io/EngineerClicker/ after some time.
+
+Linting and static analysis
+1. `npm ci` (ensure the correct packages are installed)
+2. `npx eslint .` to run eslint

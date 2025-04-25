@@ -2,11 +2,13 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import vitest from "@vitest/eslint-plugin"
 
 export default [
-  { ignores: ['dist'] },
+  { ignores: ['dist','coverage'] },
   {
     files: ['**/*.{js,jsx}'],
+    ignores: ['**/__tests__/**'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -28,6 +30,20 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+    },
+  },
+  {
+    files: ["__tests__/**"],
+    languageOptions: {
+      globals: {
+        ...globals.vitest,
+      },
+    },
+    plugins: {
+      vitest,
+    },
+    rules: {
+      ...vitest.configs.recommended.rules, // vitest.configs.all.rules can be used for more rules
     },
   },
 ]
