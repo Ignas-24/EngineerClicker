@@ -3,9 +3,9 @@ import ComputerCanvas from "../ComputerCanvas";
 import styles from "./RightSection.module.css";
 import { useMenu } from "../../contexts/MenuContext.jsx";
 import CompanyMenu from "../Menu/CompanyMenu.jsx";
-import PowerMenu from "../Menu/PowerUpgradeMenu.jsx";
-import MultMenu from "../Menu/MultUpgradeMenu.jsx";
-import ProjectMenu from "../Menu/ProjectSelectMenu.jsx";
+import PowerUpgradeMenu from "../Menu/PowerUpgradeMenu.jsx";
+import MultUpgradeMenu from "../Menu/MultUpgradeMenu.jsx";
+import ProjectSelectMenu from "../Menu/ProjectSelectMenu.jsx";
 
 const RightSection = () => {
   const { openMenu, toggleMenu } = useMenu();
@@ -27,10 +27,10 @@ const RightSection = () => {
       {openMenu === "company" && (
         <CompanyMenu onClose={() => toggleMenu(null)} />
       )}
-      {openMenu === "power" && <PowerMenu onClose={() => toggleMenu(null)} />}
-      {openMenu === "mult" && <MultMenu onClose={() => toggleMenu(null)} />}
+      {openMenu === "power" && <PowerUpgradeMenu onClose={() => toggleMenu(null)} />}
+      {openMenu === "mult" && <MultUpgradeMenu onClose={() => toggleMenu(null)} />}
       {openMenu === "project" && (
-        <ProjectMenu onClose={() => toggleMenu(null)} />
+        <ProjectSelectMenu onClose={() => toggleMenu(null)} />
       )}
     </div>
   );

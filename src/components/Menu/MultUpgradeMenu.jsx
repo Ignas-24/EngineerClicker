@@ -4,7 +4,7 @@ import Button from '../BottomLeft/Button/Button';
 import { useState } from 'react';
 import styles from './MultUpgradeMenu.module.css';
 
-const MultMenu = ({ onClose }) => {
+const MultUpgradeMenu = ({ onClose }) => {
   const initialUpgrades = [
     { id: 1, label: "Upgrade 1", price: 1.0, bought: game.upgrades.multUpgrades[0] },
     { id: 2, label: "Upgrade 2", price: 1.0, bought: game.upgrades.multUpgrades[1] },
@@ -40,4 +40,4 @@ const MultMenu = ({ onClose }) => {
   );
 }
 
-export default MultMenu;
+export default MultUpgradeMenu;

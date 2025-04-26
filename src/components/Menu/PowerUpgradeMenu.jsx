@@ -4,7 +4,7 @@ import Button from '../BottomLeft/Button/Button';
 import { useState } from 'react';
 import styles from './PowerUpgradeMenu.module.css';
 
-const PowerMenu = ({ onClose }) => {
+const PowerUpgradeMenu = ({ onClose }) => {
   const initialUpgrades = [
     { id: 1, label: "Upgrade 1", price: 0.5, bought: game.upgrades.powerUpgrades[0] },
     { id: 2, label: "Upgrade 2", price: 1.0, bought: game.upgrades.powerUpgrades[1] },
@@ -41,4 +41,4 @@ const PowerMenu = ({ onClose }) => {
   );
 }
 
-export default PowerMenu;
+export default PowerUpgradeMenu;

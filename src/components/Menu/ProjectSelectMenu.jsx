@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useSyncExternalStore } from "react";
 import game from '../../game/Game';
 import Button from '../BottomLeft/Button/Button';
-import { useState, useSyncExternalStore } from 'react';
 import styles from './ProjectSelectMenu.module.css';
 
-const ProjectMenu = ({ onClose }) => {
+const ProjectSelectMenu = ({ onClose }) => {
     const projects = useSyncExternalStore(
         game.subscribe.bind(game),
         () => game.projectManager.selectedProjects
@@ -67,4 +66,4 @@ const ProjectMenu = ({ onClose }) => {
     );
 }
 
-export default ProjectMenu;
+export default ProjectSelectMenu;
