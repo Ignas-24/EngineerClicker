@@ -1,7 +1,8 @@
 import React from "react";
-import game from '../../../game/Game';
-import Button from '../Button/Button';
+import game from '../../game/Game';
+import Button from '../BottomLeft/Button/Button';
 import { useState } from 'react';
+import styles from './MultUpgradeMenu.module.css';
 
 const MultMenu = ({ onClose }) => {
   const initialUpgrades = [
@@ -24,19 +25,17 @@ const MultMenu = ({ onClose }) => {
   };
 
   return (
-    <div>
-      <div>
-        {upgrades.map((upgrade) => (
-          <Button 
-            key={upgrade.id} 
-            label={upgrade.bought 
-              ? `${upgrade.label}, Bought` 
-              : `${upgrade.label}, Price: ${upgrade.price} Prestige`} 
-            onClick={() => handleAction(upgrade.id)}
-          >
-          </Button>
-        ))}
-      </div>
+    <div className={styles.buttonsContainer}>
+      {upgrades.map((upgrade) => (
+        <Button 
+          key={upgrade.id} 
+          label={upgrade.bought 
+            ? `${upgrade.label}, Bought` 
+            : `${upgrade.label}, Price: ${upgrade.price} Prestige`} 
+          onClick={() => handleAction(upgrade.id)}
+        >
+        </Button>
+      ))}
     </div>
   );
 }
