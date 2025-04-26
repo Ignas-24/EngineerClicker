@@ -2,7 +2,8 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import vitest from "@vitest/eslint-plugin"
+import vitest from '@vitest/eslint-plugin'
+import customRules from './CustomRules/index.js'
 
 export default [
   { ignores: ['dist','coverage'] },
@@ -21,6 +22,7 @@ export default [
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      'custom': customRules,
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -30,6 +32,7 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      'custom/numeric-separators': 'warn',
     },
   },
   {

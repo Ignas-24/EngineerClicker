@@ -22,6 +22,9 @@ Deployment
 * `npm run deploy`
 * The site should be available on https://Ignas-24.github.io/EngineerClicker/ after some time.
 
-Linting and static analysis
-1. `npm ci` (ensure the correct packages are installed)
-2. `npx eslint .` to run eslint
+Linting and static analysis:
+* Running eslint:
+    1. `npm ci` (ensure the correct packages are installed)
+    2. `npx eslint .` to run eslint
+
+* Custom rules should be defined in /CustomRules in their own .js file and added to both index.js and eslint.config.js
