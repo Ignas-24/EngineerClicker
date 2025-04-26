@@ -1,7 +1,7 @@
-import numberSeperatorRule from './LargeNumberSeperatorRule.js';
+import numberSeparatorRule from './LargeNumberSeparatorRule.js';
 
 export default {
   rules: {
-    'numeric-separators': numberSeperatorRule,
+    'numeric-separators': numberSeparatorRule,
   },
 };
