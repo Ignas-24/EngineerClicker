@@ -1,8 +1,9 @@
+import React from "react";
 import game from '../../../game/Game';
 import Button from '../Button/Button';
 import { useState } from 'react';
 
-const MultUpgradePopUp = ({ onClose }) => {
+const MultMenu = ({ onClose }) => {
   const initialUpgrades = [
     { id: 1, label: "Upgrade 1", price: 1.0, bought: game.upgrades.multUpgrades[0] },
     { id: 2, label: "Upgrade 2", price: 1.0, bought: game.upgrades.multUpgrades[1] },
@@ -38,6 +39,6 @@ const MultUpgradePopUp = ({ onClose }) => {
       </div>
     </div>
   );
-  }
+}
 
-export default MultUpgradePopUp;
+export default MultMenu;

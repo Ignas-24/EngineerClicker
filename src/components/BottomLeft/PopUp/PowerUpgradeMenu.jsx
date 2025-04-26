@@ -1,8 +1,9 @@
+import React from "react";
 import game from '../../../game/Game';
 import Button from '../Button/Button';
 import { useState } from 'react';
 
-const PowerUpgradePopUp = ({ onClose }) => {
+const PowerMenu = ({ onClose }) => {
   const initialUpgrades = [
     { id: 1, label: "Upgrade 1", price: 0.5, bought: game.upgrades.powerUpgrades[0] },
     { id: 2, label: "Upgrade 2", price: 1.0, bought: game.upgrades.powerUpgrades[1] },
@@ -41,4 +42,4 @@ const PowerUpgradePopUp = ({ onClose }) => {
   );
 }
 
-export default PowerUpgradePopUp;
+export default PowerMenu;

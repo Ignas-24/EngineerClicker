@@ -2,7 +2,7 @@ import game from '../../../game/Game';
 import Button from '../Button/Button';
 import React, { useState, useEffect } from 'react';
 
-const DeveloperHiringPopUp = ({ onClose }) => {
+const DeveloperHiringMenu = ({ onClose }) => {
     const [developers, setDevelopers] = useState({ ...game.companyManager.developers });
 
     const handleHireDeveloper = (tier) => {
@@ -50,4 +50,4 @@ const DeveloperHiringPopUp = ({ onClose }) => {
     );
 };
 
-export default DeveloperHiringPopUp;
+export default DeveloperHiringMenu;

@@ -1,8 +1,9 @@
+import React from "react";
 import game from '../../../game/Game';
 import Button from '../Button/Button';
 import { useState, useSyncExternalStore } from 'react';
 
-const ProjectSelectPopUp = ({ onClose }) => {
+const ProjectMenu = ({ onClose }) => {
     const projects = useSyncExternalStore(
         game.subscribe.bind(game),
         () => game.projectManager.selectedProjects
@@ -67,4 +68,4 @@ const ProjectSelectPopUp = ({ onClose }) => {
     );
 }
 
-export default ProjectSelectPopUp;
+export default ProjectMenu;

@@ -2,7 +2,7 @@ import game from '../../../game/Game';
 import Button from '../Button/Button';
 import React, { useState, useEffect } from 'react';
 
-const CompanyUpgradePopUp = ({ onClose }) => {
+const CompanyUpgradeMenu = ({ onClose }) => {
     const [upgrades, setUpgrades] = useState({ ...game.upgrades.companyUpgrades });
 
     const handleUpgrade = (upgradeKey) => {
@@ -70,4 +70,4 @@ const CompanyUpgradePopUp = ({ onClose }) => {
     );
 };
 
-export default CompanyUpgradePopUp;
+export default CompanyUpgradeMenu;

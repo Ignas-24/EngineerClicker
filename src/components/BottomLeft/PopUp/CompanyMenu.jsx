@@ -1,10 +1,10 @@
 import game from '../../../game/Game';
 import Button from '../Button/Button';
 import React, { useState, useSyncExternalStore } from "react";
-import CompanyUpgradePopUp from './CompanyUpgradePopUp';
-import DeveloperHiringPopUp from './DeveloperHiringPopUp';
+import CompanyUpgradeMenu from './CompanyUpgradeMenu';
+import DeveloperHiringMenu from './DeveloperHiringMenu';
 
-const CompanyPopUp = ({ onClose }) => {
+const CompanyMenu = ({ onClose }) => {
 
     const [isUpgradeOpen, setUpgradeOpen] = useState(false);
     const [isDeveloperOpen, setDeveloperOpen] = useState(false);
@@ -48,13 +48,13 @@ const CompanyPopUp = ({ onClose }) => {
                 {currentCompany && (
                     <>
                         <Button label="Company upgrades" onClick={() => setUpgradeOpen(!isUpgradeOpen)} />
-                        {isUpgradeOpen && <CompanyUpgradePopUp onClose={() => setUpgradeOpen(false)} />}
+                        {isUpgradeOpen && <CompanyUpgradeMenu onClose={() => setUpgradeOpen(false)} />}
                     </>
                 )}
                 {currentCompany && (
                     <>
                         <Button label="Hire developers" onClick={() => setDeveloperOpen(!isDeveloperOpen)} />
-                        {isDeveloperOpen && <DeveloperHiringPopUp onClose={() => setDeveloperOpen(false)} />}
+                        {isDeveloperOpen && <DeveloperHiringMenu onClose={() => setDeveloperOpen(false)} />}
                     </>
                 )}
                 {currentCompany && (currentCompany.type === "medium" || currentCompany.type === "large") && completedProjectsThisReset >= 40 && (completedProjectsThisReset - 40) % 10 === 0 && (
@@ -77,4 +77,4 @@ const CompanyPopUp = ({ onClose }) => {
 };
 
 
-export default CompanyPopUp;
+export default CompanyMenu;
