@@ -4,6 +4,8 @@ import styles from "./BottomLeft.module.css";
 import { useMenu } from "../../contexts/MenuContext.jsx";
 import BankruptcyPopUp from "./PopUp/BankruptcyPopUp";
 import LoanPopUp from "./PopUp/LoanPopUp";
+import Achievement_window from "./Achievements/Achievement_window";
+import Achievement_button from "./Achievements/Achievements_button";
 import game from "../../game/Game.js";
 import { useSyncExternalStore } from "react";
 
@@ -31,6 +33,14 @@ const BottomLeft = () => {
           : "Unknown"
       }`
     : "Buy a Company";
+  const [isAchvOpen, setAchvOpen] = useState(false);
+
+  const openAchievements = () =>{
+    setAchvOpen(true);
+  }
+  const closeAchievements = () =>{
+    setAchvOpen(false); 
+  }
 
   return (
     <div className={styles.bottomLeft}>
@@ -48,6 +58,10 @@ const BottomLeft = () => {
           onClose={() => setLoanOpen(false)}
           onTakeLoan={() => setLoanOpen(true)}
         />
+      )}
+      <Achievement_button onClick={openAchievements}/>
+      {isAchvOpen && (
+        <Achievement_window onClick={closeAchievements} game={game} />
       )}
     </div>
   );

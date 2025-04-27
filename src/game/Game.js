@@ -4,6 +4,8 @@ import { Project } from "./Project";
 import { ProjectManager } from "./ProjectManager";
 import { LoanManager } from "./LoanManager";
 import { CompanyManager } from "./CompanyManager";
+import { Stats } from "./Stat_tracker";
+import { AchievementManager } from "./AchievementManager";
 
 class Game {
   // Managers
@@ -13,7 +15,9 @@ class Game {
   projectManager;
   loanManager;
   companyManager;
-
+  stats;
+  achievementManager;
+  
   #listeners = []; // List of React components to notify
 
   constructor() {
@@ -23,6 +27,8 @@ class Game {
     this.projectManager = new ProjectManager(this);
     this.loanManager = new LoanManager(this);
     this.companyManager = new CompanyManager(this);
+    this.stats = new Stats(this);
+    this.achievementManager = new AchievementManager(this);
   }
 
   // Subcribe and notify React components

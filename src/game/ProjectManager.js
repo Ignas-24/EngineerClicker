@@ -12,6 +12,8 @@ export class ProjectManager {
   completedProjectsThisReset = 0;
   completedProjectTotal = 0;
 
+  finishedProjects = 0;
+
   constructor(game) {
     this.game = game;
     this.loadData();
@@ -164,6 +166,11 @@ export class ProjectManager {
 
 
   removeProject(inactiveProject) {
+    if(inactiveProject.completed)
+    {
+      this.game.stats.increment("projectsFinished");
+      this.game.achievementManager.checkAchievements();
+    }
     this.selectedProjects = this.selectedProjects.filter(
       (project) => project.dataName !== inactiveProject.dataName
     );
@@ -185,7 +192,7 @@ export class ProjectManager {
         this.saveData();
         this.game.notifyUpdate();
       }
-    }, 1000);
+    }, 100);
   }
 
   saveData() {
