@@ -1,8 +1,10 @@
-import game from '../../../game/Game';
-import Button from '../Button/Button';
-import { useState } from 'react';
+import React, { useState } from "react";
+import game from '../../game/Game';
+import Button from '../BottomLeft/Button/Button';
+import CloseButton from './CloseButton';
+import styles from './PowerUpgradeMenu.module.css';
 
-const PowerUpgradePopUp = ({ onClose }) => {
+const PowerUpgradeMenu = ({ onClose }) => {
   const initialUpgrades = [
     { id: 1, label: "Upgrade 1", price: 0.5, bought: game.upgrades.powerUpgrades[0] },
     { id: 2, label: "Upgrade 2", price: 1.0, bought: game.upgrades.powerUpgrades[1] },
@@ -24,21 +26,23 @@ const PowerUpgradePopUp = ({ onClose }) => {
   };
 
   return (
-    <div>
-      <div>
-        {upgrades.map((upgrade) => (
-          <Button
-            key={upgrade.id}
-            label={upgrade.bought
-              ? `${upgrade.label}, Bought`
-              : `${upgrade.label}, Price: ${upgrade.price}€`}
-            onClick={() => handleAction(upgrade.id)}
-          >
-          </Button>
-        ))}
-      </div>
+    <div 
+      className={styles.buttonsContainer}
+    >
+      <CloseButton onClick={onClose} />
+      {upgrades.map((upgrade) => (
+        <Button
+          key={upgrade.id}
+          label={upgrade.bought
+            ? `${upgrade.label}, Bought`
+            : `${upgrade.label}, Price: ${upgrade.price}€`}
+          onClick={() => handleAction(upgrade.id)}
+        >
+        </Button>
+      ))}
+      
     </div>
   );
 }
 
-export default PowerUpgradePopUp;
+export default PowerUpgradeMenu;

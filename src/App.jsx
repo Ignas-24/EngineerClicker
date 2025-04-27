@@ -1,8 +1,13 @@
 import "./App.css";
+import { MenuProvider } from "./contexts/MenuContext.jsx";
 import Layout from "./components/Layout/Layout";
 
 function App() {
-  return <Layout />;
+  return (
+    <MenuProvider>
+      <Layout />
+    </MenuProvider>
+  );
 }
 
 export default App;

@@ -1,8 +1,9 @@
-import game from '../../../game/Game';
-import Button from '../Button/Button';
+import game from '../../game/Game';
+import Button from '../BottomLeft/Button/Button';
 import React, { useState, useEffect } from 'react';
+import styles from './CompanyUpgradeMenu.module.css';
 
-const CompanyUpgradePopUp = ({ onClose }) => {
+const CompanyUpgradeMenu = ({ onClose }) => {
     const [upgrades, setUpgrades] = useState({ ...game.upgrades.companyUpgrades });
 
     const handleUpgrade = (upgradeKey) => {
@@ -47,27 +48,23 @@ const CompanyUpgradePopUp = ({ onClose }) => {
     const availableUpgrades = validCompanyTypes.flatMap(type => upgradeOptions[type]);
 
     return (
-        <div>
-            <div>
-                <h3>Company Upgrades</h3>
-                {availableUpgrades.map((upgrade) => (
-                    <React.Fragment key={upgrade.key}>
-                        <Button
-                            label={
-                                upgrades[upgrade.key]
-                                    ? `${upgrade.label} - Purchased`
-                                    : `${upgrade.label} (${upgrade.cost} €)`
-                            }
-                            onClick={() => handleUpgrade(upgrade.key)}
-                            disabled={upgrades[upgrade.key]}
-                            title={`Effect: ${upgrade.effect}\nUpkeep Increase: ${upgrade.upkeep} €`}
-                        />
-                        <br />
-                    </React.Fragment>
-                ))}
-            </div>
+        <div className={styles.buttonsContainer}>
+            <h3>Company Upgrades</h3>
+            {availableUpgrades.map((upgrade) => (
+                <Button
+                    key={upgrade.key}
+                    label={
+                        upgrades[upgrade.key]
+                            ? `${upgrade.label} - Purchased`
+                            : `${upgrade.label} (${upgrade.cost} €)`
+                    }
+                    onClick={() => handleUpgrade(upgrade.key)}
+                    disabled={upgrades[upgrade.key]}
+                    title={`Effect: ${upgrade.effect}\nUpkeep Increase: ${upgrade.upkeep} €`}
+                />
+            ))}
         </div>
     );
 };
 
-export default CompanyUpgradePopUp;
+export default CompanyUpgradeMenu;

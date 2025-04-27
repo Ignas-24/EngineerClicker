@@ -1,8 +1,9 @@
-import game from '../../../game/Game';
-import Button from '../Button/Button';
+import game from '../../game/Game';
+import Button from '../BottomLeft/Button/Button';
 import React, { useState, useEffect } from 'react';
+import styles from './DeveloperHiringMenu.module.css';
 
-const DeveloperHiringPopUp = ({ onClose }) => {
+const DeveloperHiringMenu = ({ onClose }) => {
     const [developers, setDevelopers] = useState({ ...game.companyManager.developers });
 
     const handleHireDeveloper = (tier) => {
@@ -32,22 +33,18 @@ const DeveloperHiringPopUp = ({ onClose }) => {
     );
 
     return (
-        <div>
-            <div>
-                <h3>Hire Developers</h3>
-                {availableDeveloperOptions.map((developer) => (
-                    <React.Fragment key={developer.tier}>
-                        <Button
-                            label={`${developer.label} (Hired: ${developers[developer.tier]})`}
-                            onClick={() => handleHireDeveloper(developer.tier)}
-                            title={`Efficiency: ${developer.efficiency}`}
-                        />
-                        <br />
-                    </React.Fragment>
-                ))}
-            </div>
+        <div className={styles.buttonsContainer}>
+            <h3>Hire Developers</h3>
+            {availableDeveloperOptions.map((developer) => (
+                <Button
+                    key={developer.tier}
+                    label={`${developer.label} (Hired: ${developers[developer.tier]})`}
+                    onClick={() => handleHireDeveloper(developer.tier)}
+                    title={`Efficiency: ${developer.efficiency}`}
+                />
+            ))}
         </div>
     );
 };
 
-export default DeveloperHiringPopUp;
+export default DeveloperHiringMenu;
