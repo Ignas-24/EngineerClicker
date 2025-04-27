@@ -7,9 +7,9 @@ div .console_wrap{
     position: absolute;
     margin: auto;
     text-align: left;
-
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 
     box-sizing: border-box;
     border: 7px;
@@ -85,7 +85,6 @@ div .button{
     border-width: 5px;
     border-style: outset;
     border-color: gainsboro;
-
 
     .pixelIcon {
         height: 100%;
