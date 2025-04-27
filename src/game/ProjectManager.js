@@ -137,8 +137,12 @@ export class ProjectManager {
     const activeProjects = this.selectedProjects.filter(project => project.active);
     const inactiveCount = 4 - activeProjects.length;
 
+    this.selectedProjects.filter(project => !project.active).forEach(project => project.deleteData());
+
     const weightedProjects = this.getWeightedProjects();
     const newProjects = weightedProjects.slice(0, inactiveCount).map(item => item.project);
+    const nonSelectedItems = weightedProjects.slice(inactiveCount);
+    nonSelectedItems.forEach(item => item.project.deleteData());
 
     this.selectedProjects = this.selectedProjects.map(project =>
       project.active ? project : newProjects.shift()
@@ -146,8 +150,13 @@ export class ProjectManager {
   }
 
   selectAllNewProjects() {
+    this.selectedProjects.forEach(project => project.deleteData());
+
     const weightedProjects = this.getWeightedProjects();
-    this.selectedProjects = weightedProjects.slice(0, 4).map(item => item.project);
+    const selectedItems = weightedProjects.slice(0, 4);
+    const nonSelectedItems = weightedProjects.slice(4);
+    nonSelectedItems.forEach(item => item.project.deleteData());
+    this.selectedProjects = selectedItems.map(item => item.project);
   }
 
   getWeightedProjects() {

@@ -142,6 +142,10 @@ export class Project {
     }
   }
 
+  deleteData() {
+    localStorage.removeItem(`${this.dataName}Data`);
+  }
+
   resetForBankruptcy() {
     clearInterval(this.timerInterval);
     this.projectProgress = 0;
