@@ -88,6 +88,7 @@ export class Upgrades {
             default:
                 break;
         }
+        this.game.notifyUpdate();
         this.saveData();
         return success;
     }

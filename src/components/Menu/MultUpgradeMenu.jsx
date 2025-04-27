@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useSyncExternalStore } from "react";
 import game from "../../game/Game";
 import Button from "../BottomLeft/Button/Button";
 import CloseButton from "./CloseButton";
 import styles from "./MultUpgradeMenu.module.css";
+import getCached from "../../util/getCached";
 
-const MultUpgradeMenu = ({ onClose }) => {
-  const initialUpgrades = [
+const getUpgrades = () => {
+  return [
     {
       id: 1,
       label: "Upgrade 1",
@@ -24,19 +25,15 @@ const MultUpgradeMenu = ({ onClose }) => {
       price: 1.0,
       bought: game.upgrades.multUpgrades[2],
     },
-  ];
+  ]
+}
 
-  const [upgrades, setUpgrades] = useState(initialUpgrades);
+const MultUpgradeMenu = ({ onClose }) => {
+
+  const upgrades = useSyncExternalStore(game.subscribe.bind(game), getCached(getUpgrades));
 
   const handleAction = (id) => {
-    const success = game.upgrades.multUpgrade(id);
-    if (success) {
-      setUpgrades((prevUpgrades) =>
-        prevUpgrades.map((upgrade) =>
-          upgrade.id === id ? { ...upgrade, bought: true } : upgrade
-        )
-      );
-    }
+    game.upgrades.multUpgrade(id);
   };
 
   return (
