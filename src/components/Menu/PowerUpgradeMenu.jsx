@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import game from '../../game/Game';
 import Button from '../BottomLeft/Button/Button';
-import { useState } from 'react';
+import CloseButton from './CloseButton';
 import styles from './PowerUpgradeMenu.module.css';
 
 const PowerUpgradeMenu = ({ onClose }) => {
@@ -26,7 +26,10 @@ const PowerUpgradeMenu = ({ onClose }) => {
   };
 
   return (
-    <div className={styles.buttonsContainer}>
+    <div 
+      className={styles.buttonsContainer}
+    >
+      <CloseButton onClick={onClose} />
       {upgrades.map((upgrade) => (
         <Button
           key={upgrade.id}
@@ -37,6 +40,7 @@ const PowerUpgradeMenu = ({ onClose }) => {
         >
         </Button>
       ))}
+      
     </div>
   );
 }

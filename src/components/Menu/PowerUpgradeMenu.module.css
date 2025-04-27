@@ -1,4 +1,6 @@
 .buttonsContainer {
+  position: relative;
+  padding-top: 66px;
   display: flex;
   flex-direction: column;
   gap: 8px;
