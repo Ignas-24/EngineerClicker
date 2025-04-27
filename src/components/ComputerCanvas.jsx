@@ -21,6 +21,7 @@ const playClickSound = () => {
 
 const ComputerCanvas = ({ onClick }) => {
     const [text, addText] = useState([]);
+    const [, setCurrentString] = useState("");
     const [consoleStyles, setConsoleStyles] = useState();
 
     const canvasRef = useRef(null);
@@ -36,7 +37,41 @@ const ComputerCanvas = ({ onClick }) => {
             game.resourceManager.addEurosClicked();
         }
         playClickSound();
-        addText((prev) => [...prev, "test"]);
+
+        setCurrentString((previousString) => {
+            let newString = previousString;
+            if (newString === "") {
+                newString = "\n" + Array.from(
+                    { length: Math.floor(Math.random() * 15) + 1 },
+                    () => {
+                        const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\"',.;:?!";
+                        return charset[Math.floor(Math.random() * charset.length)];
+                    }
+                ).join("");
+            }
+
+            let output = newString[0];
+            newString = newString.slice(1);
+            let newLine = false;
+            if (output === "\n") {
+                output = newString[0];
+                newString = newString.slice(1);
+                newLine = true;
+            }
+            addText((prevText) => {
+                let updatedText;
+                if (newLine) {
+                    updatedText = [...prevText, "\n", output];
+                } else {
+                    const lastLine = prevText[prevText.length - 1] || "";
+                    updatedText = [...prevText.slice(0, -1), lastLine + output];
+                }
+
+                return updatedText.slice(-5); // keep the last 5 lines in memory
+            });
+            return newString;
+        });
+
         if (onClick) onClick();
     }
 
