@@ -74,7 +74,7 @@ export class LoanManager {
     this.totalLoanToRepay = amount * (1 + this.loanInterestRate);
     this.remainingLoanAmount = this.totalLoanToRepay;
     this.paymentClock = this.paymentInterval;
-    this.game.resourceManager.euro += amount;
+    this.game.resourceManager.changeEuros(amount);
     if(this.loanAmount===maxAmount)
     {
       this.game.stats.increment("MaxLoans",1);
