@@ -42,7 +42,7 @@ const ComputerCanvas = ({ onClick }) => {
             let newString = previousString;
             if (newString === "") {
                 newString = "\n" + Array.from(
-                    { length: Math.floor(Math.random() * 15) + 1 },
+                    { length: Math.floor(Math.random() * 20) + 1 },
                     () => {
                         const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\"',.;:?!";
                         return charset[Math.floor(Math.random() * charset.length)];
@@ -50,12 +50,11 @@ const ComputerCanvas = ({ onClick }) => {
                 ).join("");
             }
 
-            let output = newString[0];
-            newString = newString.slice(1);
+            let len = Math.min(Math.ceil(Math.sqrt(Math.random() * 5)+1), newString.length);
+            let output = newString.slice(0, len);
+            newString = newString.slice(len);
             let newLine = false;
-            if (output === "\n") {
-                output = newString[0];
-                newString = newString.slice(1);
+            if (output[0] === "\n") {
                 newLine = true;
             }
             addText((prevText) => {
@@ -67,7 +66,7 @@ const ComputerCanvas = ({ onClick }) => {
                     updatedText = [...prevText.slice(0, -1), lastLine + output];
                 }
 
-                return updatedText.slice(-5); // keep the last 5 lines in memory
+                return updatedText.slice(-10); // keep the last 10 lines in memory
             });
             return newString;
         });
@@ -81,7 +80,7 @@ const ComputerCanvas = ({ onClick }) => {
         const app = appRef.current;
         const sprite = spriteRef.current;
         const background = backgroundRef.current;
-        sprite.setSize(app.screen.height / 2);
+        sprite.setSize(app.screen.height / 2 * 1.4);
         sprite.position.set(app.screen.width / 2, app.screen.height / 2);
 
         background.width = app.screen.width;
@@ -115,7 +114,7 @@ const ComputerCanvas = ({ onClick }) => {
 
             const sprite = new PIXI.Sprite(texture);
             spriteRef.current = sprite;
-            sprite.setSize(app.screen.height / 2);
+            sprite.setSize(app.screen.height / 2 * 1.4);
             sprite.anchor.set(0.5);
             sprite.position.set(app.screen.width / 2, app.screen.height / 2);
             sprite.eventMode = "static";
@@ -171,7 +170,7 @@ const ComputerCanvas = ({ onClick }) => {
             ref={canvasRef}
             style={{ position: "relative", width: "100%", height: "100%" }}
         >
-            <Console textState={text} styles={consoleStyles} onClick={handleClick}/>
+            <Console textState={text} styles={consoleStyles} onClick={handleClick} />
         </div>
     );
 };
