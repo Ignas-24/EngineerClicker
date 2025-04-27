@@ -136,7 +136,7 @@ const ComputerCanvas = ({ onClick }) => {
             ref={canvasRef}
             style={{ position: "relative", width: "100%", height: "100%" }}
         >
-            <Console textState={text} styles={consoleStyles} />
+            <Console textState={text} styles={consoleStyles} onClick={handleClick}/>
         </div>
     );
 };

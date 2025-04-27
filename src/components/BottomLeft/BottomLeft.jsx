@@ -1,31 +1,26 @@
-import React, { useState, useSyncExternalStore, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "./Button/Button";
 import styles from "./BottomLeft.module.css";
-import game from "../../game/Game.js";
-import PowerUpgradePopUp from "./PopUp/PowerUpgradePopUp";
-import MultUpgradePopUp from "./PopUp/MultUpgradePopUp";
-import ProjectSelectPopUp from "./PopUp/ProjectSelectPopUp";
-import LoanPopUp from "./PopUp/LoanPopUp";
+import { useMenu } from "../../contexts/MenuContext.jsx";
 import BankruptcyPopUp from "./PopUp/BankruptcyPopUp";
-import CompanyPopUp from "./PopUp/CompanyPopUp";
-
+import LoanPopUp from "./PopUp/LoanPopUp";
 import Achievement_window from "./Achievements/Achievement_window";
 import Achievement_button from "./Achievements/Achievements_button";
+import game from "../../game/Game.js";
+import { useSyncExternalStore } from "react";
 
 const BottomLeft = () => {
-  const [isPowerOpen, setPowerOpen] = useState(false);
-  const [isMultOpen, setMultOpen] = useState(false);
-  const [isProjectOpen, setProjectOpen] = useState(false);
-  const [isLoanOpen, setLoanOpen] = useState(false);
-  const [isCompanyOpen, setCompanyOpen] = useState(false);
+  const { openMenu, toggleMenu } = useMenu();
+  const [loanOpen, setLoanOpen] = useState(false);
 
-  const inDebt = useSyncExternalStore(game.subscribe.bind(game), () => game.loanManager.inDebt);
-
+  const inDebt = useSyncExternalStore(
+    game.subscribe.bind(game),
+    () => game.loanManager.inDebt
+  );
   const currentCompany = useSyncExternalStore(
     game.subscribe.bind(game),
     () => game.companyManager.currentCompany
   );
-
 
   const companyLabel = currentCompany
     ? `${
@@ -50,21 +45,18 @@ const BottomLeft = () => {
   return (
     <div className={styles.bottomLeft}>
       <Button label="Bank" onClick={() => setLoanOpen(true)} />
-      <Button label={companyLabel} onClick={() => setCompanyOpen(!isCompanyOpen)} />
-      {isCompanyOpen && <CompanyPopUp onClose={() => setCompanyOpen(false)} />}
-      <Button label="Open Power Upgrades" onClick={() => setPowerOpen(!isPowerOpen)} />
-      {isPowerOpen && <PowerUpgradePopUp onClose={() => setPowerOpen(false)} />}
-      <Button label="Open Multiplier Upgrades" onClick={() => setMultOpen(!isMultOpen)} />
-      {isMultOpen && <MultUpgradePopUp onClose={() => setMultOpen(false)} />}
-      <Button label="Open Available Projects" onClick={() => setProjectOpen(!isProjectOpen)} />
-      {isProjectOpen && <ProjectSelectPopUp onClose={() => setProjectOpen(false)} />}
+      <Button label={companyLabel} onClick={() => toggleMenu("company")} />
+      <Button label="Open Power Upgrades" onClick={() => toggleMenu("power")} />
+      <Button label="Open Multiplier Upgrades" onClick={() => toggleMenu("mult")} />
+      <Button label="Open Available Projects" onClick={() => toggleMenu("project")} />
 
-      {isLoanOpen && <LoanPopUp onClose={() => setLoanOpen(false)} />}
-      {(!isLoanOpen && inDebt) && (
+      {loanOpen && (
+        <LoanPopUp onClose={() => setLoanOpen(false)} />
+      )}
+      {!loanOpen && inDebt && (
         <BankruptcyPopUp
-          onTakeLoan={() => {
-            setLoanOpen(true);
-          }}
+          onClose={() => setLoanOpen(false)}
+          onTakeLoan={() => setLoanOpen(true)}
         />
       )}
       <Achievement_button onClick={openAchievements}/>
