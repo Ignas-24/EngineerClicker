@@ -7,6 +7,7 @@ export class ProjectManager {
   largeProject = { sizeInterval: [30, 200], rewardInterval: [2, 4], deadlineInterval: [120, 180] };
   selectedProjects = [];
   cooldown = 0;
+  TIMER_PERIOD_MS = 1000;
   timerInterval = null;
   projectRegistry = {};
   completedProjectsThisReset = 0;
@@ -197,11 +198,11 @@ export class ProjectManager {
         clearInterval(this.timerInterval);
         this.game.notifyUpdate();
       } else {
-        this.cooldown--;
+        this.cooldown -= this.TIMER_PERIOD_MS / 1000;
         this.saveData();
         this.game.notifyUpdate();
       }
-    }, 100);
+    }, this.TIMER_PERIOD_MS);
   }
 
   saveData() {
