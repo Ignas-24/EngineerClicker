@@ -7,6 +7,7 @@ export class Project {
   projectDeadline;
   remainingTime;
   timerInterval = null; 
+  TIMER_PERIOD_MS = 1000;
   active = false;
   completed = false;
   failed = false;
@@ -84,11 +85,11 @@ export class Project {
         clearInterval(this.timerInterval);
         this.onTimerComplete();
       } else {
-        this.remainingTime--;
+        this.remainingTime -= this.TIMER_PERIOD_MS / 1000;
         this.saveData();
         this.game.notifyUpdate();
       }
-    }, 1000);
+    }, this.TIMER_PERIOD_MS);
   }
 
   stopTimer() {
