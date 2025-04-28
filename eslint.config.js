@@ -36,6 +36,24 @@ export default [
     },
   },
   {
+    files: ["src/game/**/*.js"],
+    ignores: ['**/__tests__/**'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
+    plugins: {
+      'custom': customRules,
+    },
+    rules: {
+      'custom/require-notify-after-game-mutation': 'warn',
+    }
+  },
+  {
     files: ["**/__tests__/**"],
     languageOptions: {
       globals: {
