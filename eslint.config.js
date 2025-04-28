@@ -33,6 +33,8 @@ export default [
         { allowConstantExport: true },
       ],
       'custom/numeric-separators': 'warn',
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'custom/require-less-indentations': 'warn'
     },
   },
   {
