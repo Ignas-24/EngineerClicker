@@ -39,10 +39,9 @@ export default [
     files: ["src/game/**/*.js"],
     ignores: ['**/__tests__/**'],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 'latest',
       globals: globals.browser,
       parserOptions: {
-        ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
         sourceType: 'module',
       },
