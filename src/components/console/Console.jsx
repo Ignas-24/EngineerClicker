@@ -130,10 +130,10 @@ export default function Console( { textState, styles, onClick } ) {
         
         </div>
       </div>
-      <div className="console_contents" ref = {consoleContent}>
-      {textState.map((msg, index) => (
-        <p key={index}>{msg}</p>
-      ))}
+      <div className="console_contents" ref={consoleContent}>
+        {textState.map((line, index) => (
+          <p className="console_text" key={index}>{line}</p>
+        ))}
       </div>
     </div>
 

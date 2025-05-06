@@ -39,9 +39,9 @@ export class LoanManager {
         this.declareBankruptcy();
       }
       this.paymentClock = this.paymentInterval;
-      this.saveData();
-      this.game.notifyUpdate();
     }
+    this.saveData();
+    this.game.notifyUpdate();
   }
 
   getMaxLoanAmount() {
@@ -74,7 +74,7 @@ export class LoanManager {
     this.totalLoanToRepay = amount * (1 + this.loanInterestRate);
     this.remainingLoanAmount = this.totalLoanToRepay;
     this.paymentClock = this.paymentInterval;
-    this.game.resourceManager.euro += amount;
+    this.game.resourceManager.changeEuros(amount);
     if(this.loanAmount===maxAmount)
     {
       this.game.stats.increment("MaxLoans",1);

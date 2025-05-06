@@ -7,6 +7,7 @@ export class ProjectManager {
   largeProject = { sizeInterval: [30, 200], rewardInterval: [2, 4], deadlineInterval: [120, 180] };
   selectedProjects = [];
   cooldown = 0;
+  TIMER_PERIOD_MS = 1000;
   timerInterval = null;
   projectRegistry = {};
   completedProjectsThisReset = 0;
@@ -137,8 +138,12 @@ export class ProjectManager {
     const activeProjects = this.selectedProjects.filter(project => project.active);
     const inactiveCount = 4 - activeProjects.length;
 
+    this.selectedProjects.filter(project => !project.active).forEach(project => project.deleteData());
+
     const weightedProjects = this.getWeightedProjects();
     const newProjects = weightedProjects.slice(0, inactiveCount).map(item => item.project);
+    const nonSelectedItems = weightedProjects.slice(inactiveCount);
+    nonSelectedItems.forEach(item => item.project.deleteData());
 
     this.selectedProjects = this.selectedProjects.map(project =>
       project.active ? project : newProjects.shift()
@@ -146,8 +151,13 @@ export class ProjectManager {
   }
 
   selectAllNewProjects() {
+    this.selectedProjects.forEach(project => project.deleteData());
+
     const weightedProjects = this.getWeightedProjects();
-    this.selectedProjects = weightedProjects.slice(0, 4).map(item => item.project);
+    const selectedItems = weightedProjects.slice(0, 4);
+    const nonSelectedItems = weightedProjects.slice(4);
+    nonSelectedItems.forEach(item => item.project.deleteData());
+    this.selectedProjects = selectedItems.map(item => item.project);
   }
 
   getWeightedProjects() {
@@ -188,11 +198,11 @@ export class ProjectManager {
         clearInterval(this.timerInterval);
         this.game.notifyUpdate();
       } else {
-        this.cooldown--;
+        this.cooldown -= this.TIMER_PERIOD_MS / 1000;
         this.saveData();
         this.game.notifyUpdate();
       }
-    }, 100);
+    }, this.TIMER_PERIOD_MS);
   }
 
   saveData() {
@@ -249,6 +259,7 @@ export class ProjectManager {
   }
 
   resetForBankruptcy() {
+    this.completedProjectsThisReset = 0;
     this.selectedProjects.forEach(project => {
       if (project.active) {
         project.resetForBankruptcy();

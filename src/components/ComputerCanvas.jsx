@@ -21,6 +21,7 @@ const playClickSound = () => {
 
 const ComputerCanvas = ({ onClick }) => {
     const [text, addText] = useState([]);
+    const [, setCurrentString] = useState("");
     const [consoleStyles, setConsoleStyles] = useState();
 
     const canvasRef = useRef(null);
@@ -36,7 +37,40 @@ const ComputerCanvas = ({ onClick }) => {
             game.resourceManager.addEurosClicked();
         }
         playClickSound();
-        addText((prev) => [...prev, "test"]);
+
+        setCurrentString((previousString) => {
+            let newString = previousString;
+            if (newString === "") {
+                newString = "\n" + Array.from(
+                    { length: Math.floor(Math.random() * 20) + 1 },
+                    () => {
+                        const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\"',.;:?!";
+                        return charset[Math.floor(Math.random() * charset.length)];
+                    }
+                ).join("");
+            }
+
+            let len = Math.min(Math.ceil(Math.sqrt(Math.random() * 5)+1), newString.length);
+            let output = newString.slice(0, len);
+            newString = newString.slice(len);
+            let newLine = false;
+            if (output[0] === "\n") {
+                newLine = true;
+            }
+            addText((prevText) => {
+                let updatedText;
+                if (newLine) {
+                    updatedText = [...prevText, "\n", output];
+                } else {
+                    const lastLine = prevText[prevText.length - 1] || "";
+                    updatedText = [...prevText.slice(0, -1), lastLine + output];
+                }
+
+                return updatedText.slice(-10); // keep the last 10 lines in memory
+            });
+            return newString;
+        });
+
         if (onClick) onClick();
     }
 
@@ -46,7 +80,7 @@ const ComputerCanvas = ({ onClick }) => {
         const app = appRef.current;
         const sprite = spriteRef.current;
         const background = backgroundRef.current;
-        sprite.setSize(app.screen.height / 2);
+        sprite.setSize(app.screen.height / 2 * 1.4);
         sprite.position.set(app.screen.width / 2, app.screen.height / 2);
 
         background.width = app.screen.width;
@@ -80,7 +114,7 @@ const ComputerCanvas = ({ onClick }) => {
 
             const sprite = new PIXI.Sprite(texture);
             spriteRef.current = sprite;
-            sprite.setSize(app.screen.height / 2);
+            sprite.setSize(app.screen.height / 2 * 1.4);
             sprite.anchor.set(0.5);
             sprite.position.set(app.screen.width / 2, app.screen.height / 2);
             sprite.eventMode = "static";
@@ -136,7 +170,7 @@ const ComputerCanvas = ({ onClick }) => {
             ref={canvasRef}
             style={{ position: "relative", width: "100%", height: "100%" }}
         >
-            <Console textState={text} styles={consoleStyles} onClick={handleClick}/>
+            <Console textState={text} styles={consoleStyles} onClick={handleClick} />
         </div>
     );
 };
