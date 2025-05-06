@@ -10,6 +10,7 @@ export class ResourceManager {
   constructor(game) {
     this.game = game;
     this.loadData();
+    this.game.notifyUpdate();
   }
 
   addEurosClicked() {
@@ -76,6 +77,7 @@ export class ResourceManager {
       this.clickPowerIncrease = data.clickPowerIncrease || 0;
       this.clickPower = data.clickPower || this.initClickPower;
     }
+    this.game.notifyUpdate();
   }
 
   resetForBankruptcy() {
@@ -83,5 +85,6 @@ export class ResourceManager {
     this.clickPowerIncrease = 0;
     this.clickPower = this.initClickPower;
     this.saveData();
+    this.game.notifyUpdate();
   }
 }

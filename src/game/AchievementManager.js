@@ -8,6 +8,7 @@ export class AchievementManager {
     this.game = game;
     this.achievements = [];
     this.loadAchievements();
+    this.game.notifyUpdate();
   }
 
   createDefaultAchievements() {
@@ -145,7 +146,7 @@ export class AchievementManager {
         this.saveAchievements();
     }
 
-
+    this.game.notifyUpdate();
   }
 
   checkAchievements() {

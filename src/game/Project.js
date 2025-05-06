@@ -25,6 +25,7 @@ export class Project {
       ? `${this.projectName.replace(/ /g, "_")}_${Date.now()}`
       : 'Project');
     this.loadData();
+    this.game.notifyUpdate();
   }
 
   isActive() {
@@ -97,6 +98,7 @@ export class Project {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
     }
+    this.game.notifyUpdate();
   }
 
   onTimerComplete() {
@@ -141,6 +143,7 @@ export class Project {
       this.failed = data.failed || false;
       this.active = data.isActive || false;
     }
+    this.game.notifyUpdate();
   }
 
   deleteData() {
@@ -154,5 +157,6 @@ export class Project {
     this.remainingTime = 0;
     this.active = false;
     this.saveData();
+    this.game.notifyUpdate();
   }
 }

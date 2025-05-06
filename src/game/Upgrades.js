@@ -11,6 +11,7 @@ export class Upgrades {
     constructor(game) {
         this.game = game;
         this.loadData();
+        this.game.notifyUpdate();
     }
 
     powerUpgrade(upgradeIndex){
@@ -133,11 +134,13 @@ export class Upgrades {
             reward3: false, size3: false, speed3: false, biggerProjects3: false,
         };
         this.saveData();
+        this.game.notifyUpdate();
     }
   
     resetPowerUpgrades() {
         this.powerUpgrades = [false, false, false, false];
         this.saveData();
+        this.game.notifyUpdate();
     }
 
     saveData() {
@@ -161,10 +164,12 @@ export class Upgrades {
                 reward3: false, size3: false, speed3: false, biggerProjects3: false,
             };
         }
+        this.game.notifyUpdate();
     }
 
     resetForBankruptcy() {
       this.powerUpgrades = [ false, false, false, false ];
       this.saveData();
+      this.game.notifyUpdate();
     }
   }

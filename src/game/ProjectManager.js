@@ -21,6 +21,7 @@ export class ProjectManager {
     if (this.selectedProjects.length === 0) {
       this.selectProjects();
     }
+    this.game.notifyUpdate();
   }
 
   getRandomInt(min, max) {
@@ -59,7 +60,7 @@ export class ProjectManager {
     const project = new Project(this.game, size, reward, deadline, projectName);
     this.projectRegistry[project.dataName] = project;
     project.saveData();
-
+    this.game.notifyUpdate();
     return project;
   }
 
@@ -148,6 +149,7 @@ export class ProjectManager {
     this.selectedProjects = this.selectedProjects.map(project =>
       project.active ? project : newProjects.shift()
     );
+    this.game.notifyUpdate();
   }
 
   selectAllNewProjects() {
@@ -158,6 +160,7 @@ export class ProjectManager {
     const nonSelectedItems = weightedProjects.slice(4);
     nonSelectedItems.forEach(item => item.project.deleteData());
     this.selectedProjects = selectedItems.map(item => item.project);
+    this.game.notifyUpdate();
   }
 
   getWeightedProjects() {
@@ -228,6 +231,7 @@ export class ProjectManager {
       this.cooldown = data.cooldown || 0;
       this.startTimer(this.cooldown);
     }
+    this.game.notifyUpdate();
   }
 
   loadProjects(projectKeys) {
@@ -238,6 +242,7 @@ export class ProjectManager {
       }
       return undefined;
     }).filter(project => project !== undefined);
+    this.game.notifyUpdate();
   }
 
   createProjectFromData(parsedData, key) {
@@ -255,6 +260,7 @@ export class ProjectManager {
     project.failed = parsedData.failed;
     project.active = parsedData.isActive;
     this.projectRegistry[key] = project;
+    this.game.notifyUpdate();
     return project;
   }
 
@@ -267,5 +273,6 @@ export class ProjectManager {
     });
     this.selectProjects();
     this.saveData();
+    this.game.notifyUpdate();
   }
 }
