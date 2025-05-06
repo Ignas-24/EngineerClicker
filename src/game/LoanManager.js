@@ -39,9 +39,9 @@ export class LoanManager {
         this.declareBankruptcy();
       }
       this.paymentClock = this.paymentInterval;
-      this.saveData();
-      this.game.notifyUpdate();
     }
+    this.saveData();
+    this.game.notifyUpdate();
   }
 
   getMaxLoanAmount() {
