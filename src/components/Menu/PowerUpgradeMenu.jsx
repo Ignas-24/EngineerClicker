@@ -5,32 +5,14 @@ import Button from "../BottomLeft/Button/Button";
 import CloseButton from "./CloseButton";
 import styles from "./PowerUpgradeMenu.module.css";
 
-const getUpgrades = () => [
-  {
-    id: 1,
-    label: "Upgrade 1",
-    price: 0.5,
-    bought: game.upgrades.powerUpgrades[0],
-  },
-  {
-    id: 2,
-    label: "Upgrade 2",
-    price: 1.0,
-    bought: game.upgrades.powerUpgrades[1],
-  },
-  {
-    id: 3,
-    label: "Upgrade 3",
-    price: 5.0,
-    bought: game.upgrades.powerUpgrades[2],
-  },
-  {
-    id: 4,
-    label: "Upgrade 4",
-    price: 20.0,
-    bought: game.upgrades.powerUpgrades[3],
-  },
-];
+const getUpgrades = () => {
+  return game.upgrades.powerUpgradeData.map((upgrade, index) => ({
+    id: upgrade.id,
+    label: `Upgrade ${upgrade.id}`,
+    price: upgrade.price,
+    bought: game.upgrades.powerUpgrades[index]
+  }));
+};
 
 const PowerUpgradeMenu = ({ onClose }) => {
   const upgrades = useSyncExternalStore(

@@ -8,109 +8,89 @@ export class Upgrades {
         reward3: false, size3: false, speed3: false, biggerProjects3: false, // Tier 3
     };
 
+    powerUpgradeData = [
+        { id: 1, price: 0.5, power: 0.01 },
+        { id: 2, price: 1.0, power: 0.01 },
+        { id: 3, price: 5.0, power: 0.02 },
+        { id: 4, price: 20.0, power: 0.05 }
+    ];
+
+    multiplierUpgradeData = [
+        { id: 1, price: 1.0, multiplier: 2, requires: null },
+        { id: 2, price: 1.0, multiplier: 3, requires: 1 },
+        { id: 3, price: 1.0, multiplier: 4, requires: 2 }
+    ];
+
+    companyUpgradeData = {
+        small: { reward: 1000, size: 3000, speed: 3000, biggerProjects: 5000 },
+        medium: { reward2: 1000, size2: 3000, speed2: 10000, biggerProjects2: 2000 },
+        large: { reward3: 1000, size3: 3000, speed3: 50000, biggerProjects3: 75000 },
+    };
+
+    upkeepIncreases = { small: 100, medium: 250, large: 1000 };
+
     constructor(game) {
         this.game = game;
         this.loadData();
         this.game.notifyUpdate();
     }
 
-    powerUpgrade(upgradeIndex){
-        let success = false;
-        switch(upgradeIndex){
-            case 1:
-                if(this.powerUpgrades[0] === true) break
-                if(this.game.resourceManager.euro < 0.5) break
-                this.game.resourceManager.addClickPower(0.01);
-                this.game.resourceManager.changeEuros(-0.5);
-                this.powerUpgrades[0] = true;
-                success = true;
-                break;
-            case 2:
-                if(this.powerUpgrades[1] === true) break;
-                if(this.game.resourceManager.euro < 1) break;
-                this.game.resourceManager.addClickPower(0.01);
-                this.game.resourceManager.changeEuros(-1);
-                this.powerUpgrades[1] = true;
-                success = true;
-                break;
-            case 3:
-                if(this.powerUpgrades[2] === true) break;
-                if(this.game.resourceManager.euro < 5) break;
-                this.game.resourceManager.addClickPower(0.02);
-                this.game.resourceManager.changeEuros(-5);
-                this.powerUpgrades[2] = true;
-                success = true;
-                break;
-            case 4:
-                if(this.powerUpgrades[3] === true) break;
-                if(this.game.resourceManager.euro < 20) break;
-                this.game.resourceManager.addClickPower(0.05);
-                this.game.resourceManager.changeEuros(-20);
-                this.powerUpgrades[3] = true;
-                success = true;
-                break;
-            default:
-                break;
-        }
+    powerUpgrade(upgradeIndex) {
+        if (upgradeIndex < 1 || upgradeIndex > this.powerUpgradeData.length) return false;
+        
+        const index = upgradeIndex - 1;
+        const upgrade = this.powerUpgradeData[index];
+        
+        // Check if already purchased
+        if (this.powerUpgrades[index]) return false;
+        
+        // Check if enough resources
+        if (this.game.resourceManager.euro < upgrade.price) return false;
+        
+        // Apply effect
+        this.game.resourceManager.addClickPower(upgrade.power);
+        this.game.resourceManager.changeEuros(-upgrade.price);
+        this.powerUpgrades[index] = true;
+        
         this.game.notifyUpdate();
         this.saveData();
-        return success;
+        return true;
     }
 
-    multUpgrade(upgradeIndex){
-        let success = false;
-        switch(upgradeIndex){
-            case 1:
-                if(this.multUpgrades[0] === true) break;
-                if(this.game.resourceManager.prestige < 1) break;
-                this.game.resourceManager.setMultiplier(2);
-                this.game.resourceManager.changePrestige(-1);
-                this.multUpgrades[0] = true;
-                success = true;
-                break;
-            case 2:
-                if(this.multUpgrades[1] === true) break;
-                if(this.multUpgrades[0] === false) break;
-                if(this.game.resourceManager.prestige < 1) break;
-                this.game.resourceManager.setMultiplier(3);
-                this.game.resourceManager.changePrestige(-1);
-                this.multUpgrades[1] = true;
-                success = true;
-                break;
-            case 3:
-                if(this.multUpgrades[2] === true) break;
-                if(this.multUpgrades[1] === false) break;
-                if(this.game.resourceManager.prestige < 1) break;
-                this.game.resourceManager.setMultiplier(4);
-                this.game.resourceManager.changePrestige(-1);
-                this.multUpgrades[2] = true;
-                success = true;
-                break;
-            default:
-                break;
-        }
+    multUpgrade(upgradeIndex) {
+        if (upgradeIndex < 1 || upgradeIndex > this.multiplierUpgradeData.length) return false;
+        
+        const index = upgradeIndex - 1;
+        const upgrade = this.multiplierUpgradeData[index];
+        
+        // Check if already purchased
+        if (this.multUpgrades[index]) return false;
+        
+        // Check prerequisites
+        if (upgrade.requires !== null && !this.multUpgrades[upgrade.requires - 1]) return false;
+        
+        // Check if enough resources
+        if (this.game.resourceManager.prestige < upgrade.price) return false;
+        
+        // Apply effect
+        this.game.resourceManager.setMultiplier(upgrade.multiplier);
+        this.game.resourceManager.changePrestige(-upgrade.price);
+        this.multUpgrades[index] = true;
+        
         this.game.notifyUpdate();
         this.saveData();
-        return success;
+        return true;
     }
 
     buyCompanyUpgrade(upgradeKey) {
-        const upgradeCosts = {
-            small: { reward: 1000, size: 3000, speed: 3000, biggerProjects: 5000 },
-            medium: { reward2: 1000, size2: 3000, speed2: 10000, biggerProjects2: 2000 },
-            large: { reward3: 1000, size3: 3000, speed3: 50000, biggerProjects3: 75000 },
-        };
-
-        const upkeepIncreases = { small: 100, medium: 250, large: 1000 };
-
         const companyType = this.game.companyManager.currentCompany?.type;
         if (!companyType || this.companyUpgrades[upgradeKey]) return false;
 
         let cost, upkeepIncrease;
         for (const type of ["small", "medium", "large"]) {
-            if (upgradeCosts[type][upgradeKey] !== undefined) {
-                cost = upgradeCosts[type][upgradeKey];
-                upkeepIncrease = upkeepIncreases[type];
+            if (this.companyUpgradeData[type][upgradeKey] !== undefined) {
+                cost = this.companyUpgradeData[type][upgradeKey];
+                upkeepIncrease = this.upkeepIncreases[type];
                 break;
             }
             if (type === companyType) break;
@@ -168,8 +148,8 @@ export class Upgrades {
     }
 
     resetForBankruptcy() {
-      this.powerUpgrades = [ false, false, false, false ];
-      this.saveData();
-      this.game.notifyUpdate();
+        this.powerUpgrades = [false, false, false, false];
+        this.saveData();
+        this.game.notifyUpdate();
     }
-  }
+}
