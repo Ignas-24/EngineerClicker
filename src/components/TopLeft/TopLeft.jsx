@@ -1,73 +1,47 @@
 import React, { useSyncExternalStore } from "react";
 import styles from "./TopLeft.module.css";
 import game from "../../game/Game";
+import getCached from "../../util/getCached";
 
 const TopLeft = () => {
-  const activeProject = game.projectManager.selectedProjects.find(p => p.active);
-  if (activeProject) {
-    game.project = activeProject;
-  }
-  
-  const euros = useSyncExternalStore(
+  const { euros, prestige, multiplier, clickPower } = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.resourceManager.euro
+    getCached(() => ({
+      euros: game.resourceManager.euro,
+      prestige: game.resourceManager.prestige,
+      multiplier: game.resourceManager.multiplier,
+      clickPower: game.resourceManager.clickPower
+    }))
   );
 
-  const prestige = useSyncExternalStore(
+  const { hasLoan, remainingLoanAmount } = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.resourceManager.prestige
+    getCached(() => ({
+      hasLoan: game.loanManager.hasLoan,
+      remainingLoanAmount: game.loanManager.remainingLoanAmount
+    }))
   );
 
-  const multiplier = useSyncExternalStore(
+  const { projectName, projectProgress, projectSize, projectRemainingTime, activeProject } = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.resourceManager.multiplier
-  );
-
-  const clickPower = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => game.resourceManager.clickPower
-  );
-
-  const hasLoan = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => game.loanManager.hasLoan
-  );
-
-  const remainingLoanAmount = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => game.loanManager.remainingLoanAmount
-  );
-
-  const projectName = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => {
+    getCached(() => {
+      // TODO: should be part of ProjectManager
+      const activeProject = game.projectManager.selectedProjects.find(p => p.active);
+      if (activeProject) {
+        game.project = activeProject;
+      }
+      
       const project = game.project;
-      return project && !project.completed && !project.failed ? project.projectName : "None selected"
-    }
-  );
-
-  const projectProgress = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => {
-      const project = game.project;
-      return project && !project.completed && !project.failed ? project.projectProgress : 0;
-    }
-  );
-
-  const projectSize = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => {
-      const project = game.project 
-      return project && !project.completed && !project.failed ? game.project.projectSize : 0
-    }
-  );
-
-  const projectRemainingTime = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => {
-      const project = game.project;
-      return project && !project.completed && !project.failed ? project.remainingTime : 0;
-    }
+      const isActiveProject = project && !project.completed && !project.failed;
+      
+      return {
+        activeProject,
+        projectName: isActiveProject ? project.projectName : "None selected",
+        projectProgress: isActiveProject ? project.projectProgress : 0,
+        projectSize: isActiveProject ? project.projectSize : 0,
+        projectRemainingTime: isActiveProject ? project.remainingTime : 0
+      };
+    })
   );
 
   return (

@@ -115,7 +115,6 @@ export class AchievementManager {
     const saved = localStorage.getItem("AchievementsData");
     if (saved) {
         const parsed = JSON.parse(saved);
-;
 
         const defaultAchievements = this.createDefaultAchievements();
 
@@ -165,6 +164,8 @@ export class AchievementManager {
   }
 
   getAchievements() {
+    console.log('fun: ', Object.entries(this.achievements[5]));
+    // setTimeout(() => {}, 10000);
     return this.achievements;
   }
 }

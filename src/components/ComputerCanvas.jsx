@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import click1 from "../assets/click1.mp3";
 import click2 from "../assets/click2.mp3";
 import click3 from "../assets/click3.mp3";
@@ -28,12 +28,13 @@ const ComputerCanvas = ({ onClick }) => {
     const appRef = useRef(null);
     const spriteRef = useRef(null);
     const backgroundRef = useRef(null);
-
+    const activeProject = useSyncExternalStore(game.subscribe.bind(game), () => game.project?.isActive());
+    
     function handleClick(sprite) {
-        if (game.project.isActive()) {
+        if (activeProject) {
             game.project.addProgress();
         }
-        else if (!game.project.isActive()) {
+        else {
             game.resourceManager.addEurosClicked();
         }
         playClickSound();
@@ -135,6 +136,7 @@ const ComputerCanvas = ({ onClick }) => {
                 const targetBottomRight = { x: 815, y: 563 };
 
                 if (spriteBounds)
+                    // TODO: This causes 100s of rerenders per second
                     setConsoleStyles({
                         left: Math.floor(
                             spriteBounds.minX +
@@ -165,6 +167,7 @@ const ComputerCanvas = ({ onClick }) => {
     }, []);
 
     return (
+        <>
         <div
             onResize={handleResize}
             ref={canvasRef}
@@ -172,6 +175,7 @@ const ComputerCanvas = ({ onClick }) => {
         >
             <Console textState={text} styles={consoleStyles} onClick={handleClick} />
         </div>
+        </>
     );
 };
 export default ComputerCanvas;

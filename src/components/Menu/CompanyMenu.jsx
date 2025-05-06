@@ -10,18 +10,17 @@ const CompanyMenu = ({ onClose }) => {
   const [isUpgradeOpen, setUpgradeOpen] = useState(false);
   const [isDeveloperOpen, setDeveloperOpen] = useState(false);
 
-  const currentCompany = useSyncExternalStore(
+  const { currentCompany, completedProjectsThisReset } = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.companyManager.currentCompany
+    getCached(() => ({
+      currentCompany: game.companyManager.currentCompany,
+      completedProjectsThisReset: game.projectManager.completedProjectsThisReset
+    }))
   );
+  
   const handleBuyCompany = (type) => {
     game.companyManager.buyCompany(type);
   };
-
-  const completedProjectsThisReset = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => game.projectManager.completedProjectsThisReset
-  );
 
   return (
     <div className={styles.buttonsContainer}>

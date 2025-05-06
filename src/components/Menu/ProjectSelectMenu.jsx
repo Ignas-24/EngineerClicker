@@ -3,19 +3,19 @@ import game from "../../game/Game";
 import Button from "../BottomLeft/Button/Button";
 import CloseButton from "./CloseButton";
 import styles from "./ProjectSelectMenu.module.css";
+import getCached from "../../util/getCached";
 
 const ProjectSelectMenu = ({ onClose }) => {
-  const projects = useSyncExternalStore(
+  const { projects, cooldown } = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.projectManager.selectedProjects
+    getCached(() => ({
+      projects: game.projectManager.selectedProjects,
+      cooldown: game.projectManager.cooldown,
+    }))
   );
-
-  const cooldown = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => game.projectManager.cooldown
-  );
-
+  
   const handleAction = (project) => {
+    // TODO: All of this should be in the ProjectManager.js file
     if (project.active) {
       project.toggleActive();
       if (game.project === project) {
@@ -25,7 +25,7 @@ const ProjectSelectMenu = ({ onClose }) => {
         ...game.projectManager.selectedProjects,
       ];
 
-      game.notifyUpdate();
+      game.notifyUpdate(); // this is very bad
       return;
     }
     const activeProject = game.projectManager.selectedProjects.find(

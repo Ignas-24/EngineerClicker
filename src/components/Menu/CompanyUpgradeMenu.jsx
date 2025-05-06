@@ -2,6 +2,7 @@ import React, { useSyncExternalStore } from "react";
 import game from "../../game/Game";
 import Button from "../BottomLeft/Button/Button";
 import styles from "./CompanyUpgradeMenu.module.css";
+import getCached from "../../util/getCached";
 
 const upgradeOptions = {
   small: [
@@ -112,7 +113,7 @@ const CompanyUpgradeMenu = ({ onClose }) => {
     (type) => upgradeOptions[type]
   );
 
-  const upgrades = useSyncExternalStore(game.subscribe.bind(game), getUpgrades);
+  const upgrades = useSyncExternalStore(game.subscribe.bind(game), getCached(getUpgrades));
 
   const handleUpgrade = (upgradeKey) => {
     game.upgrades.buyCompanyUpgrade(upgradeKey);

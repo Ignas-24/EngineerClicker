@@ -9,7 +9,7 @@ export class LoanManager {
   paymentClock = 0;
   paymentInterval = 5 * 60 * 1000;
   paymentPercentage = 0.05;
-  timerInterval = 100;
+  timerInterval = 100000; // TODO: revert
 
   constructor(game) {
     this.game = game;
