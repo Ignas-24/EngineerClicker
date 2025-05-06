@@ -259,6 +259,7 @@ export class ProjectManager {
   }
 
   resetForBankruptcy() {
+    this.completedProjectsThisReset = 0;
     this.selectedProjects.forEach(project => {
       if (project.active) {
         project.resetForBankruptcy();
