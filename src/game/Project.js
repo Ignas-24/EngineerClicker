@@ -60,7 +60,9 @@ export class Project {
     const delta = this.game.companyManager.calculateTotalEfficiency();
     this.projectProgress += delta;
     this.checkCompletion();
-    this.saveData();
+    if(!this.completed) {
+      this.saveData();
+    }
     this.game.notifyUpdate();
   }
 
