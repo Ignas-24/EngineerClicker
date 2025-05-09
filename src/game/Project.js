@@ -142,6 +142,10 @@ export class Project {
       this.completed = data.completed || false;
       this.failed = data.failed || false;
       this.active = data.isActive || false;
+
+      if (this.active && this.remainingTime > 0) {
+        this.startTimer();
+      }
     }
     this.game.notifyUpdate();
   }
