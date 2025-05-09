@@ -75,9 +75,8 @@ export class LoanManager {
     this.remainingLoanAmount = this.totalLoanToRepay;
     this.paymentClock = this.paymentInterval;
     this.game.resourceManager.changeEuros(amount);
-    if(this.loanAmount===maxAmount)
-    {
-      this.game.stats.increment("MaxLoans",1);
+    if (this.loanAmount === maxAmount) {
+      this.game.stats.increment("MaxLoans", 1);
       this.game.achievementManager.checkAchievements();
     }
     this.saveData();
@@ -138,7 +137,7 @@ export class LoanManager {
       totalLoanToRepay: this.totalLoanToRepay,
       remainingLoanAmount: this.remainingLoanAmount,
       paymentClock: this.paymentClock,
-      inDebt: this.inDebt
+      inDebt: this.inDebt,
     };
     localStorage.setItem("LoanManagerData", JSON.stringify(data));
   }

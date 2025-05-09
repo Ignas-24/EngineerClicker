@@ -7,12 +7,12 @@ import styles from "./ProjectSelectMenu.module.css";
 const ProjectSelectMenu = ({ onClose }) => {
   const projects = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.projectManager.selectedProjects
+    () => game.projectManager.selectedProjects,
   );
 
   const cooldown = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.projectManager.cooldown
+    () => game.projectManager.cooldown,
   );
 
   const handleAction = (project) => {
@@ -29,11 +29,11 @@ const ProjectSelectMenu = ({ onClose }) => {
       return;
     }
     const activeProject = game.projectManager.selectedProjects.find(
-      (p) => p.active
+      (p) => p.active,
     );
     if (activeProject) {
       alert(
-        "A project is already active. Cancel it first before selecting a new project."
+        "A project is already active. Cancel it first before selecting a new project.",
       );
       return;
     }

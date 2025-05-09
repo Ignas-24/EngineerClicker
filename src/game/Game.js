@@ -17,7 +17,7 @@ class Game {
   companyManager;
   stats;
   achievementManager;
-  
+
   #listeners = []; // List of React components to notify
 
   constructor() {

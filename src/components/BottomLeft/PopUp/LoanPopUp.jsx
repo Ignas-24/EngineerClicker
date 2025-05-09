@@ -8,12 +8,12 @@ const LoanPopUp = ({ onClose }) => {
 
   const hasLoan = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.loanManager.hasLoan
+    () => game.loanManager.hasLoan,
   );
 
   const remainingLoanAmount = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.loanManager.remainingLoanAmount
+    () => game.loanManager.remainingLoanAmount,
   );
 
   const maxLoanAmount = game.loanManager.getMaxLoanAmount();

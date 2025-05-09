@@ -12,7 +12,7 @@ const CompanyMenu = ({ onClose }) => {
 
   const currentCompany = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.companyManager.currentCompany
+    () => game.companyManager.currentCompany,
   );
   const handleBuyCompany = (type) => {
     game.companyManager.buyCompany(type);
@@ -20,7 +20,7 @@ const CompanyMenu = ({ onClose }) => {
 
   const completedProjectsThisReset = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.projectManager.completedProjectsThisReset
+    () => game.projectManager.completedProjectsThisReset,
   );
 
   return (
@@ -72,7 +72,7 @@ const CompanyMenu = ({ onClose }) => {
                 label="Sell Company"
                 onClick={() => {
                   const confirmSell = confirm(
-                    "Are you sure you want to sell your company?"
+                    "Are you sure you want to sell your company?",
                   );
                   if (confirmSell) {
                     game.companyManager.sellCompany();

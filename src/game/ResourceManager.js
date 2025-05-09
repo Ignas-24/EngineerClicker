@@ -20,7 +20,7 @@ export class ResourceManager {
     this.saveData();
     this.game.notifyUpdate();
   }
-  
+
   changeEuros(delta) {
     this.euro = this.euro + delta;
     this.game.achievementManager.checkAchievements();
