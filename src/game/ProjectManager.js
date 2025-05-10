@@ -180,6 +180,7 @@ export class ProjectManager {
     {
       this.game.stats.increment("projectsFinished");
       this.game.achievementManager.checkAchievements();
+      inactiveProject.deleteData();
     }
     this.selectedProjects = this.selectedProjects.filter(
       (project) => project.dataName !== inactiveProject.dataName
