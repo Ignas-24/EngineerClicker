@@ -6,6 +6,7 @@ export class Stats{
     constructor(game) {
         this.game=game;
         this.load();
+        this.game.notifyUpdate();
       }
     
       increment(statKey, amount) {
@@ -18,11 +19,13 @@ export class Stats{
         }
         this.stats[statKey] += amount;
         this.save();
+        this.game.notifyUpdate();
       }
     
       set(statKey, value) {
         this.stats[statKey] = value;
         this.save();
+        this.game.notifyUpdate();
       }
     
       get(statKey) {
@@ -38,5 +41,6 @@ export class Stats{
         if (data) {
           this.stats = JSON.parse(data);
         }
+        this.game.notifyUpdate();
       }
 }

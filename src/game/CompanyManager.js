@@ -10,6 +10,7 @@ export class CompanyManager {
         this.loadData();
         this.startUpkeepTimer();
         this.startProjectContributionTimer();
+        this.game.notifyUpdate();
     }
 
     startUpkeepTimer() {
@@ -23,6 +24,7 @@ export class CompanyManager {
                 this.game.resourceManager.changeEuros(-upkeepCost);
             }
         }, 5 * 60 * 1000); // 5 minutes
+        this.game.notifyUpdate();
     }
 
     startProjectContributionTimer() {
@@ -36,6 +38,7 @@ export class CompanyManager {
                 activeProject.addProgressByDeveloper();
             }
         }, 1000); // Apply developer contributions every second
+        this.game.notifyUpdate();
     }
 
     calculateDeveloperUpkeep() {
@@ -120,6 +123,7 @@ export class CompanyManager {
             clearInterval(this.upkeepInterval);
             this.upkeepInterval = null;
         }
+        this.game.notifyUpdate();
     }
 
     stopProjectContributionTimer() {
@@ -127,6 +131,7 @@ export class CompanyManager {
             clearInterval(this.projectContributionInterval);
             this.projectContributionInterval = null;
         }
+        this.game.notifyUpdate();
     }
 
     buyCompany(type) {
@@ -237,5 +242,6 @@ export class CompanyManager {
             this.currentCompany = data.currentCompany;
             this.developers = data.developers || { junior: 0, midlevel: 0, senior: 0, lead: 0 };
         }
+        this.game.notifyUpdate();
     }
 }

@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import click1 from "../assets/click1.mp3";
 import click2 from "../assets/click2.mp3";
 import click3 from "../assets/click3.mp3";
@@ -28,16 +28,16 @@ const ComputerCanvas = ({ onClick }) => {
     const appRef = useRef(null);
     const spriteRef = useRef(null);
     const backgroundRef = useRef(null);
-
-    function handleClick(sprite) {
-        if (game.project.isActive()) {
+    const isActiveProject = useSyncExternalStore(game.subscribe.bind(game), () => game.project?.isActive());
+        
+    const handleClick = useCallback((sprite) => {
+        if (isActiveProject) {
             game.project.addProgress();
         }
-        else if (!game.project.isActive()) {
+        else {
             game.resourceManager.addEurosClicked();
         }
         playClickSound();
-
         setCurrentString((previousString) => {
             let newString = previousString;
             if (newString === "") {
@@ -72,7 +72,7 @@ const ComputerCanvas = ({ onClick }) => {
         });
 
         if (onClick) onClick();
-    }
+    }, [isActiveProject]);
 
     function handleResize() {
         if (!appRef.current) return;
@@ -135,6 +135,7 @@ const ComputerCanvas = ({ onClick }) => {
                 const targetBottomRight = { x: 815, y: 563 };
 
                 if (spriteBounds)
+                    // TODO: This causes 100s of rerenders per second
                     setConsoleStyles({
                         left: Math.floor(
                             spriteBounds.minX +
@@ -163,6 +164,15 @@ const ComputerCanvas = ({ onClick }) => {
             appRef.current.destroy(true);
         };
     }, []);
+
+    useEffect(() => {
+        const sprite = spriteRef.current;
+        if(!sprite) return;
+        sprite.removeAllListeners("pointerdown");
+        sprite.on("pointerdown", () => {
+            handleClick(sprite);
+        });
+    }, [isActiveProject]);
 
     return (
         <div

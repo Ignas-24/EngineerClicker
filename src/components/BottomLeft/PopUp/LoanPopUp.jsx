@@ -2,22 +2,20 @@ import React, { useState, useSyncExternalStore } from "react";
 import styles from "./LoanPopUp.module.css";
 import game from "../../../game/Game";
 import Button from "../Button/Button";
+import getCached from "../../../util/getCached";
 
 const LoanPopUp = ({ onClose }) => {
   const [loanAmount, setLoanAmount] = useState("");
 
-  const hasLoan = useSyncExternalStore(
+  const { hasLoan, remainingLoanAmount, maxLoanAmount, interestRate } = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.loanManager.hasLoan
+    getCached(() => ({
+      hasLoan: game.loanManager.hasLoan,
+      remainingLoanAmount: game.loanManager.remainingLoanAmount,
+      maxLoanAmount: game.loanManager.getMaxLoanAmount(),
+      interestRate: game.loanManager.getInterestRate()
+    }))
   );
-
-  const remainingLoanAmount = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => game.loanManager.remainingLoanAmount
-  );
-
-  const maxLoanAmount = game.loanManager.getMaxLoanAmount();
-  const interestRate = game.loanManager.getInterestRate();
 
   const handleTakeLoan = () => {
     const amount = parseFloat(loanAmount);

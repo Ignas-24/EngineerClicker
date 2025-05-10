@@ -54,8 +54,7 @@ export class Achievement {
           this.unlocked=false;
           this.claimed=false;
         }
-        console.log("Sukurtas scalable naujas");
         game.achievementManager.saveAchievements();
-        console.log(this);
+        game.notifyUpdate();
     }
   }

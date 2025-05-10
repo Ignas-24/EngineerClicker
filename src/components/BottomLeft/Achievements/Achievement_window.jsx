@@ -1,38 +1,46 @@
-import React from "react";
-import { useState } from "react";
-import "./Achievement_window.css"
+import React, { useSyncExternalStore } from "react";
+import "./Achievement_window.css";
 import AchievementView from "./AchievementView";
+import game from "../../../game/Game";
+import getCached from "../../../util/getCached";
 
-const Achievement_window = ({ onClick, game }) =>{
+const Achievement_window = ({ onClick }) => {
+  const achievements = useSyncExternalStore(
+    game.subscribe.bind(game),
+    getCached(() =>
+      game.achievementManager.getAchievements().map((a, i) => ({
+        id: i,
+        name: a.name,
+        description: a.description,
+        unlocked: a.unlocked,
+        claimed: a.claimed,
+      }))
+    )
+  );
 
-    const [, forceUpdate] = useState(false);
-    const achievements = game.achievementManager.getAchievements();
-    console.log(achievements);
-    const refresh = () => {
-        forceUpdate(v => !v);
-        game.achievementManager.saveAchievements();
+  const handleClaim = (achievement) => {
+    if (achievement.unlocked && !achievement.claimed) {
+      game.achievementManager.getAchievements()[achievement.id].claim(game);
     }
-  
-    return (
-        <div className="Backdrop">
-            
+  };
 
+  return (
+    <div className="Backdrop">
+      <div className="Window_Container">
+        <button className="closeButton" onClick={onClick}>
+          X
+        </button>
 
-            <div className="Window_Container">
-            <button className="closeButton" onClick={onClick}>X</button>
-
-            {achievements.map((achievement, index) => (
-            <AchievementView
+        {achievements.map((achievement, index) => (
+          <AchievementView
             key={index}
             achievement={achievement}
-            game={game}
-            onUpdate={refresh}
-            />
-            ))}
-
-            </div>
-        </div>
-    );
+            onClick={handleClaim}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Achievement_window;

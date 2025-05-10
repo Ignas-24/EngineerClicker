@@ -1,14 +1,7 @@
 import React from "react";
 
-const AchievementView = ({ achievement, game, onUpdate }) => {
+const AchievementView = ({ achievement, onClick }) => {
     const { name, description, unlocked, claimed } = achievement;
-  
-    const handleClaim = () => {
-      if (unlocked && !claimed) {
-        achievement.claim(game);
-        onUpdate(); 
-      }
-    };
   
     return (
       <div className={`Achievement_wrap`}>
@@ -16,7 +9,7 @@ const AchievementView = ({ achievement, game, onUpdate }) => {
           <p>{name}</p>
           <button
             className="Achievement_button"
-            onClick={handleClaim}
+            onClick={() => { onClick(achievement)}}
             disabled={!unlocked || claimed}
             style={{ backgroundColor: unlocked && !claimed ? 'green' : '' }}
           >
