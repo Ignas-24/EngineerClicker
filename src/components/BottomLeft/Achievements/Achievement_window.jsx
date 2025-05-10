@@ -1,16 +1,15 @@
 import React, { useSyncExternalStore } from "react";
-import { useState } from "react";
 import "./Achievement_window.css";
 import AchievementView from "./AchievementView";
 import game from "../../../game/Game";
 import getCached from "../../../util/getCached";
 
 const Achievement_window = ({ onClick }) => {
-  // TODO: 
   const achievements = useSyncExternalStore(
     game.subscribe.bind(game),
     getCached(() =>
-      game.achievementManager.getAchievements().map((a) => ({
+      game.achievementManager.getAchievements().map((a, i) => ({
+        id: i,
         name: a.name,
         description: a.description,
         unlocked: a.unlocked,
@@ -20,12 +19,11 @@ const Achievement_window = ({ onClick }) => {
   );
 
   const handleClaim = (achievement) => {
-    if (unlocked && !claimed) {
-      achievement.claim(game);
+    if (achievement.unlocked && !achievement.claimed) {
+      game.achievementManager.getAchievements()[achievement.id].claim(game);
     }
   };
 
-  console.log(achievements);
   return (
     <div className="Backdrop">
       <div className="Window_Container">

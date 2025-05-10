@@ -42,6 +42,7 @@ export class Project {
       this.remainingTime = this.projectDeadline;
       this.stopTimer();
     }
+    this.game.project = this.game.projectManager.selectedProjects.find(p => p.active)
     this.saveData();
     this.game.notifyUpdate();
   }
@@ -54,6 +55,7 @@ export class Project {
     this.saveData();
     this.game.notifyUpdate();
   }
+  
   addProgressByDeveloper() {
     if (!this.active) return;
     const delta = this.game.companyManager.calculateTotalEfficiency();

@@ -164,8 +164,6 @@ export class AchievementManager {
   }
 
   getAchievements() {
-    console.log('fun: ', Object.entries(this.achievements[5]));
-    // setTimeout(() => {}, 10000);
     return this.achievements;
   }
 }

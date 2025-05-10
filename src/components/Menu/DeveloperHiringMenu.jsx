@@ -30,16 +30,17 @@ const developerOptions = [
 const getDevelopers = () => ({ ...game.companyManager.developers });
 
 const DeveloperHiringMenu = ({ onClose }) => {
-  const availableDeveloperOptions = developerOptions.filter((developer) =>
-    unlockedTiers.includes(developer.tier)
-  );
-
+  
   const { developers, unlockedTiers } = useSyncExternalStore(
     game.subscribe.bind(game),
     getCached(() => ({
-      developers: getDevelopers,
+      developers: getDevelopers(),
       unlockedTiers: game.companyManager.currentCompany?.unlocks || []
     }))
+  );
+  
+  const availableDeveloperOptions = developerOptions.filter((developer) =>
+    unlockedTiers.includes(developer.tier)
   );
 
   const handleHireDeveloper = (tier) => {

@@ -17,7 +17,6 @@ export default function Console( { textState, styles, onClick } ) {
     if(consoleContent.current){
       consoleContent.current.scrollTop = consoleContent.current.scrollHeight;
     }
-    console.log('useffect a');
   }, [textState])
 
   useEffect(() => {

@@ -55,7 +55,6 @@ export class Achievement {
           this.claimed=false;
         }
         game.achievementManager.saveAchievements();
-        console.log(this.claimed);
         game.notifyUpdate();
     }
   }

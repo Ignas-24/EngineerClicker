@@ -175,7 +175,6 @@ const ComputerCanvas = ({ onClick }) => {
     }, [isActiveProject]);
 
     return (
-        <>
         <div
             onResize={handleResize}
             ref={canvasRef}
@@ -183,7 +182,6 @@ const ComputerCanvas = ({ onClick }) => {
         >
             <Console textState={text} styles={consoleStyles} onClick={handleClick} />
         </div>
-        </>
     );
 };
 export default ComputerCanvas;

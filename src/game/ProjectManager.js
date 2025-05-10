@@ -135,6 +135,17 @@ export class ProjectManager {
     this.saveData();
   }
 
+  refreshProjects() {
+    if (this.cooldown === 0) {
+      this.selectProjects();
+      this.startTimer(60);
+    }
+  }
+
+  toggleActive(projectId) {
+    this.selectedProjects[projectId].toggleActive();
+  }
+
   replaceInactiveProjects() {
     const activeProjects = this.selectedProjects.filter(project => project.active);
     const inactiveCount = 4 - activeProjects.length;
@@ -231,6 +242,7 @@ export class ProjectManager {
       this.cooldown = data.cooldown || 0;
       this.startTimer(this.cooldown);
     }
+    this.game.project = this.selectedProjects.find(p => p.active)
     this.game.notifyUpdate();
   }
 

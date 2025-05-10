@@ -22,20 +22,12 @@ const TopLeft = () => {
     }))
   );
 
-  const { projectName, projectProgress, projectSize, projectRemainingTime, activeProject } = useSyncExternalStore(
+  const { projectName, projectProgress, projectSize, projectRemainingTime } = useSyncExternalStore(
     game.subscribe.bind(game),
-    getCached(() => {
-      // TODO: should be part of ProjectManager
-      const activeProject = game.projectManager.selectedProjects.find(p => p.active);
-      if (activeProject) {
-        game.project = activeProject;
-      }
-      
+    getCached(() => {   
       const project = game.project;
       const isActiveProject = project && !project.completed && !project.failed;
-      
       return {
-        activeProject,
         projectName: isActiveProject ? project.projectName : "None selected",
         projectProgress: isActiveProject ? project.projectProgress : 0,
         projectSize: isActiveProject ? project.projectSize : 0,

@@ -40,7 +40,6 @@ class Game {
   }
 
   notifyUpdate() {
-    console.log('notify');
     this.#listeners.forEach((listener) => listener());
   }
 

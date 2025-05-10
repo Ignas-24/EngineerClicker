@@ -5,6 +5,7 @@ import CompanyUpgradeMenu from "./CompanyUpgradeMenu";
 import DeveloperHiringMenu from "./DeveloperHiringMenu";
 import CloseButton from "./CloseButton";
 import styles from "./CompanyMenu.module.css";
+import getCached from "../../util/getCached";
 
 const CompanyMenu = ({ onClose }) => {
   const [isUpgradeOpen, setUpgradeOpen] = useState(false);
