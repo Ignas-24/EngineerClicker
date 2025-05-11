@@ -25,3 +25,9 @@ dist-ssr
 *.sln
 *.sw?
 .vs
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

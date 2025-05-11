@@ -31,4 +31,14 @@ Linting and static analysis:
     1. `npm ci` (ensure the correct packages are installed)
     2. `npm run format` to run Prettier (or use the Prettier command `npx prettier . --write`)
 
-* Custom rules should be defined in /CustomRules in their own .js file and added to both index.js and eslint.config.js
+* Custom rules should be defined in /CustomRules in their own .js file and added to both index.js and eslint.config.js'
+
+* Automated testing with Playwright
+    * `npm ci` (ensure the correct packages are installed)
+    * `npm run dev` (ensure the game is running)
+    * `npx playwright test` to run the tests
+
+    * Other useful commands:
+        * `npx playwright show-report` to get a html report of the tests ran
+        * `npx playwright test --ui` to open the playwright ui for easier debugging 
+
