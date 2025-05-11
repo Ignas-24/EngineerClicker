@@ -52,7 +52,9 @@ export class Project {
     const delta = this.game.resourceManager.clickPower * this.game.resourceManager.multiplier;
     this.projectProgress += delta;
     this.checkCompletion();
-    this.saveData();
+    if(!this.completed) {
+      this.saveData();
+    }
     this.game.notifyUpdate();
   }
   
@@ -61,7 +63,9 @@ export class Project {
     const delta = this.game.companyManager.calculateTotalEfficiency();
     this.projectProgress += delta;
     this.checkCompletion();
-    this.saveData();
+    if(!this.completed) {
+      this.saveData();
+    }
     this.game.notifyUpdate();
   }
 
@@ -74,7 +78,6 @@ export class Project {
       this.stopTimer();
       this.game.resourceManager.changeEuros(this.projectReward);
       this.game.projectManager.removeProject(this);
-      this.saveData();
       this.game.notifyUpdate();
     }
   }
