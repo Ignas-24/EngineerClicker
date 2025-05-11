@@ -27,12 +27,8 @@ const RightSection = () => {
       {openMenu === "company" && (
         <CompanyMenu onClose={() => toggleMenu(null)} />
       )}
-      {openMenu === "power" && (
-        <PowerUpgradeMenu onClose={() => toggleMenu(null)} />
-      )}
-      {openMenu === "mult" && (
-        <MultUpgradeMenu onClose={() => toggleMenu(null)} />
-      )}
+      {openMenu === "power" && <PowerUpgradeMenu onClose={() => toggleMenu(null)} />}
+      {openMenu === "mult" && <MultUpgradeMenu onClose={() => toggleMenu(null)} />}
       {openMenu === "project" && (
         <ProjectSelectMenu onClose={() => toggleMenu(null)} />
       )}

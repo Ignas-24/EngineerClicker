@@ -1,58 +1,58 @@
-import js from "@eslint/js";
-import globals from "globals";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
-import vitest from "@vitest/eslint-plugin";
-import customRules from "./CustomRules/index.js";
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import vitest from '@vitest/eslint-plugin'
+import customRules from './CustomRules/index.js'
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 export default [
-  { ignores: ["dist", "coverage"] },
+  { ignores: ['dist','coverage'] },
   {
-    files: ["**/*.{js,jsx}"],
-    ignores: ["**/__tests__/**"],
+    files: ['**/*.{js,jsx}'],
+    ignores: ['**/__tests__/**'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
       parserOptions: {
-        ecmaVersion: "latest",
+        ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     plugins: {
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-      custom: customRules,
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+      'custom': customRules,
     },
     rules: {
       ...js.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-      "no-unused-vars": ["error", { varsIgnorePattern: "^[A-Z_]" }],
-      "react-refresh/only-export-components": [
-        "warn",
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'react-refresh/only-export-components': [
+        'warn',
         { allowConstantExport: true },
       ],
-      "custom/numeric-separators": "warn",
+      'custom/numeric-separators': 'warn',
     },
   },
   {
     files: ["src/game/**/*.js"],
-    ignores: ["**/__tests__/**"],
+    ignores: ['**/__tests__/**'],
     languageOptions: {
-      ecmaVersion: "latest",
+      ecmaVersion: 'latest',
       globals: globals.browser,
       parserOptions: {
         ecmaFeatures: { jsx: true },
-        sourceType: "module",
+        sourceType: 'module',
       },
     },
     plugins: {
-      custom: customRules,
+      'custom': customRules,
     },
     rules: {
-      "custom/require-notify-after-game-mutation": "warn",
-    },
+      'custom/require-notify-after-game-mutation': 'warn',
+    }
   },
   {
     files: ["**/__tests__/**"],

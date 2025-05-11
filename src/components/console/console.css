@@ -1,125 +1,132 @@
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-@import url("https://fonts.cdnfonts.com/css/pink-noise-official");
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.cdnfonts.com/css/pink-noise-official');
 
-div .console_wrap {
-  /*change later with dynamic values*/
-  /*If height and width is not set PIXI graphics fail to load properly*/
-  user-select: none;
-  position: absolute;
-  margin: auto;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
+div .console_wrap{
 
-  box-sizing: border-box;
-  border: 7px;
-  border-style: ridge;
-  border-color: gainsboro;
+    /*change later with dynamic values*/
+    /*If height and width is not set PIXI graphics fail to load properly*/
+    user-select: none;
+    position: absolute;
+    margin: auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+
+    box-sizing: border-box;
+    border: 7px;
+    border-style:ridge;
+    border-color: gainsboro;
+    
 }
 
-div .console_header {
-  p {
-    font-size: 1rem;
-    padding-left: 3px;
-    margin: 2px;
-    font-weight: bold;
-    font-family: "Press Start 2P", monospace;
-  }
-  flex: 0 0 auto;
-  margin-top: 0;
-  /*background: rgb(9,9,121);
+div .console_header{
+    
+    p{
+        font-size: 1rem;
+        padding-left: 3px;
+        margin: 2px;
+        font-weight: bold;
+        font-family: 'Press Start 2P', monospace;
+    }
+    flex: 0 0 auto;
+    margin-top: 0;
+    /*background: rgb(9,9,121);
     background: linear-gradient(90deg, rgba(9,9,121,1) 50%, rgb(86, 168, 250) 90%); */
-  color: white;
-  text-align: left;
-  margin-bottom: 0px;
+    color: white;
+    text-align: left;
+    margin-bottom: 0px;
 
-  position: relative;
+    position: relative;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  height: 8%;
-  max-height: 50px;
-  min-height: 40px;
+    height: 8%;
+    max-height: 50px;
+    min-height: 40px;
+    
 
-  border-bottom: 5px ridge gainsboro;
+    border-bottom: 5px ridge gainsboro;
 
-  vertical-align: middle;
+    vertical-align: middle;
 
-  p {
-    z-index: 2;
-    width: fit-content;
-    display: inline-block;
-    margin: 0.5%;
-  }
+    p{
+        z-index: 2;
+        width: fit-content;
+        display: inline-block;
+        margin: 0.5%;
+    }
 
-  /*canvas{
+    /*canvas{
         position: absolute;
         z-index: -1;
         height: 33%;
         width: 100%;
     }*/
+
 }
 
-div .buttonWrapper {
-  display: flex;
-  vertical-align: middle;
-  height: 100%;
-  margin-right: 2px;
-}
-
-div .button {
-  z-index: 2;
-  aspect-ratio: 1/1;
-  height: 60%;
-  background-color: gainsboro;
-  color: black;
-  margin: auto;
-  margin-left: 2px;
-  margin-right: 2px;
-
-  border-width: 5px;
-  border-style: outset;
-  border-color: gainsboro;
-
-  .pixelIcon {
-    height: 100%;
-    width: 100%;
+div .buttonWrapper{
 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    vertical-align: middle;
+    height: 100%;
+    margin-right: 2px;
+}
 
-    .middleCutOut {
-      margin: 0;
-      height: 70%;
-      width: 80%;
-      box-shadow:
-        1px 1px black,
-        -1px -1px black,
-        -1px 1px black,
-        1px -1px black,
-        -1px -3px black,
-        1px -3px black;
-      transform: translateY(5%);
+div .button{
+    z-index: 2;
+    aspect-ratio: 1/1;
+    height: 60%;
+    background-color: gainsboro;
+    color: black;
+    margin:auto;
+    margin-left: 2px;
+    margin-right: 2px;
+
+    border-width: 5px;
+    border-style: outset;
+    border-color: gainsboro;
+
+    .pixelIcon {
+        height: 100%;
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .middleCutOut
+        {
+            margin: 0;
+            height: 70%;
+            width: 80%;
+            box-shadow: 1px 1px black, -1px -1px black, -1px 1px black, 1px -1px black, -1px -3px black, 1px -3px black;
+            transform: translateY(5%);
+        }
     }
-  }
+    
+
+    
 }
 
-div .console_contents {
-  flex: 1 1 auto;
-  overflow: hidden;
-  background-color: black;
+
+div .console_contents{
+    flex: 1 1 auto;
+    overflow: hidden;
+    background-color: black;
 }
 
-.console_text {
-  font-family: "Pink Noise Official", sans-serif;
-  color: white;
-  font-size: 1.6rem;
-  padding-left: 3px;
-  margin: 2px;
-  font-weight: bold;
-  letter-spacing: 0.2rem;
+.console_text{
+    font-family: 'Pink Noise Official', sans-serif;
+    color: white;
+    font-size: 1.6rem;
+    padding-left: 3px;
+    margin: 2px;
+    font-weight: bold;
+    letter-spacing: 0.2rem;
 }
+
+

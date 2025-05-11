@@ -1,12 +1,4 @@
-import {
-  beforeAll,
-  beforeEach,
-  afterEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from "vitest";
+import { beforeAll, beforeEach, afterEach, describe, expect, it, vi } from "vitest";
 import { Project } from "../Project.js";
 
 describe("Project", () => {
@@ -84,9 +76,7 @@ describe("Project", () => {
       expect(project.completed).toBe(true);
       expect(project.active).toBe(false);
       expect(mockGame.resourceManager.changeEuros).toHaveBeenCalledWith(100);
-      expect(mockGame.projectManager.removeProject).toHaveBeenCalledWith(
-        project,
-      );
+      expect(mockGame.projectManager.removeProject).toHaveBeenCalledWith(project);
     });
   });
 
@@ -104,7 +94,7 @@ describe("Project", () => {
       project.saveData();
       expect(localStorage.setItem).toHaveBeenCalledWith(
         "TestKeyData",
-        expect.stringContaining('"projectProgress":3'),
+        expect.stringContaining('"projectProgress":3')
       );
     });
   });

@@ -3,13 +3,13 @@ export default {
     type: "suggestion",
     docs: {
       description:
-        "Ensure `this.game.notifyUpdate()` occurs after any direct `this.*` writes",
+        "Ensure `this.game.notifyUpdate()` occurs after any direct `this.*` writes"
     },
     messages: {
       missingNotify:
-        "Possible error: function contains `this.*` writes without this.game.notifyUpdate().",
+        "Possible error: function contains `this.*` writes without this.game.notifyUpdate()."
     },
-    schema: [],
+    schema: []
   },
 
   create(context) {
@@ -68,7 +68,7 @@ export default {
         let pending = false;
         if (segment.prevSegments.length > 0) {
           pending = segment.prevSegments.some(
-            (prev) => segmentInfo[prev.id]?.pending,
+            prev => segmentInfo[prev.id]?.pending
           );
         }
         segmentInfo[segment.id] = { pending };
@@ -117,12 +117,12 @@ export default {
           return;
         }
         const bad = codePath.finalSegments.some(
-          (seg) => segmentInfo[seg.id]?.pending,
+          seg => segmentInfo[seg.id]?.pending
         );
         if (bad) {
           context.report({ node: funcNode, messageId: "missingNotify" });
         }
-      },
+      }
     };
-  },
+  }
 };

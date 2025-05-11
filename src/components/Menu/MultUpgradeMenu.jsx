@@ -33,8 +33,8 @@ const MultUpgradeMenu = ({ onClose }) => {
     if (success) {
       setUpgrades((prevUpgrades) =>
         prevUpgrades.map((upgrade) =>
-          upgrade.id === id ? { ...upgrade, bought: true } : upgrade,
-        ),
+          upgrade.id === id ? { ...upgrade, bought: true } : upgrade
+        )
       );
     }
   };
