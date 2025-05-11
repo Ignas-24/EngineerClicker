@@ -4,9 +4,10 @@ import game from "../../game/Game";
 import getCached from "../../util/getCached";
 
 const TopLeft = () => {
-  const { euros, prestige, multiplier, clickPower } = useSyncExternalStore(
+  const { upkeep, euros, prestige, multiplier, clickPower } = useSyncExternalStore(
     game.subscribe.bind(game),
     getCached(() => ({
+      upkeep : game.companyManager.calculateDeveloperUpkeep(),
       euros: game.resourceManager.euro,
       prestige: game.resourceManager.prestige,
       multiplier: game.resourceManager.multiplier,
@@ -38,6 +39,7 @@ const TopLeft = () => {
 
   return (
     <div className={styles.topLeft}>
+      <p>Developer upkeep: {parseFloat(upkeep).toFixed(2)}€ / 5 min</p>
       <p>Euro: {parseFloat(euros).toFixed(2)}€</p>
       <p>Prestige: {prestige}</p>
       <p>Current typing power: {parseFloat(clickPower).toFixed(2)}, Multiplier: {multiplier}</p>
