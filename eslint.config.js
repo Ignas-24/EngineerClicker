@@ -4,6 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import vitest from '@vitest/eslint-plugin'
 import customRules from './CustomRules/index.js'
+import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 export default [
   { ignores: ['dist','coverage'] },
@@ -67,4 +68,5 @@ export default [
       ...vitest.configs.recommended.rules, // vitest.configs.all.rules can be used for more rules
     },
   },
-]
+  eslintConfigPrettier,
+];
