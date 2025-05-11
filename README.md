@@ -27,4 +27,8 @@ Linting and static analysis:
     1. `npm ci` (ensure the correct packages are installed)
     2. `npx eslint .` to run eslint
 
+* Running the fromating tool (Prettier):
+    1. `npm ci` (ensure the correct packages are installed)
+    2. `npm run format` to run Prettier (or use the Prettier command `npx prettier . --write`)
+
 * Custom rules should be defined in /CustomRules in their own .js file and added to both index.js and eslint.config.js
