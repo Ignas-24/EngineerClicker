@@ -1,6 +1,6 @@
 export class Upgrades {
     game;
-    powerUpgrades = [false, false, false, false];
+    powerUpgrades = [false, false, false, false, false, false, false, false, false, false, false, false, false];
     multUpgrades = [false, false, false];
     companyUpgrades = {
         reward: false, size: false, speed: false, biggerProjects: false, // Tier 1
@@ -12,7 +12,16 @@ export class Upgrades {
         { id: 1, price: 0.5, power: 0.01 },
         { id: 2, price: 1.0, power: 0.01 },
         { id: 3, price: 5.0, power: 0.02 },
-        { id: 4, price: 20.0, power: 0.05 }
+        { id: 4, price: 20.0, power: 0.05 },
+        { id: 5, price: 50.0, power: 0.10 },     
+        { id: 6, price: 125.0, power: 0.20 },    
+        { id: 7, price: 300.0, power: 0.35 },    
+        { id: 8, price: 750.0, power: 0.60 },    
+        { id: 9, price: 1800.0, power: 1.00 },   
+        { id: 10, price: 4500.0, power: 1.75 },  
+        { id: 11, price: 10000.0, power: 3.00 }, 
+        { id: 12, price: 25000.0, power: 5.00 },  
+        { id: 13, price: 60000.0, power: 8.00 }   
     ];
 
     multiplierUpgradeData = [
@@ -118,7 +127,7 @@ export class Upgrades {
     }
   
     resetPowerUpgrades() {
-        this.powerUpgrades = [false, false, false, false];
+        this.powerUpgrades = [false, false, false, false, false, false, false, false, false, false, false, false, false];
         this.saveData();
         this.game.notifyUpdate();
     }
@@ -136,7 +145,7 @@ export class Upgrades {
         const savedData = localStorage.getItem('UpgradeData');
         if (savedData) {
             const data = JSON.parse(savedData);
-            this.powerUpgrades = data.powerUpgrades || [false, false, false, false];
+            this.powerUpgrades = data.powerUpgrades || [false, false, false, false, false, false, false, false, false, false, false, false, false];
             this.multUpgrades = data.multUpgrades || [false, false, false];
             this.companyUpgrades = data.companyUpgrades || {
                 reward: false, size: false, speed: false, biggerProjects: false,
@@ -148,7 +157,7 @@ export class Upgrades {
     }
 
     resetForBankruptcy() {
-        this.powerUpgrades = [false, false, false, false];
+        this.powerUpgrades = [false, false, false, false, false, false, false, false, false, false, false, false, false];
         this.saveData();
         this.game.notifyUpdate();
     }
