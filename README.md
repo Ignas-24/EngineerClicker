@@ -35,6 +35,7 @@ Linting and static analysis:
 
 * Automated testing with Playwright
     * `npm ci` (ensure the correct packages are installed)
+    * `npx playwright install` for the first time running playwright to download the browsers used for testing
     * `npm run dev` (ensure the game is running)
     * `npx playwright test` to run the tests
 
