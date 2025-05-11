@@ -3,54 +3,33 @@ import game from "../../game/Game";
 import Button from "../BottomLeft/Button/Button";
 import CloseButton from "./CloseButton";
 import styles from "./ProjectSelectMenu.module.css";
+import getCached from "../../util/getCached";
 
 const ProjectSelectMenu = ({ onClose }) => {
-  const projects = useSyncExternalStore(
+  const { projects, cooldown } = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.projectManager.selectedProjects
+    getCached(() => ({
+      projects: game.projectManager.selectedProjects.map(
+        (p, i) => ({
+          id: i, 
+          active: p.active, 
+          dataName: p.dataName,
+          projectName: p.projectName,
+          projectSize: p.projectSize,
+          projectDeadline: p.projectDeadline,
+          projectReward: p.projectReward
+        })
+      ),
+      cooldown: game.projectManager.cooldown,
+    }))
   );
-
-  const cooldown = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => game.projectManager.cooldown
-  );
-
-  const handleAction = (project) => {
-    if (project.active) {
-      project.toggleActive();
-      if (game.project === project) {
-        game.project = null;
-      }
-      game.projectManager.selectedProjects = [
-        ...game.projectManager.selectedProjects,
-      ];
-
-      game.notifyUpdate();
-      return;
-    }
-    const activeProject = game.projectManager.selectedProjects.find(
-      (p) => p.active
-    );
-    if (activeProject) {
-      alert(
-        "A project is already active. Cancel it first before selecting a new project."
-      );
-      return;
-    }
-    project.toggleActive();
-    game.project = project;
-    game.projectManager.selectedProjects = [
-      ...game.projectManager.selectedProjects,
-    ];
-
-    game.notifyUpdate();
+  
+  const handleAction = (projectId) => {
+    game.projectManager.toggleActive(projectId);
   };
 
   const handleRefresh = () => {
-    if (cooldown === 0) {
-      game.projectManager.selectProjects();
-      game.projectManager.startTimer(60);
-    }
+    game.projectManager.refreshProjects();
   };
 
   return (
@@ -66,7 +45,7 @@ const ProjectSelectMenu = ({ onClose }) => {
                 ? "Cancel Project"
                 : `${project.projectName} - Size: ${project.projectSize}, Deadline: ${project.projectDeadline}, Reward: ${project.projectReward}€`
             }
-            onClick={() => handleAction(project)}
+            onClick={() => handleAction(project.id)}
           ></Button>
         ))}
       <br />

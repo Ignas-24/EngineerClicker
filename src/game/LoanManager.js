@@ -15,6 +15,7 @@ export class LoanManager {
     this.game = game;
     this.loadData();
     this.setupPaymentTimer();
+    this.game.notifyUpdate();
   }
 
   setupPaymentTimer() {
@@ -128,6 +129,7 @@ export class LoanManager {
         this.saveData();
       }
     }
+    this.game.notifyUpdate();
   }
 
   saveData() {
@@ -155,5 +157,6 @@ export class LoanManager {
       this.paymentClock = data.paymentClock || 0;
       this.inDebt = data.inDebt || false;
     }
+    this.game.notifyUpdate();
   }
 }

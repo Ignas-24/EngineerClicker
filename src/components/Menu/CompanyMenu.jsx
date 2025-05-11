@@ -5,23 +5,23 @@ import CompanyUpgradeMenu from "./CompanyUpgradeMenu";
 import DeveloperHiringMenu from "./DeveloperHiringMenu";
 import CloseButton from "./CloseButton";
 import styles from "./CompanyMenu.module.css";
+import getCached from "../../util/getCached";
 
 const CompanyMenu = ({ onClose }) => {
   const [isUpgradeOpen, setUpgradeOpen] = useState(false);
   const [isDeveloperOpen, setDeveloperOpen] = useState(false);
 
-  const currentCompany = useSyncExternalStore(
+  const { currentCompany, completedProjectsThisReset } = useSyncExternalStore(
     game.subscribe.bind(game),
-    () => game.companyManager.currentCompany
+    getCached(() => ({
+      currentCompany: game.companyManager.currentCompany,
+      completedProjectsThisReset: game.projectManager.completedProjectsThisReset
+    }))
   );
+  
   const handleBuyCompany = (type) => {
     game.companyManager.buyCompany(type);
   };
-
-  const completedProjectsThisReset = useSyncExternalStore(
-    game.subscribe.bind(game),
-    () => game.projectManager.completedProjectsThisReset
-  );
 
   return (
     <div className={styles.buttonsContainer}>

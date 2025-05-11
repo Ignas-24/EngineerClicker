@@ -25,6 +25,7 @@ export class Project {
       ? `${this.projectName.replace(/ /g, "_")}_${Date.now()}`
       : 'Project');
     this.loadData();
+    this.game.notifyUpdate();
   }
 
   isActive() {
@@ -41,6 +42,7 @@ export class Project {
       this.remainingTime = this.projectDeadline;
       this.stopTimer();
     }
+    this.game.project = this.game.projectManager.selectedProjects.find(p => p.active)
     this.saveData();
     this.game.notifyUpdate();
   }
@@ -55,6 +57,7 @@ export class Project {
     }
     this.game.notifyUpdate();
   }
+  
   addProgressByDeveloper() {
     if (!this.active) return;
     const delta = this.game.companyManager.calculateTotalEfficiency();
@@ -100,6 +103,7 @@ export class Project {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
     }
+    this.game.notifyUpdate();
   }
 
   onTimerComplete() {
@@ -148,6 +152,7 @@ export class Project {
         this.startTimer();
       }
     }
+    this.game.notifyUpdate();
   }
 
   deleteData() {
@@ -161,5 +166,6 @@ export class Project {
     this.remainingTime = 0;
     this.active = false;
     this.saveData();
+    this.game.notifyUpdate();
   }
 }
