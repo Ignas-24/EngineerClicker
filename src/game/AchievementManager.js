@@ -40,7 +40,7 @@ export class AchievementManager {
       new Achievement(
         "Financial ruin",
         "Default on your payments while paying off a loan and managing a company",
-        (game) => game.stats.get("Bankruptcies") >= 1,
+        (game) => game.loanManager.inDebt && game.companyManager.currentCompany,
         (game) => {
           game.resourceManager.changePrestige(1);
         }
