@@ -19,13 +19,13 @@ test("buying power upgrade 1", async ({ page }) => {
   await expect(TypingPowerLocator).toContainText("Current typing power: 0.01");
 
   await page.evaluate(() => {
-    const element = document.querySelector('div.console_wrap');
-    if (!element) throw new Error('Element not found');
+    const element = document.querySelector("div.console_wrap");
+    if (!element) throw new Error("Element not found");
 
-    const event = new MouseEvent('click', {
+    const event = new MouseEvent("click", {
       bubbles: true,
       cancelable: true,
-      view: window
+      view: window,
     });
 
     for (let i = 0; i < 50; i++) {
