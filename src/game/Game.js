@@ -17,7 +17,7 @@ class Game {
   companyManager;
   stats;
   achievementManager;
-  
+
   #listeners = []; // List of React components to notify
 
   constructor() {
@@ -45,7 +45,7 @@ class Game {
 
   resetForBankruptcy() {
     this.resourceManager.resetForBankruptcy();
-    if(this.project) this.project.resetForBankruptcy();
+    if (this.project) this.project.resetForBankruptcy();
     this.upgrades.resetForBankruptcy();
     this.projectManager.resetForBankruptcy();
     this.notifyUpdate();

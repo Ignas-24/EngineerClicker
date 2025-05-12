@@ -7,15 +7,16 @@ import getCached from "../../../util/getCached";
 const LoanPopUp = ({ onClose }) => {
   const [loanAmount, setLoanAmount] = useState("");
 
-  const { hasLoan, remainingLoanAmount, maxLoanAmount, interestRate } = useSyncExternalStore(
-    game.subscribe.bind(game),
-    getCached(() => ({
-      hasLoan: game.loanManager.hasLoan,
-      remainingLoanAmount: game.loanManager.remainingLoanAmount,
-      maxLoanAmount: game.loanManager.getMaxLoanAmount(),
-      interestRate: game.loanManager.getInterestRate()
-    }))
-  );
+  const { hasLoan, remainingLoanAmount, maxLoanAmount, interestRate } =
+    useSyncExternalStore(
+      game.subscribe.bind(game),
+      getCached(() => ({
+        hasLoan: game.loanManager.hasLoan,
+        remainingLoanAmount: game.loanManager.remainingLoanAmount,
+        maxLoanAmount: game.loanManager.getMaxLoanAmount(),
+        interestRate: game.loanManager.getInterestRate(),
+      })),
+    );
 
   const handleTakeLoan = () => {
     const amount = parseFloat(loanAmount);

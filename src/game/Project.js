@@ -6,7 +6,7 @@ export class Project {
   projectReward;
   projectDeadline;
   remainingTime;
-  timerInterval = null; 
+  timerInterval = null;
   TIMER_PERIOD_MS = 1000;
   active = false;
   completed = false;
@@ -14,16 +14,25 @@ export class Project {
 
   dataName;
 
-  constructor(game, projectSize, projectReward, projectDeadline, projectName, dataName) {
+  constructor(
+    game,
+    projectSize,
+    projectReward,
+    projectDeadline,
+    projectName,
+    dataName,
+  ) {
     this.game = game;
     this.projectSize = projectSize;
     this.projectReward = projectReward;
     this.projectDeadline = projectDeadline;
     this.projectName = projectName;
     this.remainingTime = projectDeadline;
-    this.dataName = dataName || (typeof this.projectName === 'string'
-      ? `${this.projectName.replace(/ /g, "_")}_${Date.now()}`
-      : 'Project');
+    this.dataName =
+      dataName ||
+      (typeof this.projectName === "string"
+        ? `${this.projectName.replace(/ /g, "_")}_${Date.now()}`
+        : "Project");
     this.loadData();
     this.game.notifyUpdate();
   }
@@ -42,28 +51,32 @@ export class Project {
       this.remainingTime = this.projectDeadline;
       this.stopTimer();
     }
-    this.game.project = this.game.projectManager.selectedProjects.find(p => p.active)
+    this.game.project = this.game.projectManager.selectedProjects.find(
+      (p) => p.active,
+    );
     this.saveData();
     this.game.notifyUpdate();
   }
 
   addProgress() {
     if (!this.active) return;
-    const delta = this.game.resourceManager.clickPower * this.game.resourceManager.multiplier;
+    const delta =
+      this.game.resourceManager.clickPower *
+      this.game.resourceManager.multiplier;
     this.projectProgress += delta;
     this.checkCompletion();
-    if(!this.completed) {
+    if (!this.completed) {
       this.saveData();
     }
     this.game.notifyUpdate();
   }
-  
+
   addProgressByDeveloper() {
     if (!this.active) return;
     const delta = this.game.companyManager.calculateTotalEfficiency();
     this.projectProgress += delta;
     this.checkCompletion();
-    if(!this.completed) {
+    if (!this.completed) {
       this.saveData();
     }
     this.game.notifyUpdate();
@@ -117,7 +130,6 @@ export class Project {
       this.game.notifyUpdate();
     }
   }
-
 
   saveData() {
     const data = {

@@ -5,7 +5,7 @@ import {
   describe,
   expect,
   it,
-  vi
+  vi,
 } from "vitest";
 import { ProjectManager } from "../ProjectManager.js";
 
@@ -115,20 +115,20 @@ describe("ProjectManager", () => {
       const project = projectManager.createProject(
         sizeInterval,
         rewardInterval,
-        deadlineInterval
+        deadlineInterval,
       );
 
       expect(project).toBeDefined();
       expect(project.projectSize).toBeGreaterThanOrEqual(sizeInterval[0]);
       expect(project.projectSize).toBeLessThanOrEqual(sizeInterval[1]);
       expect(project.projectReward).toBeGreaterThanOrEqual(
-        sizeInterval[0] * rewardInterval[0]
+        sizeInterval[0] * rewardInterval[0],
       );
       expect(project.projectReward).toBeLessThanOrEqual(
-        sizeInterval[1] * rewardInterval[1]
+        sizeInterval[1] * rewardInterval[1],
       );
       expect(project.projectDeadline).toBeGreaterThanOrEqual(
-        deadlineInterval[0]
+        deadlineInterval[0],
       );
       expect(project.projectDeadline).toBeLessThanOrEqual(deadlineInterval[1]);
       expect(typeof project.projectName).toBe("string");
@@ -192,33 +192,33 @@ describe("ProjectManager", () => {
       ({ expectedProgress, projectSize, expectedWeight }) => {
         const result = projectManager.calculateProjectWeight(
           expectedProgress,
-          projectSize
+          projectSize,
         );
         expect(result).toBeCloseTo(expectedWeight, 5);
-      }
+      },
     );
 
     it("should throw an error when expectedProgress is zero", () => {
       expect(() => projectManager.calculateProjectWeight(0, 5)).toThrow(
-        "expectedProgress and projectSize must be positive values"
+        "expectedProgress and projectSize must be positive values",
       );
     });
 
     it("should throw an error when projectSize is zero", () => {
       expect(() => projectManager.calculateProjectWeight(5, 0)).toThrow(
-        "expectedProgress and projectSize must be positive values"
+        "expectedProgress and projectSize must be positive values",
       );
     });
 
     it("should throw an error when expectedProgress is negative", () => {
       expect(() => projectManager.calculateProjectWeight(-1, 10)).toThrow(
-        "expectedProgress and projectSize must be positive values"
+        "expectedProgress and projectSize must be positive values",
       );
     });
 
     it("should throw an error when projectSize is negative", () => {
       expect(() => projectManager.calculateProjectWeight(10, -1)).toThrow(
-        "expectedProgress and projectSize must be positive values"
+        "expectedProgress and projectSize must be positive values",
       );
     });
   });
@@ -243,10 +243,10 @@ describe("ProjectManager", () => {
       projectManager.replaceInactiveProjects();
       expect(projectManager.selectedProjects.length).toBe(4);
       expect(projectManager.selectedProjects).not.toContain(
-        (i) => i.dataName === "b"
+        (i) => i.dataName === "b",
       );
       expect(projectManager.selectedProjects).not.toContain(
-        (i) => i.dataName === "c"
+        (i) => i.dataName === "c",
       );
     });
   });
@@ -293,7 +293,7 @@ describe("ProjectManager", () => {
       projectManager.saveData();
       expect(localStorage.setItem).toHaveBeenCalledWith(
         "ProjectManagerData",
-        expect.any(String)
+        expect.any(String),
       );
     });
   });
@@ -301,7 +301,7 @@ describe("ProjectManager", () => {
   describe("loadData", () => {
     it("should load data and start timer", () => {
       localStorage.getItem.mockReturnValueOnce(
-        JSON.stringify({ selectedProjectKeys: [], cooldown: 3 })
+        JSON.stringify({ selectedProjectKeys: [], cooldown: 3 }),
       );
       projectManager.loadData();
       expect(projectManager.selectedProjects).toHaveLength(0);
@@ -324,7 +324,7 @@ describe("ProjectManager", () => {
       };
       const createProjectSpy = vi.spyOn(
         projectManager,
-        "createProjectFromData"
+        "createProjectFromData",
       );
       localStorage.getItem.mockReturnValueOnce(JSON.stringify(mockProject));
       projectManager.loadProjects(["testKey"]);
@@ -347,7 +347,7 @@ describe("ProjectManager", () => {
           failed: false,
           isActive: false,
         },
-        "abc123"
+        "abc123",
       );
       expect(project.projectName).toBe("Test");
       expect(project.projectSize).toBe(5);

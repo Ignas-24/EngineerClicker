@@ -15,10 +15,11 @@ const CompanyMenu = ({ onClose }) => {
     game.subscribe.bind(game),
     getCached(() => ({
       currentCompany: game.companyManager.currentCompany,
-      completedProjectsThisReset: game.projectManager.completedProjectsThisReset
-    }))
+      completedProjectsThisReset:
+        game.projectManager.completedProjectsThisReset,
+    })),
   );
-  
+
   const handleBuyCompany = (type) => {
     game.companyManager.buyCompany(type);
   };
@@ -72,7 +73,7 @@ const CompanyMenu = ({ onClose }) => {
                 label="Sell Company"
                 onClick={() => {
                   const confirmSell = confirm(
-                    "Are you sure you want to sell your company?"
+                    "Are you sure you want to sell your company?",
                   );
                   if (confirmSell) {
                     game.companyManager.sellCompany();

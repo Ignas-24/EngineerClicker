@@ -14,8 +14,8 @@ const Achievement_window = ({ onClick }) => {
         description: a.description,
         unlocked: a.unlocked,
         claimed: a.claimed,
-      }))
-    )
+      })),
+    ),
   );
 
   const handleClaim = (achievement) => {

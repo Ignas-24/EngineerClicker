@@ -9,21 +9,19 @@ const ProjectSelectMenu = ({ onClose }) => {
   const { projects, cooldown } = useSyncExternalStore(
     game.subscribe.bind(game),
     getCached(() => ({
-      projects: game.projectManager.selectedProjects.map(
-        (p, i) => ({
-          id: i, 
-          active: p.active, 
-          dataName: p.dataName,
-          projectName: p.projectName,
-          projectSize: p.projectSize,
-          projectDeadline: p.projectDeadline,
-          projectReward: p.projectReward
-        })
-      ),
+      projects: game.projectManager.selectedProjects.map((p, i) => ({
+        id: i,
+        active: p.active,
+        dataName: p.dataName,
+        projectName: p.projectName,
+        projectSize: p.projectSize,
+        projectDeadline: p.projectDeadline,
+        projectReward: p.projectReward,
+      })),
       cooldown: game.projectManager.cooldown,
-    }))
+    })),
   );
-  
+
   const handleAction = (projectId) => {
     game.projectManager.toggleActive(projectId);
   };

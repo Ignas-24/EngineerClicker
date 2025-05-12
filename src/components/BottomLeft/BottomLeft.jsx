@@ -19,7 +19,7 @@ const BottomLeft = () => {
     getCached(() => ({
       inDebt: game.loanManager.inDebt,
       currentCompany: game.companyManager.currentCompany,
-    }))
+    })),
   );
 
   const companyLabel = currentCompany
@@ -27,10 +27,10 @@ const BottomLeft = () => {
         currentCompany.type === "small"
           ? "Small Software Development Studio"
           : currentCompany.type === "medium"
-          ? "Medium Sized Software Company"
-          : currentCompany.type === "large"
-          ? "Large Software Corporation"
-          : "Unknown"
+            ? "Medium Sized Software Company"
+            : currentCompany.type === "large"
+              ? "Large Software Corporation"
+              : "Unknown"
       }`
     : "Buy a Company";
   const [isAchvOpen, setAchvOpen] = useState(false);

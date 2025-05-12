@@ -110,10 +110,13 @@ const CompanyUpgradeMenu = ({ onClose }) => {
   else if (currentCompanyType === "small") validCompanyTypes.push("small");
 
   const availableUpgrades = validCompanyTypes.flatMap(
-    (type) => upgradeOptions[type]
+    (type) => upgradeOptions[type],
   );
 
-  const upgrades = useSyncExternalStore(game.subscribe.bind(game), getCached(getUpgrades));
+  const upgrades = useSyncExternalStore(
+    game.subscribe.bind(game),
+    getCached(getUpgrades),
+  );
 
   const handleUpgrade = (upgradeKey) => {
     game.upgrades.buyCompanyUpgrade(upgradeKey);
