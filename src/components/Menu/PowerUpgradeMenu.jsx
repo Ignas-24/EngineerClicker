@@ -10,14 +10,14 @@ const getUpgrades = () => {
     id: upgrade.id,
     label: `Upgrade ${upgrade.id}`,
     price: upgrade.price,
-    bought: game.upgrades.powerUpgrades[index]
+    bought: game.upgrades.powerUpgrades[index],
   }));
 };
 
 const PowerUpgradeMenu = ({ onClose }) => {
   const upgrades = useSyncExternalStore(
     game.subscribe.bind(game),
-    getCached(getUpgrades)
+    getCached(getUpgrades),
   );
 
   const handleAction = (id) => {
