@@ -18,13 +18,20 @@ test("buying power upgrade 1", async ({ page }) => {
   const TypingPowerLocator = page.getByText(/Current typing power:/);
   await expect(TypingPowerLocator).toContainText("Current typing power: 0.01");
 
-  const ConsoleLocator = page.locator("div.console_contents");
+  await page.evaluate(() => {
+    const element = document.querySelector('div.console_wrap');
+    if (!element) throw new Error('Element not found');
 
-  const clickPromises = [];
-  for (let i = 0; i < 50; i++) {
-    clickPromises.push(ConsoleLocator.click());
-  }
-  await Promise.all(clickPromises);
+    const event = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window
+    });
+
+    for (let i = 0; i < 50; i++) {
+      element.dispatchEvent(event);
+    }
+  });
 
   await expect(EuroLocator).toHaveText("Euro: 0.50€");
 
@@ -35,6 +42,7 @@ test("buying power upgrade 1", async ({ page }) => {
   await expect(EuroLocator).toHaveText("Euro: 0.00€");
   await expect(TypingPowerLocator).toContainText("Current typing power: 0.02");
 
+  const ConsoleLocator = page.locator("div.console_contents");
   await ConsoleLocator.click();
   await expect(EuroLocator).toHaveText("Euro: 0.02€");
 });
