@@ -19,10 +19,15 @@ test('buying power upgrade 1', async ({ page }) => {
   await expect(TypingPowerLocator).toContainText('Current typing power: 0.01');
 
   const ConsoleLocator = page.locator('div.console_contents');
+
+  const clickPromises = [];
   for (let i = 0; i < 50; i++) {
-    await ConsoleLocator.click();
+    clickPromises.push(ConsoleLocator.click());
   }
+  await Promise.all(clickPromises);
+
   await expect(EuroLocator).toHaveText('Euro: 0.50€');
+
 
   await page.getByRole('button', { name: 'Open Power Upgrades' }).click();
   await page.getByRole('button', { name: 'Upgrade 1, Price: 0.5€' }).click();
