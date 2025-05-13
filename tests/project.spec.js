@@ -45,11 +45,16 @@ test.describe('Project flows', () => {
     await page.getByRole('button', {
       name: 'TEST - Size: 10, Deadline: 100, Reward: 5€',
     }).click();
+    
+    await page.getByRole('button', { name: 'Open Available Projects' }).click();  
 
     await expect(page.getByText('Active project: TEST')).toBeVisible();
     await expect(page.getByText('Progress: 0.00, Size: 10, Time left: 100')).toBeVisible();
 
+    
+    await page.getByRole('button', { name: 'Open Available Projects' }).click();
     await page.getByRole('button', { name: 'Cancel Project' }).click();
+    await page.getByRole('button', { name: 'Open Available Projects' }).click();
 
     await expect(page.getByText('Active project: None selected')).toBeVisible();
     await expect(page.getByText('Progress: 0.00, Size: 0, Time left: 0')).toBeVisible();
@@ -58,8 +63,7 @@ test.describe('Project flows', () => {
   test('completing a project by clicking awards reward and deselects', async ({ context, page }) => {
     const projectKey = 'CompleteTestProj';
 
-    await setSaveData(context, 'ResourceManagerData', { euro: 0, prestige: 0 });
-
+    await setSaveData(context, 'ResourceManagerData', { initClickPower: 1, clickPower: 1 });
     await setSaveData(context, 'ProjectManagerData', {
       selectedProjectKeys: [projectKey],
       cooldown: 0,
@@ -83,6 +87,7 @@ test.describe('Project flows', () => {
 
     await page.getByRole('button', { name: 'Open Available Projects' }).click();
     await page.getByRole('button', { name: 'COMPLETE - Size: 5, Deadline: 50, Reward: 7€' }).click();
+    await page.getByRole('button', { name: 'Open Available Projects' }).click();
 
     for (let i = 0; i < 5; i++) {
       await page.locator('.console_contents').click();
