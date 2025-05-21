@@ -11,6 +11,7 @@ div .console_wrap {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  overflow: hidden;
 
   box-sizing: border-box;
   border: 7px;
@@ -33,7 +34,7 @@ div .console_header {
   color: white;
   text-align: left;
   margin-bottom: 0px;
-
+  overflow: hidden;
   position: relative;
 
   display: flex;
