@@ -275,6 +275,7 @@ export class CompanyManager {
   resetForBankruptcy() {
     if (this.currentCompany != null) {
       this.game.stats.set("FinancialRuin", 1);
+      this.game.stats.set("CompaniesSold", 0);
       this.game.achievementManager.checkAchievements();
       this.game.upgrades.resetCompanyUpgrades();
       this.currentCompany = null;
