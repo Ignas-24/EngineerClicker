@@ -45,9 +45,11 @@ class Game {
 
   resetForBankruptcy() {
     this.resourceManager.resetForBankruptcy();
-    if (this.project) this.project.resetForBankruptcy();
+    if (this.project) 
+      this.project.resetForBankruptcy();
     this.upgrades.resetForBankruptcy();
     this.projectManager.resetForBankruptcy();
+    this.companyManager.resetForBankruptcy();
     this.notifyUpdate();
   }
 }
