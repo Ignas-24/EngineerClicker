@@ -124,13 +124,3 @@ div .console_contents {
   font-weight: bold;
   letter-spacing: 0.2rem;
 }
-
-@media screen and (max-width: 768px) {
-  .console_text {
-    font-size: 1.2rem;
-  }
-  
-  div .console_header p {
-    font-size: 0.8rem;
-  }
-}
