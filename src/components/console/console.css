@@ -11,6 +11,7 @@ div .console_wrap {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  overflow: hidden;
 
   box-sizing: border-box;
   border: 7px;
@@ -33,7 +34,7 @@ div .console_header {
   color: white;
   text-align: left;
   margin-bottom: 0px;
-
+  overflow: hidden;
   position: relative;
 
   display: flex;
@@ -122,4 +123,14 @@ div .console_contents {
   margin: 2px;
   font-weight: bold;
   letter-spacing: 0.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .console_text {
+    font-size: 1.2rem;
+  }
+  
+  div .console_header p {
+    font-size: 0.8rem;
+  }
 }

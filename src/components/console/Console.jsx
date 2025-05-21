@@ -34,9 +34,10 @@ export default function Console({ textState, styles, onClick }) {
 
       await app.init({
         backgroundAlpha: 0,
-        resizeTo: header.current,
+        resizeTo: header,
+        autoDensity: true,
+        resolution: header.devicePixelRatio || 1,
       });
-
       const canvas = app.canvas;
       canvas.style.position = "absolute";
       canvas.style.top = `${topPosition}%`;
@@ -81,18 +82,11 @@ export default function Console({ textState, styles, onClick }) {
       await createGradientCanvas(2, 66, 0.4, 1);
     };
 
-    const handleResize = () => {
-      console.log("resize not implemented");
-    };
-
     if (header.current) {
       load().then(() => {
-        window.addEventListener("resize", handleResize);
+        //window.addEventListener("resize", handleResize);
       });
     } else {
-      //PIXI graphics seemed to fail to load properly on page startup
-      //This is an attemt to rectify it, however key issue seems to be unset console measurements, which are now set
-      //This can probably be deleted
       const observer = new MutationObserver(() => {
         if (header.current) {
           observer.disconnect();
