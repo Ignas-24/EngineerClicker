@@ -272,11 +272,9 @@ export class CompanyManager {
     this.game.notifyUpdate();
   }
 
-  resetForBankruptcy()
-  {
-    if(this.currentCompany!=null)
-    {
-      this.game.stats.set("FinancialRuin",1)
+  resetForBankruptcy() {
+    if (this.currentCompany != null) {
+      this.game.stats.set("FinancialRuin", 1);
       this.game.achievementManager.checkAchievements();
       this.game.upgrades.resetCompanyUpgrades();
       this.currentCompany = null;
@@ -284,7 +282,5 @@ export class CompanyManager {
       this.saveData();
       this.game.notifyUpdate();
     }
-
   }
-
 }
