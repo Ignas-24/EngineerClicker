@@ -15,7 +15,18 @@ export class Upgrades {
     false,
     false,
   ];
-  multUpgrades = [false, false, false];
+  multUpgrades = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
   companyUpgrades = {
     reward: false,
     size: false,
@@ -51,6 +62,13 @@ export class Upgrades {
     { id: 1, price: 1.0, multiplier: 2, requires: null },
     { id: 2, price: 1.0, multiplier: 3, requires: 1 },
     { id: 3, price: 1.0, multiplier: 4, requires: 2 },
+    { id: 4, price: 2.0, multiplier: 5, requires: 3 },
+    { id: 5, price: 3.0, multiplier: 7, requires: 4 },
+    { id: 6, price: 5.0, multiplier: 9, requires: 5 },
+    { id: 7, price: 10.0, multiplier: 12, requires: 6 },
+    { id: 8, price: 15.0, multiplier: 15, requires: 7 },
+    { id: 9, price: 20.0, multiplier: 18, requires: 8 },
+    { id: 10, price: 30.0, multiplier: 20, requires: 9 },
   ];
 
   companyUpgradeData = {
@@ -219,7 +237,18 @@ export class Upgrades {
         false,
         false,
       ];
-      this.multUpgrades = data.multUpgrades || [false, false, false];
+      this.multUpgrades = data.multUpgrades || [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ];
       this.companyUpgrades = data.companyUpgrades || {
         reward: false,
         size: false,
