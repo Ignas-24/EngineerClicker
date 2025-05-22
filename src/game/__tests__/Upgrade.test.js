@@ -39,8 +39,33 @@ describe("Upgrades", () => {
 
   describe("Initialization", () => {
     it("should initialize with default values", () => {
-      expect(upgrades.powerUpgrades).toEqual([false, false, false, false]);
-      expect(upgrades.multUpgrades).toEqual([false, false, false]);
+      expect(upgrades.powerUpgrades).toEqual([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ]);
+      expect(upgrades.multUpgrades).toEqual([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ]);
       expect(upgrades.companyUpgrades).toEqual({
         reward: false,
         size: false,
@@ -101,7 +126,7 @@ describe("Upgrades", () => {
     });
 
     it("should fail for invalid upgrade index", () => {
-      const result = upgrades.powerUpgrade(5);
+      const result = upgrades.powerUpgrade(9999); // Number shouldn't be a real upgrade
       expect(result).toBe(false);
       expect(mockResourceManager.changeEuros).not.toHaveBeenCalled();
     });
@@ -209,13 +234,41 @@ describe("Upgrades", () => {
     it("resetPowerUpgrades should reset all power upgrades", () => {
       upgrades.powerUpgrades = [true, true, false, false];
       upgrades.resetPowerUpgrades();
-      expect(upgrades.powerUpgrades).toEqual([false, false, false, false]);
+      expect(upgrades.powerUpgrades).toEqual([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ]);
     });
 
     it("resetForBankruptcy should reset power upgrades", () => {
       upgrades.powerUpgrades = [true, true, false, false];
       upgrades.resetForBankruptcy();
-      expect(upgrades.powerUpgrades).toEqual([false, false, false, false]);
+      expect(upgrades.powerUpgrades).toEqual([
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ]);
     });
   });
 
