@@ -10,6 +10,12 @@ describe("LoanManager", () => {
         this.euro += amount;
       }),
     },
+    stats: {
+      increment: vi.fn(),
+    },
+    achievementManager: {
+      checkAchievements: vi.fn(),
+    },
     resetForBankruptcy: vi.fn(),
     notifyUpdate: vi.fn(),
   });

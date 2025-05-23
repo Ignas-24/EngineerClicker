@@ -30,6 +30,12 @@ describe("CompanyManager", () => {
           biggerProjects3: false,
         },
       },
+      stats: {
+        increment: vi.fn(),
+      },
+      achievementManager: {
+        checkAchievements: vi.fn(),
+      },
     };
 
     global.localStorage = {
