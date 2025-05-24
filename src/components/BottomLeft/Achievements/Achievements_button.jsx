@@ -5,10 +5,9 @@ const Achievements_button = ({ onClick }) => {
   function handleClick() {
     onClick();
   }
-
   return (
-    <button className="Achievements" onClick={handleClick}>
-      ✓
+    <button className="nes-btn is-warning Achievements" onClick={handleClick}>
+      <i class="nes-icon star"></i>
     </button>
   );
 };

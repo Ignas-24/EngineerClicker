@@ -9,10 +9,9 @@ import ProjectSelectMenu from "../Menu/ProjectSelectMenu.jsx";
 
 const RightSection = () => {
   const { openMenu, toggleMenu } = useMenu();
-
   return (
     <div
-      className={styles.rightSection}
+      className={`nes-container ${styles.rightSection}`}
       style={{ padding: 8, position: "relative" }}
     >
       <div

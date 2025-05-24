@@ -29,27 +29,30 @@ const ProjectSelectMenu = ({ onClose }) => {
   const handleRefresh = () => {
     game.projectManager.refreshProjects();
   };
-
   return (
-    <div className={styles.buttonsContainer}>
-      <CloseButton onClick={onClose} />
-      {projects
-        .filter((project) => !projects.some((p) => p.active) || project.active)
-        .map((project) => (
-          <Button
-            key={project.dataName}
-            label={
-              project.active
-                ? "Cancel Project"
-                : `${project.projectName} - Size: ${project.projectSize}, Deadline: ${project.projectDeadline}, Reward: ${project.projectReward}€`
-            }
-            onClick={() => handleAction(project.id)}
-          ></Button>
-        ))}
-      <br />
-      <button onClick={handleRefresh}>
-        {cooldown > 0 ? `Cooldown: ${cooldown}s` : "Refresh"}
-      </button>
+    <div className={`nes-container is-rounded`}>
+      <div className={styles.buttonsContainer}>
+        <CloseButton onClick={onClose} />
+        {projects
+          .filter(
+            (project) => !projects.some((p) => p.active) || project.active,
+          )
+          .map((project) => (
+            <Button
+              key={project.dataName}
+              label={
+                project.active
+                  ? "Cancel Project"
+                  : `${project.projectName} - Size: ${project.projectSize}, Deadline: ${project.projectDeadline}, Reward: ${project.projectReward}€`
+              }
+              onClick={() => handleAction(project.id)}
+            ></Button>
+          ))}
+        <br />
+        <button className="nes-btn is-warning" onClick={handleRefresh}>
+          {cooldown > 0 ? `Cooldown: ${cooldown}s` : "Refresh"}
+        </button>
+      </div>
     </div>
   );
 };

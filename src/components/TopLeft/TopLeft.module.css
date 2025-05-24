@@ -1,16 +1,21 @@
 .topLeft {
-  height: 40%;
-  background-color: #d3d3d3;
+  height: 50%;
   display: flex;
   box-sizing: border-box;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 10px 20px;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 20px;
+  gap: 15px;
+  overflow-y: auto;
+}
+
+.topLeft div {
+  padding: 1rem;
 }
 
 .topLeft p {
   margin: 5px 0;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: bold;
 }

@@ -91,13 +91,8 @@ const ComputerCanvas = ({ onClick }) => {
     if (!spriteRef.current) return;
     const app = appRef.current;
     const sprite = spriteRef.current;
-    const background = backgroundRef.current;
     sprite.setSize((app.screen.height / 2) * 1.4);
     sprite.position.set(app.screen.width / 2, app.screen.height / 2);
-
-    background.width = app.screen.width;
-    background.height = app.screen.height;
-    background.position.set(app.screen.width / 2, app.screen.height / 2);
   }
 
   useEffect(() => {
@@ -110,16 +105,7 @@ const ComputerCanvas = ({ onClick }) => {
       await app.init({ resizeTo: canvasRef.current, backgroundAlpha: 0 });
       canvasRef.current.appendChild(app.canvas);
 
-      const [texture, backgroundTexture] = await Promise.all([
-        PIXI.Assets.load(pc1Image),
-        PIXI.Assets.load(backgroundImage),
-      ]);
-
-      const background = new PIXI.Sprite(backgroundTexture);
-      backgroundRef.current = background;
-      background.anchor.set(0.5);
-      background.zIndex = -1;
-      app.stage.addChild(background);
+      const [texture] = await Promise.all([PIXI.Assets.load(pc1Image)]);
 
       const sprite = new PIXI.Sprite(texture);
       spriteRef.current = sprite;
@@ -127,7 +113,7 @@ const ComputerCanvas = ({ onClick }) => {
       sprite.anchor.set(0.5);
       sprite.position.set(app.screen.width / 2, app.screen.height / 2);
       sprite.eventMode = "static";
-      sprite.cursor = "pointer";
+      sprite.cursor = "var(--nes-cursor-select)";
       sprite.on("pointerdown", () => {
         handleClick(sprite);
       });

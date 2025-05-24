@@ -45,9 +45,8 @@ const DeveloperHiringMenu = ({ onClose }) => {
   const handleHireDeveloper = (tier) => {
     game.companyManager.hireDeveloper(tier);
   };
-
   return (
-    <div className={styles.buttonsContainer}>
+    <div className={`nes-container is-rounded ${styles.buttonsContainer}`}>
       <h3>Hire Developers</h3>
       {availableDeveloperOptions.map((developer) => (
         <Button

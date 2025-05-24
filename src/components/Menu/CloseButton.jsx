@@ -6,22 +6,20 @@ export default function CloseButton({ onClick }) {
       onClick={onClick}
       style={{
         position: "absolute",
+        border: "none",
+        background: "none",
         top: 8,
         right: 8,
-        border: "none",
-        background: "red",
-        color: "white",
-        fontSize: "1.5em",
         width: 41,
         height: 41,
-        cursor: "pointer",
         padding: 0,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        zIndex: 10,
       }}
     >
-      ✕
+      <i className="nes-icon close" />
     </button>
   );
 }

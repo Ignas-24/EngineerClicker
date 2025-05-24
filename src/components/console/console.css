@@ -10,7 +10,7 @@ div .console_wrap {
   text-align: left;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
+  cursor: var(--nes-cursor-select);
   overflow: hidden;
 
   box-sizing: border-box;
@@ -84,6 +84,7 @@ div .button {
   border-width: 5px;
   border-style: outset;
   border-color: gainsboro;
+  box-sizing: content-box;
 
   .pixelIcon {
     height: 100%;

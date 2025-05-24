@@ -39,22 +39,29 @@ const TopLeft = () => {
         };
       }),
     );
-
   return (
-    <div className={styles.topLeft}>
-      <p>Developer upkeep: {parseFloat(upkeep).toFixed(2)}€ / 5 min</p>
-      <p>Euro: {parseFloat(euros).toFixed(2)}€</p>
-      <p>Prestige: {prestige}</p>
-      <p>
-        Current typing power: {parseFloat(clickPower).toFixed(2)}, Multiplier:{" "}
-        {multiplier}
-      </p>
-      <p>Active project: {projectName || "None selected"}</p>
-      <p>
-        Progress: {parseFloat(projectProgress || 0).toFixed(2)}, Size:{" "}
-        {projectSize || 0}, Time left: {projectRemainingTime || 0}
-      </p>
-      {hasLoan && <p>Loan: {parseFloat(remainingLoanAmount).toFixed(2)}€</p>}
+    <div className={`nes-container ${styles.topLeft}`}>
+      <div className="nes-container with-title">
+        <p className="title">Resources</p>
+        <p>Euro: {parseFloat(euros).toFixed(2)}€</p>
+        <p>Prestige: {prestige}</p>
+        {hasLoan && <p>Loan: {parseFloat(remainingLoanAmount).toFixed(2)}€</p>}
+      </div>
+
+      <div className="nes-container with-title">
+        <p className="title">Performance</p>
+        <p>Current typing power: {parseFloat(clickPower).toFixed(2)}</p>
+        <p>Multiplier: {multiplier}</p>
+        <p>Developer upkeep: {parseFloat(upkeep).toFixed(2)}€ / 5 min</p>
+      </div>
+
+      <div className="nes-container with-title">
+        <p className="title">Active Project</p>
+        <p>Project: {projectName || "None selected"}</p>
+        <p>Progress: {parseFloat(projectProgress || 0).toFixed(2)}</p>
+        <p>Size: {projectSize || 0}</p>
+        <p>Time left: {projectRemainingTime || 0}</p>
+      </div>
     </div>
   );
 };

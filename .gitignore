@@ -25,6 +25,7 @@ dist-ssr
 *.sln
 *.sw?
 .vs
+.github
 
 # Playwright
 /test-results/
