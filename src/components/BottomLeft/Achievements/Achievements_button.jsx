@@ -5,9 +5,8 @@ const Achievements_button = ({ onClick }) => {
   function handleClick() {
     onClick();
   }
-
   return (
-    <button className="Achievements" onClick={handleClick}>
+    <button className="nes-btn is-success Achievements" onClick={handleClick}>
       ✓
     </button>
   );

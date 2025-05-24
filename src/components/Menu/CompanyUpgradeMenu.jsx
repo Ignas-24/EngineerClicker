@@ -121,9 +121,8 @@ const CompanyUpgradeMenu = ({ onClose }) => {
   const handleUpgrade = (upgradeKey) => {
     game.upgrades.buyCompanyUpgrade(upgradeKey);
   };
-
   return (
-    <div className={styles.buttonsContainer}>
+    <div className={`nes-container is-rounded ${styles.buttonsContainer}`}>
       <h3>Company Upgrades</h3>
       {availableUpgrades.map((upgrade) => (
         <Button

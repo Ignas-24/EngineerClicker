@@ -4,14 +4,11 @@ export default function CloseButton({ onClick }) {
   return (
     <button
       onClick={onClick}
+      className="nes-btn is-error"
       style={{
         position: "absolute",
         top: 8,
         right: 8,
-        border: "none",
-        background: "red",
-        color: "white",
-        fontSize: "1.5em",
         width: 41,
         height: 41,
         cursor: "pointer",
@@ -19,6 +16,7 @@ export default function CloseButton({ onClick }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        zIndex: 10,
       }}
     >
       ✕

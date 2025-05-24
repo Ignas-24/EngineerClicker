@@ -8,10 +8,9 @@ const BankruptcyPopUp = ({ onClose, onTakeLoan }) => {
     game.loanManager.declareBankruptcy();
     onClose();
   };
-
   return (
     <div className={styles.overlay}>
-      <div className={styles.modal}>
+      <div className={`nes-container is-rounded ${styles.modal}`}>
         <h2>Financial Crisis!</h2>
         <p>Your balance is negative. You have two options:</p>
 

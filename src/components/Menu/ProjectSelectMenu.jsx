@@ -29,9 +29,8 @@ const ProjectSelectMenu = ({ onClose }) => {
   const handleRefresh = () => {
     game.projectManager.refreshProjects();
   };
-
   return (
-    <div className={styles.buttonsContainer}>
+    <div className={`nes-container is-rounded ${styles.buttonsContainer}`}>
       <CloseButton onClick={onClose} />
       {projects
         .filter((project) => !projects.some((p) => p.active) || project.active)
@@ -47,7 +46,7 @@ const ProjectSelectMenu = ({ onClose }) => {
           ></Button>
         ))}
       <br />
-      <button onClick={handleRefresh}>
+      <button className="nes-btn is-warning" onClick={handleRefresh}>
         {cooldown > 0 ? `Cooldown: ${cooldown}s` : "Refresh"}
       </button>
     </div>

@@ -23,11 +23,10 @@ const Achievement_window = ({ onClick }) => {
       game.achievementManager.getAchievements()[achievement.id].claim(game);
     }
   };
-
   return (
     <div className="Backdrop">
-      <div className="Window_Container">
-        <button className="closeButton" onClick={onClick}>
+      <div className="nes-container is-rounded Window_Container">
+        <button className="nes-btn is-error closeButton" onClick={onClick}>
           X
         </button>
 

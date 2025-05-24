@@ -41,9 +41,8 @@ const BottomLeft = () => {
   const closeAchievements = () => {
     setAchvOpen(false);
   };
-
   return (
-    <div className={styles.bottomLeft}>
+    <div className={`nes-container ${styles.bottomLeft}`}>
       <Button label="Bank" onClick={() => setLoanOpen(true)} />
       <Button label={companyLabel} onClick={() => toggleMenu("company")} />
       <Button label="Open Power Upgrades" onClick={() => toggleMenu("power")} />

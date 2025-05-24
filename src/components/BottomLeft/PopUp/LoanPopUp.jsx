@@ -26,10 +26,9 @@ const LoanPopUp = ({ onClose }) => {
       }
     }
   };
-
   return (
     <div className={styles.overlay}>
-      <div className={styles.modal}>
+      <div className={`nes-container is-rounded ${styles.modal}`}>
         <h2>Bank</h2>
 
         {hasLoan ? (
@@ -47,11 +46,12 @@ const LoanPopUp = ({ onClose }) => {
         ) : (
           <div>
             <p>Maximum loan amount: {maxLoanAmount}€</p>
-            <p>Interest rate: {interestRate * 100}%</p>
+            <p>Interest rate: {interestRate * 100}%</p>{" "}
             <div>
               <label>
                 Loan Amount:
                 <input
+                  className="nes-input"
                   type="number"
                   value={loanAmount}
                   onChange={(e) => setLoanAmount(e.target.value)}
@@ -64,7 +64,9 @@ const LoanPopUp = ({ onClose }) => {
           </div>
         )}
 
-        <button onClick={onClose}>Close</button>
+        <button className="nes-btn is-primary" onClick={onClose}>
+          Close
+        </button>
       </div>
     </div>
   );

@@ -1,13 +1,19 @@
 import React from "react";
-import styles from "./Button.module.css";
 
-const Button = ({ label, onClick, title }) => {
+const Button = ({ label, onClick, title, disabled = false }) => {
   function handleClick() {
-    onClick();
+    if (!disabled) {
+      onClick();
+    }
   }
 
   return (
-    <button className={styles.customButton} onClick={handleClick} title={title}>
+    <button
+      className={`nes-btn ${disabled ? "is-disabled" : ""}`}
+      onClick={handleClick}
+      title={title}
+      disabled={disabled}
+    >
       {label}
     </button>
   );

@@ -23,9 +23,8 @@ const PowerUpgradeMenu = ({ onClose }) => {
   const handleAction = (id) => {
     game.upgrades.powerUpgrade(id);
   };
-
   return (
-    <div className={styles.buttonsContainer}>
+    <div className={`nes-container is-rounded ${styles.buttonsContainer}`}>
       <CloseButton onClick={onClose} />
       {upgrades.map((upgrade) => (
         <Button

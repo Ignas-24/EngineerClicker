@@ -23,67 +23,68 @@ const CompanyMenu = ({ onClose }) => {
   const handleBuyCompany = (type) => {
     game.companyManager.buyCompany(type);
   };
-
   return (
-    <div className={styles.buttonsContainer}>
-      <CloseButton onClick={onClose} />
-      <h4>Completed Projects: {completedProjectsThisReset}</h4>
-      {!currentCompany && (
-        <Button
-          label="Buy Small Software Development Studio (5,000 €)"
-          onClick={() => handleBuyCompany("small")}
-        />
-      )}
-      {currentCompany && (
-        <>
-          {currentCompany?.type === "small" && (
-            <Button
-              label="Upgrade to Medium Sized Software Company (20,000 €)"
-              onClick={() => handleBuyCompany("medium")}
-            />
-          )}
-          {currentCompany?.type === "medium" && (
-            <Button
-              label="Upgrade to Large Software Corporation (100,000 €)"
-              onClick={() => handleBuyCompany("large")}
-            />
-          )}
-
+    <div className={`nes-container is-rounded`}>
+      <div className={`${styles.buttonsContainer}`}>
+        <CloseButton onClick={onClose} />
+        <h4>Completed Projects: {completedProjectsThisReset}</h4>
+        {!currentCompany && (
           <Button
-            label="Company upgrades"
-            onClick={() => setUpgradeOpen(!isUpgradeOpen)}
+            label="Buy Small Software Development Studio (5,000 €)"
+            onClick={() => handleBuyCompany("small")}
           />
-          <Button
-            label="Hire developers"
-            onClick={() => setDeveloperOpen(!isDeveloperOpen)}
-          />
-
-          {isUpgradeOpen && (
-            <CompanyUpgradeMenu onClose={() => setUpgradeOpen(false)} />
-          )}
-          {isDeveloperOpen && (
-            <DeveloperHiringMenu onClose={() => setDeveloperOpen(false)} />
-          )}
-
-          {(currentCompany.type === "medium" ||
-            currentCompany.type === "large") &&
-            completedProjectsThisReset >= 40 &&
-            (completedProjectsThisReset - 40) % 10 === 0 && (
+        )}
+        {currentCompany && (
+          <>
+            {currentCompany?.type === "small" && (
               <Button
-                label="Sell Company"
-                onClick={() => {
-                  const confirmSell = confirm(
-                    "Are you sure you want to sell your company?",
-                  );
-                  if (confirmSell) {
-                    game.companyManager.sellCompany();
-                  }
-                }}
+                label="Upgrade to Medium Sized Software Company (20,000 €)"
+                onClick={() => handleBuyCompany("medium")}
               />
             )}
-        </>
-      )}
-      <br />
+            {currentCompany?.type === "medium" && (
+              <Button
+                label="Upgrade to Large Software Corporation (100,000 €)"
+                onClick={() => handleBuyCompany("large")}
+              />
+            )}
+
+            <Button
+              label="Company upgrades"
+              onClick={() => setUpgradeOpen(!isUpgradeOpen)}
+            />
+            <Button
+              label="Hire developers"
+              onClick={() => setDeveloperOpen(!isDeveloperOpen)}
+            />
+
+            {isUpgradeOpen && (
+              <CompanyUpgradeMenu onClose={() => setUpgradeOpen(false)} />
+            )}
+            {isDeveloperOpen && (
+              <DeveloperHiringMenu onClose={() => setDeveloperOpen(false)} />
+            )}
+
+            {(currentCompany.type === "medium" ||
+              currentCompany.type === "large") &&
+              completedProjectsThisReset >= 40 &&
+              (completedProjectsThisReset - 40) % 10 === 0 && (
+                <Button
+                  label="Sell Company"
+                  onClick={() => {
+                    const confirmSell = confirm(
+                      "Are you sure you want to sell your company?",
+                    );
+                    if (confirmSell) {
+                      game.companyManager.sellCompany();
+                    }
+                  }}
+                />
+              )}
+          </>
+        )}
+        <br />
+      </div>
     </div>
   );
 };

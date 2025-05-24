@@ -1,5 +1,5 @@
 .Backdrop {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 
@@ -12,35 +12,28 @@
   display: flex;
 
   justify-content: center;
-  vertical-align: middle;
+  align-items: center;
 }
 
 .Window_Container {
   width: 60%;
   height: 80%;
-  background-color: black;
-  border-style: solid;
-  border-color: black;
-  border-radius: 20px;
   margin: auto;
-
   display: inline-block;
   position: relative;
   overflow: scroll;
+  background-color: white !important;
 
   .closeButton {
-    background-color: black;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 8px;
+    right: 8px;
     aspect-ratio: 1/1;
     margin: 5px;
     padding: 0;
     min-width: 25px;
     min-height: 25px;
     text-align: center;
-
-    border-radius: 0;
   }
 
   .Achievement_wrap {

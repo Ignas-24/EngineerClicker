@@ -1,10 +1,9 @@
 .bottomLeft {
-  height: 60%;
-  background-color: #b0b0b0;
+  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: left;
   gap: 10px;
-  padding: 10px;
+  padding: 20px;
 }
