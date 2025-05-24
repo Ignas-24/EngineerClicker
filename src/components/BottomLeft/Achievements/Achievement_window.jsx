@@ -3,6 +3,7 @@ import "./Achievement_window.css";
 import AchievementView from "./AchievementView";
 import game from "../../../game/Game";
 import getCached from "../../../util/getCached";
+import CloseButton from "../../Menu/CloseButton";
 
 const Achievement_window = ({ onClick }) => {
   const achievements = useSyncExternalStore(
@@ -26,9 +27,7 @@ const Achievement_window = ({ onClick }) => {
   return (
     <div className="Backdrop">
       <div className="nes-container is-rounded Window_Container">
-        <button className="nes-btn is-error closeButton" onClick={onClick}>
-          X
-        </button>
+        <CloseButton onClick={onClick} />
 
         {achievements.map((achievement, index) => (
           <AchievementView

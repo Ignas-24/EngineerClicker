@@ -34,19 +34,22 @@ const MultUpgradeMenu = ({ onClose }) => {
     game.upgrades.multUpgrade(id);
   };
   return (
-    <div className={`nes-container is-rounded ${styles.buttonsContainer}`}>
-      <CloseButton onClick={onClose} />
-      {upgrades.map((upgrade) => (
-        <Button
-          key={upgrade.id}
-          label={
-            upgrade.bought
-              ? `${upgrade.label}, Bought`
-              : `${upgrade.label}, Price: ${upgrade.price} Prestige`
-          }
-          onClick={() => handleAction(upgrade.id)}
-        ></Button>
-      ))}
+    <div className={`nes-container is-rounded`}>
+      <div className={styles.buttonsContainer}>
+        <CloseButton onClick={onClose} />
+        {upgrades.map((upgrade) => (
+          <Button
+            key={upgrade.id}
+            label={
+              upgrade.bought
+                ? `${upgrade.label}, Bought`
+                : `${upgrade.label}, Price: ${upgrade.price} Prestige`
+            }
+            disabled={upgrade.bought}
+            onClick={() => handleAction(upgrade.id)}
+          ></Button>
+        ))}
+      </div>
     </div>
   );
 };

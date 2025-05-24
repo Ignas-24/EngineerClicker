@@ -4,7 +4,7 @@
   border: none;
   background-color: #007bff;
   color: white;
-  cursor: pointer;
+  cursor: var(--nes-cursor-select);
   font-size: 16px;
   border-radius: 5px;
 }

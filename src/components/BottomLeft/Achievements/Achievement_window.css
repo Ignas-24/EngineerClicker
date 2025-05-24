@@ -21,7 +21,7 @@
   margin: auto;
   display: inline-block;
   position: relative;
-  overflow: scroll;
+  overflow: auto;
   background-color: white !important;
 
   .closeButton {
@@ -36,17 +36,17 @@
     text-align: center;
   }
 
+  /* TODO: could look into making these equal height */
   .Achievement_wrap {
     display: flex;
     justify-content: space-between;
     margin: 0;
     margin-top: 5%;
-    margin-left: 5%;
     padding: 0;
     text-align: right;
     p {
       width: 60%;
-      padding-right: 15px;
+      margin-left: 8px;
     }
   }
 
@@ -54,9 +54,7 @@
     border-style: solid;
     border-radius: 10px;
 
-    height: 15%;
     width: 40%;
-    max-height: 60px;
 
     display: flex;
     justify-content: space-between;
@@ -80,7 +78,7 @@
       color: white;
       font-weight: bold;
       background-color: green;
-      width: 25%;
+      width: 35%;
     }
   }
 }

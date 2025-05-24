@@ -63,10 +63,9 @@ const LoanPopUp = ({ onClose }) => {
             <Button label="Take Loan" onClick={handleTakeLoan} />
           </div>
         )}
-
-        <button className="nes-btn is-primary" onClick={onClose}>
-          Close
-        </button>
+        <div style={{ marginTop: 8 }}>
+          <Button label="Close" onClick={onClose} />
+        </div>
       </div>
     </div>
   );

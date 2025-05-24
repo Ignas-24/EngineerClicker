@@ -6,8 +6,8 @@ const Achievements_button = ({ onClick }) => {
     onClick();
   }
   return (
-    <button className="nes-btn is-success Achievements" onClick={handleClick}>
-      ✓
+    <button className="nes-btn is-warning Achievements" onClick={handleClick}>
+      <i class="nes-icon star"></i>
     </button>
   );
 };
