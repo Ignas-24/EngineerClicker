@@ -271,4 +271,17 @@ export class CompanyManager {
     }
     this.game.notifyUpdate();
   }
+
+  resetForBankruptcy() {
+    if (this.currentCompany != null) {
+      this.game.stats.set("FinancialRuin", 1);
+      this.game.stats.set("CompaniesSold", 0);
+      this.game.achievementManager.checkAchievements();
+      this.game.upgrades.resetCompanyUpgrades();
+      this.currentCompany = null;
+      this.developers = { junior: 0, midlevel: 0, senior: 0, lead: 0 };
+      this.saveData();
+      this.game.notifyUpdate();
+    }
+  }
 }
