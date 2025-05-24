@@ -19,7 +19,7 @@ export default function CloseButton({ onClick }) {
         zIndex: 10,
       }}
     >
-      <i class="nes-icon close" />
+      <i className="nes-icon close" />
     </button>
   );
 }
