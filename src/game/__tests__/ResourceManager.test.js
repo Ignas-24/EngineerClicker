@@ -11,6 +11,12 @@ describe("ResourceManager", () => {
       loanManager: {
         checkNegativeBalance: vi.fn(),
       },
+      achievementManager: {
+        checkAchievements: vi.fn(),
+      },
+      stats: {
+        increment: vi.fn(),
+      },
     };
 
     global.localStorage = {
