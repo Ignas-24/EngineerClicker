@@ -24,7 +24,7 @@ const CompanyMenu = ({ onClose }) => {
     game.companyManager.buyCompany(type);
   };
   return (
-    <div className={`nes-container is-rounded`}>
+    <div className="nes-container is-rounded">
       <div className={`${styles.buttonsContainer}`}>
         <CloseButton onClick={onClose} />
         <h4>Completed Projects: {completedProjectsThisReset}</h4>
