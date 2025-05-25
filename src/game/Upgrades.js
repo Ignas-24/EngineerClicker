@@ -72,18 +72,18 @@ export class Upgrades {
   ];
 
   companyUpgradeData = {
-    small: { reward: 1000, size: 3000, speed: 3000, biggerProjects: 5000 },
+    small: { reward: 600, size: 1800, speed: 1800, biggerProjects: 3000 },
     medium: {
-      reward2: 1000,
-      size2: 3000,
-      speed2: 10000,
-      biggerProjects2: 2000,
+      reward2: 600,
+      size2: 1200,
+      speed2: 6000,
+      biggerProjects2: 1200,
     },
     large: {
-      reward3: 1000,
-      size3: 3000,
-      speed3: 50000,
-      biggerProjects3: 75000,
+      reward3: 600,
+      size3: 1800,
+      speed3: 30000,
+      biggerProjects3: 45000,
     },
   };
 
