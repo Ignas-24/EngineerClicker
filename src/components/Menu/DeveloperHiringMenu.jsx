@@ -7,22 +7,22 @@ import styles from "./DeveloperHiringMenu.module.css";
 const developerOptions = [
   {
     tier: "junior",
-    label: "Hire Junior Developer (€500, €100 upkeep)",
+    label: "Hire Junior Developer (€300, €60 upkeep)",
     efficiency: "+0.1 progress/sec",
   },
   {
     tier: "midlevel",
-    label: "Hire Mid-Level Developer (€1,000, €200 upkeep)",
+    label: "Hire Mid-Level Developer (€600, €120 upkeep)",
     efficiency: "+0.3 progress/sec",
   },
   {
     tier: "senior",
-    label: "Hire Senior Developer (€2,000, €500 upkeep)",
+    label: "Hire Senior Developer (€1,200, €300 upkeep)",
     efficiency: "+0.7 progress/sec",
   },
   {
     tier: "lead",
-    label: "Hire Lead Developer (€5,000, €1,000 upkeep)",
+    label: "Hire Lead Developer (€3,000, €600 upkeep)",
     efficiency: "+1.5 progress/sec, boosts others by 10%",
   },
 ];
