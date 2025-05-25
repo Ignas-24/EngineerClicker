@@ -48,16 +48,21 @@ test.describe('Project flows', () => {
     
     await page.getByRole('button', { name: 'Open Available Projects' }).click();  
 
-    await expect(page.getByText('Active project: TEST')).toBeVisible();
-    await expect(page.getByText('Progress: 0.00, Size: 10, Time left: 100')).toBeVisible();
+
+    await expect(page.getByText('Project: TEST')).toBeVisible();
+    await expect(page.getByText('Progress: 0.00')).toBeVisible();
+    await expect(page.getByText('Size: 10')).toBeVisible();
+
 
     
     await page.getByRole('button', { name: 'Open Available Projects' }).click();
     await page.getByRole('button', { name: 'Cancel Project' }).click();
     await page.getByRole('button', { name: 'Open Available Projects' }).click();
 
-    await expect(page.getByText('Active project: None selected')).toBeVisible();
-    await expect(page.getByText('Progress: 0.00, Size: 0, Time left: 0')).toBeVisible();
+    await expect(page.getByText('Project: None selected')).toBeVisible();
+    await expect(page.getByText('Progress: 0.00')).toBeVisible();
+    await expect(page.getByText('Size: 0')).toBeVisible();
+    await expect(page.getByText('Time left: 0')).toBeVisible();
   });
 
   test('completing a project by clicking awards reward and deselects', async ({ context, page }) => {
@@ -95,7 +100,7 @@ test.describe('Project flows', () => {
 
     await expect(page.getByText('Euro: 7.00€')).toBeVisible();
 
-    await expect(page.getByText('Active project: None selected')).toBeVisible();
+    await expect(page.getByText('Project: None selected')).toBeVisible();
   });
 
   test('an active project fails when its timer runs out', async ({ context, page }) => {
@@ -129,7 +134,9 @@ test.describe('Project flows', () => {
 
     await page.waitForTimeout(1500);
 
-    await expect(page.getByText('Active project: None selected')).toBeVisible();
-    await expect(page.getByText('Progress: 0.00, Size: 0, Time left: 0')).toBeVisible();
+    await expect(page.getByText('Project: None selected')).toBeVisible();
+    await expect(page.getByText('Progress: 0.00')).toBeVisible();
+    await expect(page.getByText('Size: 0')).toBeVisible();
+    await expect(page.getByText('Time left: 0')).toBeVisible();
   });
 });
