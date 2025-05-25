@@ -47,10 +47,10 @@ export class CompanyManager {
 
   calculateDeveloperUpkeep() {
     const developerCosts = {
-      junior: 100,
-      midlevel: 200,
-      senior: 500,
-      lead: 1000,
+      junior: 60,
+      midlevel: 120,
+      senior: 300,
+      lead: 600,
     };
 
     return Object.entries(this.developers).reduce(
@@ -70,10 +70,10 @@ export class CompanyManager {
     }
 
     const developerTiers = {
-      junior: { cost: 500, upkeep: 100, efficiency: 0.1 },
-      midlevel: { cost: 1000, upkeep: 200, efficiency: 0.3 },
-      senior: { cost: 2000, upkeep: 500, efficiency: 0.7 },
-      lead: { cost: 5000, upkeep: 1000, efficiency: 1.5, boost: 0.1 },
+      junior: { cost: 300, upkeep: 60, efficiency: 0.1 },
+      midlevel: { cost: 600, upkeep: 120, efficiency: 0.3 },
+      senior: { cost: 1200, upkeep: 300, efficiency: 0.7 },
+      lead: { cost: 3000, upkeep: 600, efficiency: 1.5, boost: 0.1 },
     };
 
     const developer = developerTiers[tier];
@@ -153,25 +153,25 @@ export class CompanyManager {
 
     const companyTypes = {
       small: {
-        cost: 5000,
+        cost: 3000,
         maxEmployees: 5 + Math.floor(completedProjectsThisReset / 5),
-        upkeep: 300,
+        upkeep: 180,
         unlocks: ["junior", "midlevel"],
         requirements: () => !this.currentCompany,
       },
       medium: {
-        cost: 20000,
+        cost: 12000,
         maxEmployees: 20 + Math.floor(completedProjectsThisReset / 3),
-        upkeep: 1000,
+        upkeep: 600,
         unlocks: ["junior", "midlevel", "senior"],
         requirements: () =>
           this.currentCompany?.type === "small" &&
           completedProjectsThisReset >= 20,
       },
       large: {
-        cost: 100000,
+        cost: 60000,
         maxEmployees: 75 + completedProjectsThisReset,
-        upkeep: 5000,
+        upkeep: 3000,
         unlocks: ["junior", "midlevel", "senior", "lead"],
         requirements: () =>
           this.currentCompany?.type === "medium" &&
