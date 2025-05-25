@@ -17,6 +17,26 @@ export class ProjectManager {
     rewardInterval: [2, 4],
     deadlineInterval: [120, 180],
   };
+  veryLargeProject = {
+    sizeInterval: [100, 500],
+    rewardInterval: [3, 5],
+    deadlineInterval: [150, 300],
+  };
+  incrediblyLargeProject = {
+    sizeInterval: [200, 1000],
+    rewardInterval: [4, 6],
+    deadlineInterval: [240, 800],
+  };
+  hugeProject = {
+    sizeInterval: [500, 2000],
+    rewardInterval: [5, 10],
+    deadlineInterval: [700, 1500],
+  };
+  incrediblyHugeProject = {
+    sizeInterval: [1000, 5000],
+    rewardInterval: [6, 12],
+    deadlineInterval: [1000, 2000],
+  };
   selectedProjects = [];
   cooldown = 0;
   TIMER_PERIOD_MS = 1000;
@@ -156,6 +176,34 @@ export class ProjectManager {
           this.largeProject.sizeInterval,
           this.largeProject.rewardInterval,
           this.largeProject.deadlineInterval,
+        ),
+      ),
+      veryLarge: Array.from({ length: 4 }, () =>
+        this.createProject(
+          this.veryLargeProject.sizeInterval,
+          this.veryLargeProject.rewardInterval,
+          this.veryLargeProject.deadlineInterval,
+        ),
+      ),
+      incrediblyLarge: Array.from({ length: 4 }, () =>
+        this.createProject(
+          this.incrediblyLargeProject.sizeInterval,
+          this.incrediblyLargeProject.rewardInterval,
+          this.incrediblyLargeProject.deadlineInterval,
+        ),
+      ),
+      huge: Array.from({ length: 4 }, () =>
+        this.createProject(
+          this.hugeProject.sizeInterval,
+          this.hugeProject.rewardInterval,
+          this.hugeProject.deadlineInterval,
+        ),
+      ),
+      incrediblyHuge: Array.from({ length: 4 }, () =>
+        this.createProject(
+          this.incrediblyHugeProject.sizeInterval,
+          this.incrediblyHugeProject.rewardInterval,
+          this.incrediblyHugeProject.deadlineInterval,
         ),
       ),
     };
