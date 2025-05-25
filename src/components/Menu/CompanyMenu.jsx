@@ -30,7 +30,7 @@ const CompanyMenu = ({ onClose }) => {
         <h4>Completed Projects: {completedProjectsThisReset}</h4>
         {!currentCompany && (
           <Button
-            label="Buy Small Software Development Studio (5,000 €)"
+            label="Buy Small Software Development Studio (3,000 €)"
             onClick={() => handleBuyCompany("small")}
           />
         )}
@@ -38,13 +38,13 @@ const CompanyMenu = ({ onClose }) => {
           <>
             {currentCompany?.type === "small" && (
               <Button
-                label="Upgrade to Medium Sized Software Company (20,000 €)"
+                label="Upgrade to Medium Sized Software Company (12,000 €)"
                 onClick={() => handleBuyCompany("medium")}
               />
             )}
             {currentCompany?.type === "medium" && (
               <Button
-                label="Upgrade to Large Software Corporation (100,000 €)"
+                label="Upgrade to Large Software Corporation (60,000 €)"
                 onClick={() => handleBuyCompany("large")}
               />
             )}
