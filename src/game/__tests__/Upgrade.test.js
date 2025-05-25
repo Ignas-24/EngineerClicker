@@ -185,7 +185,7 @@ describe("Upgrades", () => {
     it("should successfully purchase small company upgrade", () => {
       const result = upgrades.buyCompanyUpgrade("reward");
       expect(result).toBe(true);
-      expect(mockResourceManager.changeEuros).toHaveBeenCalledWith(-1000);
+      expect(mockResourceManager.changeEuros).toHaveBeenCalledWith(-600);
       expect(mockCompanyManager.currentCompany.upkeep).toBe(200); // 100 base + 100 increase
       expect(upgrades.companyUpgrades.reward).toBe(true);
       expect(mockGame.notifyUpdate).toHaveBeenCalled();
@@ -217,7 +217,7 @@ describe("Upgrades", () => {
       mockCompanyManager.currentCompany.type = "medium";
       const result = upgrades.buyCompanyUpgrade("speed2");
       expect(result).toBe(true);
-      expect(mockResourceManager.changeEuros).toHaveBeenCalledWith(-10000);
+      expect(mockResourceManager.changeEuros).toHaveBeenCalledWith(-6000);
       expect(mockCompanyManager.currentCompany.upkeep).toBe(350);
     });
   });

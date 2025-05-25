@@ -68,7 +68,7 @@ describe("CompanyManager", () => {
       // Fast-forward 5 minutes
       vi.advanceTimersByTime(5 * 60 * 1000);
 
-      expect(mockChangeEuros).toHaveBeenCalledWith(-600);
+      expect(mockChangeEuros).toHaveBeenCalledWith(-480);
     });
 
     it("should not deduct upkeep if there is no current company", () => {
@@ -141,7 +141,7 @@ describe("CompanyManager", () => {
         lead: 2,
       };
       const upkeep = companyManager.calculateDeveloperUpkeep();
-      expect(upkeep).toBe(3600); // 100*2 + 2*200 + 500*2 + 1000*2
+      expect(upkeep).toBe(2160);
     });
   });
 
@@ -158,7 +158,7 @@ describe("CompanyManager", () => {
       companyManager.game.resourceManager.euro = 1000;
       const result = companyManager.hireDeveloper("junior");
 
-      expect(mockChangeEuros).toHaveBeenCalledWith(-500);
+      expect(mockChangeEuros).toHaveBeenCalledWith(-300);
       expect(result).toBe(true);
       expect(companyManager.developers.junior).toBe(3);
     });

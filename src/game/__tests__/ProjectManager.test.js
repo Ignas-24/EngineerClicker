@@ -163,7 +163,15 @@ describe("ProjectManager", () => {
   describe("generateProjectPool", () => {
     it("should return small, medium, large arrays", () => {
       const pool = projectManager.generateProjectPool();
-      expect(Object.keys(pool)).toEqual(["small", "medium", "large"]);
+      expect(Object.keys(pool)).toEqual([
+        "small",
+        "medium",
+        "large",
+        "veryLarge",
+        "incrediblyLarge",
+        "huge",
+        "incrediblyHuge",
+      ]);
       expect(pool.small).toHaveLength(4);
       expect(pool.medium).toHaveLength(4);
       expect(pool.large).toHaveLength(4);
@@ -261,7 +269,7 @@ describe("ProjectManager", () => {
   describe("getWeightedProjects", () => {
     it("should return an array of weighted projects", () => {
       const weighted = projectManager.getWeightedProjects();
-      expect(weighted).toHaveLength(3 * 4);
+      expect(weighted).toHaveLength(7 * 4);
       expect(weighted[0]).toHaveProperty("project");
       expect(weighted[0]).toHaveProperty("key");
       expect(weighted[0]["key"]).toBeGreaterThan(0);
