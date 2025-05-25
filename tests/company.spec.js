@@ -158,6 +158,6 @@ test("hire developers", async ({ context, page }) => {
   );
 
   await expect(page.getByText(/Developer upkeep: /)).toHaveText(
-    "Developer upkeep: 300.00€ / 5 min",
+    "Developer upkeep: 180.00€ / 5 min",
   );
 });
