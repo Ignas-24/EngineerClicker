@@ -25,6 +25,7 @@ describe("Project", () => {
         completedProjectsThisReset: 0,
         completedProjectTotal: 0,
         removeProject: vi.fn(),
+        selectedProjects: [],
       },
       notifyUpdate: vi.fn(),
     };

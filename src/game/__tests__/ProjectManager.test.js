@@ -235,10 +235,10 @@ describe("ProjectManager", () => {
   describe("replaceIncativeProjects", () => {
     it("should replace non-active projects", () => {
       projectManager.selectedProjects = [
-        { active: true, dataName: "a" },
-        { active: false, dataName: "b" },
-        { active: false, dataName: "c" },
-        { active: true, dataName: "d" },
+        { active: true, dataName: "a", deleteData: vi.fn() },
+        { active: false, dataName: "b", deleteData: vi.fn() },
+        { active: false, dataName: "c", deleteData: vi.fn() },
+        { active: true, dataName: "d", deleteData: vi.fn() },
       ];
       projectManager.replaceInactiveProjects();
       expect(projectManager.selectedProjects.length).toBe(4);
