@@ -38,7 +38,20 @@ test("taking out and paying off a loan with 0 prestige", async ({
 
   await expect(page.getByText(/Euro:/)).toHaveText("Euro: 5499.99€");
   await expect(page.getByText(/Loan:/)).toHaveText("Loan: 5500.00€");
-  await page.locator(".console_contents").click();
+
+  await page.evaluate(() => {
+  const element = document.querySelector('div.console_wrap');
+  if (!element) throw new Error('Element not found');
+  
+  const event = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window
+  });
+    element.dispatchEvent(event);
+  });
+
+  //await page.locator(".console_contents").click();
 
   await page.getByRole("button", { name: "Bank" }).click();
   await page.getByRole("button", { name: "Pay Off Loan" }).click();
@@ -78,7 +91,18 @@ test("taking out and paying off a loan with 2 prestige", async ({
 
   await expect(page.getByText(/Euro:/)).toHaveText("Euro: 10999.99€");
   await expect(page.getByText(/Loan:/)).toHaveText("Loan: 11000.00€");
-  await page.locator(".console_contents").click();
+  
+  await page.evaluate(() => {
+  const element = document.querySelector('div.console_wrap');
+  if (!element) throw new Error('Element not found');
+  
+  const event = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window
+  });
+    element.dispatchEvent(event);
+  });
 
   await page.getByRole("button", { name: "Bank" }).click();
   await page.getByRole("button", { name: "Pay Off Loan" }).click();
@@ -118,7 +142,18 @@ test("taking out and paying off a loan with 5 prestige", async ({
 
   await expect(page.getByText(/Euro:/)).toHaveText("Euro: 107499.99€");
   await expect(page.getByText(/Loan:/)).toHaveText("Loan: 107500.00€");
-  await page.locator(".console_contents").click();
+  
+  await page.evaluate(() => {
+  const element = document.querySelector('div.console_wrap');
+  if (!element) throw new Error('Element not found');
+  
+  const event = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window
+  });
+    element.dispatchEvent(event);
+  });
 
   await page.getByRole("button", { name: "Bank" }).click();
   await page.getByRole("button", { name: "Pay Off Loan" }).click();

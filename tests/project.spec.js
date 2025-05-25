@@ -94,9 +94,21 @@ test.describe('Project flows', () => {
     await page.getByRole('button', { name: 'COMPLETE - Size: 5, Deadline: 50, Reward: 7€' }).click();
     await page.getByRole('button', { name: 'Open Available Projects' }).click();
 
-    for (let i = 0; i < 5; i++) {
-      await page.locator('.console_contents').click();
+  await page.evaluate(() => {
+    const element = document.querySelector('div.console_wrap');
+    if (!element) throw new Error('Element not found');
+  
+    const event = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+    });
+    for(let i=0; i<5; i++)
+    {
+      element.dispatchEvent(event);
     }
+    
+  });
 
     await expect(page.getByText('Euro: 7.00€')).toBeVisible();
 

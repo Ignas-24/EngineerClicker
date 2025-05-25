@@ -1,4 +1,3 @@
-// @ts-check
 import { test, expect } from "@playwright/test";
 
 const PAGE_URL = "http://localhost:5173/EngineerClicker/";
@@ -13,7 +12,7 @@ const setSaveData = async (context, key, value) => {
 };
 
 test("buy small studio", async ({ context, page }) => {
-  await setSaveData(context, "ResourceManagerData", { euro: 4000 });
+  await setSaveData(context, "ResourceManagerData", { euro: 6000 });
   await page.goto(PAGE_URL);
 
   await page
@@ -26,11 +25,11 @@ test("buy small studio", async ({ context, page }) => {
     "Completed Projects: 0",
   );
 
-  await expect(page.getByText(/Euro:/)).toHaveText("Euro: 4000.00€");
+  await expect(page.getByText(/Euro:/)).toHaveText("Euro: 6000.00€");
 
   await page
     .getByRole("button", {
-      name: "Buy Small Software Development Studio (3,000 €)",
+      name: "Buy Small Software Development Studio (5,000 €)",
     })
     .click();
 
@@ -44,7 +43,7 @@ test("buy small studio", async ({ context, page }) => {
 
   await expect(
     page.getByRole("button", {
-      name: "Upgrade to Medium Sized Software Company (12,000 €)",
+      name: "Upgrade to Medium Sized Software Company (20,000 €)",
     }),
   ).toBeVisible();
 
@@ -52,7 +51,7 @@ test("buy small studio", async ({ context, page }) => {
 });
 
 test("buy medium company", async ({ context, page }) => {
-  await setSaveData(context, "ResourceManagerData", { euro: 12500 });
+  await setSaveData(context, "ResourceManagerData", { euro: 20500 });
   await setSaveData(context, "ProjectManagerData", {
     completedProjectsThisReset: 20,
   });
@@ -60,7 +59,7 @@ test("buy medium company", async ({ context, page }) => {
     context,
     "CompanyManagerData",
     JSON.parse(
-      '{"currentCompany":{"type":"small","cost":3000,"maxEmployees":5,"upkeep":180,"unlocks":["junior","midlevel"]},"developers":{"junior":0,"midlevel":0,"senior":0,"lead":0}}',
+      '{"currentCompany":{"type":"small","cost":5000,"maxEmployees":5,"upkeep":300,"unlocks":["junior","midlevel"]},"developers":{"junior":0,"midlevel":0,"senior":0,"lead":0}}',
     ),
   );
 
@@ -76,11 +75,11 @@ test("buy medium company", async ({ context, page }) => {
     "Completed Projects: 20",
   );
 
-  await expect(page.getByText(/Euro:/)).toHaveText("Euro: 12500.00€");
+  await expect(page.getByText(/Euro:/)).toHaveText("Euro: 20500.00€");
 
   await page
     .getByRole("button", {
-      name: "Upgrade to Medium Sized Software Company (12,000 €)",
+      name: "Upgrade to Medium Sized Software Company (20,000 €)",
     })
     .click();
 
@@ -92,7 +91,7 @@ test("buy medium company", async ({ context, page }) => {
 
   await expect(
     page.getByRole("button", {
-      name: "Upgrade to Large Software Corporation (60,000 €)",
+      name: "Upgrade to Large Software Corporation (100,000 €)",
     }),
   ).toBeVisible();
 
@@ -113,7 +112,7 @@ test("hire developers", async ({ context, page }) => {
     context,
     "CompanyManagerData",
     JSON.parse(
-      '{"currentCompany":{"type":"small","cost":3000,"maxEmployees":5,"upkeep":180,"unlocks":["junior","midlevel"]},"developers":{"junior":0,"midlevel":0,"senior":0,"lead":0}}',
+      '{"currentCompany":{"type":"small","cost":5000,"maxEmployees":5,"upkeep":300,"unlocks":["junior","midlevel"]},"developers":{"junior":0,"midlevel":0,"senior":0,"lead":0}}',
     ),
   );
 
@@ -137,24 +136,24 @@ test("hire developers", async ({ context, page }) => {
   const HireMidButton = page.getByText(/Hire Mid-Level Developer/);
 
   await expect(HireJuniorButton).toHaveText(
-    "Hire Junior Developer (€300, €60 upkeep) (Hired: 0)",
+    "Hire Junior Developer (€500, €100 upkeep) (Hired: 0)",
   );
   await expect(HireMidButton).toHaveText(
-    "Hire Mid-Level Developer (€600, €120 upkeep) (Hired: 0)",
+    "Hire Mid-Level Developer (€1,000, €200 upkeep) (Hired: 0)",
   );
 
   await HireJuniorButton.click();
 
-  await expect(page.getByText(/Euro:/)).toHaveText("Euro: 17700.00€");
+  await expect(page.getByText(/Euro:/)).toHaveText("Euro: 17500.00€");
   await expect(HireJuniorButton).toHaveText(
-    "Hire Junior Developer (€300, €60 upkeep) (Hired: 1)",
+    "Hire Junior Developer (€500, €100 upkeep) (Hired: 1)",
   );
 
   await HireMidButton.click();
 
-  await expect(page.getByText(/Euro:/)).toHaveText("Euro: 17100.00€");
+  await expect(page.getByText(/Euro:/)).toHaveText("Euro: 16500.00€");
   await expect(HireMidButton).toHaveText(
-    "Hire Mid-Level Developer (€600, €120 upkeep) (Hired: 1)",
+    "Hire Mid-Level Developer (€1,000, €200 upkeep) (Hired: 1)",
   );
 
   await expect(page.getByText(/Developer upkeep: /)).toHaveText(
