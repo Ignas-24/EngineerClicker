@@ -62,7 +62,6 @@ const ComputerCanvas = ({ onClick }) => {
     game.project?.isActive(),
   );
   const handleClick = useCallback(() => {
-    console.log("CLICKKKK");
     const app = appRef.current;
     const sprite = spriteRef.current;
     const animatedSprite = animatedSpriteRef.current;
@@ -90,7 +89,6 @@ const ComputerCanvas = ({ onClick }) => {
       animatedSprite.visible = false;
       sprite.visible = true;
       animatedSprite.gotoAndStop(animatedSprite.currentFrame);
-      console.log("stop");
       animationTimeoutRef.current = null;
     }, 250);
 
