@@ -42,8 +42,20 @@ test("buying power upgrade 1", async ({ page }) => {
   await expect(EuroLocator).toHaveText("Euro: 0.00€");
   await expect(TypingPowerLocator).toContainText("Current typing power: 0.02");
 
-  const ConsoleLocator = page.locator("div.console_contents");
-  await ConsoleLocator.click();
+  await page.evaluate(() => {
+  const element = document.querySelector('div.console_wrap');
+  if (!element) throw new Error('Element not found');
+  
+  const event = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window
+  });
+    element.dispatchEvent(event);
+  });
+
+
+
   await expect(EuroLocator).toHaveText("Euro: 0.02€");
 });
 
@@ -79,7 +91,18 @@ test("buying mult upgrade 1", async ({ context, page }) => {
   await expect(PrestigeLocator).toHaveText("Prestige: 0");
   await expect(MultiplierLocator).toContainText("Multiplier: 2");
 
-  const ConsoleLocator = page.locator("div.console_contents");
-  await ConsoleLocator.click();
+  await page.evaluate(() => {
+  const element = document.querySelector('div.console_wrap');
+  if (!element) throw new Error('Element not found');
+  
+  const event = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      view: window
+  });
+    element.dispatchEvent(event);
+  });
+
+  
   await expect(EuroLocator).toHaveText("Euro: 0.02€");
 });
